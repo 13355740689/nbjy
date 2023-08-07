@@ -17,7 +17,7 @@
 							:color="currentPath === getPath(tab.path) ? tabbarData.activeColor : tabbarData.color"
 						></u-icon> -->
 						<i
-							class="iconfont icon-envelope-full"
+							class="iconfont"
 							:class="currentPath == getPath(tab.path) ? tab.activeIcon : tab.icon"
 							:style="{color: currentPath === getPath(tab.path) ? tabbarData.activeColor : tabbarData.color}"
 						>

@@ -1,10 +1,9 @@
 <template>
 	<view class="content">
-		<i class="iconfont icon-envelope-full"></i>
-		<image class="logo" src="/static/logo.png"></image>
-		<view class="text-area">
-			<text class="title">{{title}}</text>
-		</view>
+		<u-swiper
+		            :list="list1"
+		    ></u-swiper>
+			
 		<zd-tabbar></zd-tabbar>
 	</view>
 </template>
@@ -13,7 +12,9 @@
 	export default {
 		data() {
 			return {
-				title: 'Hello'
+				list1: [
+				         'http://47.98.63.31:8888/down/FlEmQgd82pRP'
+				                ]
 			}
 		},
 		onLoad() {

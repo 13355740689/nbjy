@@ -14,7 +14,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var objectKeys = ['qy', 'env', 'error', 'version', 'lanDebug', 'cloud', 'serviceMarket', 'router', 'worklet'];
+var objectKeys = ['qy', 'env', 'error', 'version', 'lanDebug', 'cloud', 'serviceMarket', 'router', 'worklet', '__webpack_require_UNI_MP_PLUGIN__'];
 var singlePageDisableKey = ['lanDebug', 'router', 'worklet'];
 var target = typeof globalThis !== 'undefined' ? globalThis : function () {
   return this;
@@ -780,8 +780,8 @@ function populateParameters(result) {
     appVersion: "1.0.0",
     appVersionCode: "100",
     appLanguage: getAppLanguage(hostLanguage),
-    uniCompileVersion: "3.8.4",
-    uniRuntimeVersion: "3.8.4",
+    uniCompileVersion: "3.8.7",
+    uniRuntimeVersion: "3.8.7",
     uniPlatform: undefined || "mp-weixin",
     deviceBrand: deviceBrand,
     deviceModel: model,
@@ -1954,14 +1954,10 @@ function handleEvent(event) {
   }
 }
 var eventChannels = {};
-var eventChannelStack = [];
 function getEventChannel(id) {
-  if (id) {
-    var eventChannel = eventChannels[id];
-    delete eventChannels[id];
-    return eventChannel;
-  }
-  return eventChannelStack.shift();
+  var eventChannel = eventChannels[id];
+  delete eventChannels[id];
+  return eventChannel;
 }
 var hooks = ['onShow', 'onHide', 'onError', 'onPageNotFound', 'onThemeChange', 'onUnhandledRejection'];
 function initEventChannel() {
@@ -2428,7 +2424,7 @@ if (typeof Proxy !== 'undefined' && "mp-weixin" !== 'app-plus') {
       uni[name] = promisify(name, todoApis[name]);
     });
     Object.keys(extraApi).forEach(function (name) {
-      uni[name] = promisify(name, todoApis[name]);
+      uni[name] = promisify(name, extraApi[name]);
     });
   }
   Object.keys(eventApi).forEach(function (name) {
@@ -9481,9 +9477,9 @@ internalMixin(Vue);
 
 /***/ }),
 /* 26 */
-/*!********************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/pages.json ***!
-  \********************************************************************/
+/*!****************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/pages.json ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9495,9 +9491,7 @@ internalMixin(Vue);
 /* 29 */,
 /* 30 */,
 /* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */
+/* 32 */
 /*!**********************************************************************************************************!*\
   !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js ***!
   \**********************************************************************************************************/
@@ -9628,33 +9622,2090 @@ function normalizeComponent (
 
 
 /***/ }),
-/* 35 */
-/*!**********************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni.promisify.adaptor.js ***!
-  \**********************************************************************************/
+/* 33 */
+/*!**********************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/common/router.js ***!
+  \**********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(uni) {var _typeof = __webpack_require__(/*! @babel/runtime/helpers/typeof */ 13);
-uni.addInterceptor({
-  returnValue: function returnValue(res) {
-    if (!(!!res && (_typeof(res) === "object" || typeof res === "function") && typeof res.then === "function")) {
-      return res;
-    }
-    return new Promise(function (resolve, reject) {
-      res.then(function (res) {
-        return res[0] ? reject(res[0]) : resolve(res[1]);
-      });
-    });
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+Object.defineProperty(exports, "RouterMount", {
+  enumerable: true,
+  get: function get() {
+    return _uniSimpleRouter.RouterMount;
   }
 });
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+exports.router = void 0;
+var _toConsumableArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ 18));
+var _uniSimpleRouter = __webpack_require__(/*! uni-simple-router */ 34);
+//初始化
+var router = (0, _uniSimpleRouter.createRouter)({
+  platform: "mp-weixin",
+  // APP: {
+  // 	animation: {
+  // 		animationType: 'pop-in',
+  // 		animationDuration: 300
+  // 	}
+  // },
+  // encodeURI: false,
+  routes: (0, _toConsumableArray2.default)([{"path":"/pages/index/index","aliasPath":"/"},{"path":"/pages/mine/mine"}]) //路由表
+});
+
+//全局路由前置守卫
+exports.router = router;
+router.beforeEach(function (to, from, next) {
+  next();
+});
+// 全局路由后置守卫
+router.afterEach(function (to, from) {
+  console.log('------afterEach-------');
+});
+
+/***/ }),
+/* 34 */
+/*!**********************************************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/node_modules/_uni-simple-router@2.0.8-beta.4@uni-simple-router/dist/uni-simple-router.js ***!
+  \**********************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(uni, module) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof = __webpack_require__(/*! @babel/runtime/helpers/typeof */ 13);
+!function (e, t) {
+  "object" == ( false ? undefined : _typeof(exports)) && "object" == ( false ? undefined : _typeof(module)) ? module.exports = t() :  true ? !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (t),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : undefined;
+}(self, function () {
+  return e = {
+    779: function _(e, t, r) {
+      var o = r(173);
+      e.exports = function e(t, r, n) {
+        return o(r) || (n = r || n, r = []), n = n || {}, t instanceof RegExp ? function (e, t) {
+          var r = e.source.match(/\((?!\?)/g);
+          if (r) for (var o = 0; o < r.length; o++) {
+            t.push({
+              name: o,
+              prefix: null,
+              delimiter: null,
+              optional: !1,
+              repeat: !1,
+              partial: !1,
+              asterisk: !1,
+              pattern: null
+            });
+          }
+          return s(e, t);
+        }(t, r) : o(t) ? function (t, r, o) {
+          for (var n = [], a = 0; a < t.length; a++) {
+            n.push(e(t[a], r, o).source);
+          }
+          return s(new RegExp("(?:" + n.join("|") + ")", p(o)), r);
+        }(t, r, n) : function (e, t, r) {
+          return f(a(e, r), t, r);
+        }(t, r, n);
+      }, e.exports.parse = a, e.exports.compile = function (e, t) {
+        return u(a(e, t), t);
+      }, e.exports.tokensToFunction = u, e.exports.tokensToRegExp = f;
+      var n = new RegExp(["(\\\\.)", "([\\/.])?(?:(?:\\:(\\w+)(?:\\(((?:\\\\.|[^\\\\()])+)\\))?|\\(((?:\\\\.|[^\\\\()])+)\\))([+*?])?|(\\*))"].join("|"), "g");
+      function a(e, t) {
+        for (var r, o = [], a = 0, i = 0, u = "", s = t && t.delimiter || "/"; null != (r = n.exec(e));) {
+          var p = r[0],
+            f = r[1],
+            h = r.index;
+          if (u += e.slice(i, h), i = h + p.length, f) u += f[1];else {
+            var v = e[i],
+              y = r[2],
+              g = r[3],
+              d = r[4],
+              m = r[5],
+              b = r[6],
+              P = r[7];
+            u && (o.push(u), u = "");
+            var O = null != y && null != v && v !== y,
+              k = "+" === b || "*" === b,
+              w = "?" === b || "*" === b,
+              j = r[2] || s,
+              R = d || m;
+            o.push({
+              name: g || a++,
+              prefix: y || "",
+              delimiter: j,
+              optional: w,
+              repeat: k,
+              partial: O,
+              asterisk: !!P,
+              pattern: R ? c(R) : P ? ".*" : "[^" + l(j) + "]+?"
+            });
+          }
+        }
+        return i < e.length && (u += e.substr(i)), u && o.push(u), o;
+      }
+      function i(e) {
+        return encodeURI(e).replace(/[\/?#]/g, function (e) {
+          return "%" + e.charCodeAt(0).toString(16).toUpperCase();
+        });
+      }
+      function u(e, t) {
+        for (var r = new Array(e.length), n = 0; n < e.length; n++) {
+          "object" == _typeof(e[n]) && (r[n] = new RegExp("^(?:" + e[n].pattern + ")$", p(t)));
+        }
+        return function (t, n) {
+          for (var a = "", u = t || {}, l = (n || {}).pretty ? i : encodeURIComponent, c = 0; c < e.length; c++) {
+            var s = e[c];
+            if ("string" != typeof s) {
+              var p,
+                f = u[s.name];
+              if (null == f) {
+                if (s.optional) {
+                  s.partial && (a += s.prefix);
+                  continue;
+                }
+                throw new TypeError('Expected "' + s.name + '" to be defined');
+              }
+              if (o(f)) {
+                if (!s.repeat) throw new TypeError('Expected "' + s.name + '" to not repeat, but received `' + JSON.stringify(f) + "`");
+                if (0 === f.length) {
+                  if (s.optional) continue;
+                  throw new TypeError('Expected "' + s.name + '" to not be empty');
+                }
+                for (var h = 0; h < f.length; h++) {
+                  if (p = l(f[h]), !r[c].test(p)) throw new TypeError('Expected all "' + s.name + '" to match "' + s.pattern + '", but received `' + JSON.stringify(p) + "`");
+                  a += (0 === h ? s.prefix : s.delimiter) + p;
+                }
+              } else {
+                if (p = s.asterisk ? encodeURI(f).replace(/[?#]/g, function (e) {
+                  return "%" + e.charCodeAt(0).toString(16).toUpperCase();
+                }) : l(f), !r[c].test(p)) throw new TypeError('Expected "' + s.name + '" to match "' + s.pattern + '", but received "' + p + '"');
+                a += s.prefix + p;
+              }
+            } else a += s;
+          }
+          return a;
+        };
+      }
+      function l(e) {
+        return e.replace(/([.+*?=^!:${}()[\]|\/\\])/g, "\\$1");
+      }
+      function c(e) {
+        return e.replace(/([=!:$\/()])/g, "\\$1");
+      }
+      function s(e, t) {
+        return e.keys = t, e;
+      }
+      function p(e) {
+        return e && e.sensitive ? "" : "i";
+      }
+      function f(e, t, r) {
+        o(t) || (r = t || r, t = []);
+        for (var n = (r = r || {}).strict, a = !1 !== r.end, i = "", u = 0; u < e.length; u++) {
+          var c = e[u];
+          if ("string" == typeof c) i += l(c);else {
+            var f = l(c.prefix),
+              h = "(?:" + c.pattern + ")";
+            t.push(c), c.repeat && (h += "(?:" + f + h + ")*"), i += h = c.optional ? c.partial ? f + "(" + h + ")?" : "(?:" + f + "(" + h + "))?" : f + "(" + h + ")";
+          }
+        }
+        var v = l(r.delimiter || "/"),
+          y = i.slice(-v.length) === v;
+        return n || (i = (y ? i.slice(0, -v.length) : i) + "(?:" + v + "(?=$))?"), i += a ? "$" : n && y ? "" : "(?=" + v + "|$)", s(new RegExp("^" + i, p(r)), t);
+      }
+    },
+    173: function _(e) {
+      e.exports = Array.isArray || function (e) {
+        return "[object Array]" == Object.prototype.toString.call(e);
+      };
+    },
+    844: function _(e, t, r) {
+      "use strict";
+
+      var o = this && this.__assign || function () {
+        return (o = Object.assign || function (e) {
+          for (var t, r = 1, o = arguments.length; r < o; r++) {
+            for (var n in t = arguments[r]) {
+              Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+            }
+          }
+          return e;
+        }).apply(this, arguments);
+      };
+      Object.defineProperty(t, "__esModule", {
+        value: !0
+      }), t.buildVueRouter = t.buildVueRoutes = void 0;
+      var n = r(366),
+        a = r(883),
+        i = r(789),
+        u = r(169);
+      t.buildVueRoutes = function (e, t) {
+        for (var r = e.routesMap, o = r.pathMap, l = r.finallyPathList, c = Object.keys(t), s = 0; s < c.length; s++) {
+          var p = c[s],
+            f = o[p],
+            h = t[p];
+          if (f) {
+            var v = i.getRoutePath(f, e).finallyPath;
+            if (v instanceof Array) throw new Error("非 vueRouterDev 模式下，alias、aliasPath、path 无法提供数组类型！ " + JSON.stringify(f));
+            null != f.name && (h.name = f.name);
+            var y = h.path,
+              g = h.alias;
+            delete h.alias, h.path = v, "/" === y && null != g && (h.alias = g, h.path = y), f.beforeEnter && (h.beforeEnter = function (t, r, o) {
+              u.onTriggerEachHook(t, r, e, n.hookToggle.enterHooks, o);
+            });
+          } else a.warn(p + " 路由地址在路由表中未找到，确定是否传递漏啦", e, !0);
+        }
+        return l.includes("*") && (t["*"] = o["*"]), t;
+      }, t.buildVueRouter = function (e, t, r) {
+        var n;
+        n = "[object Array]" === i.getDataType(r) ? r : Object.values(r);
+        var a = e.options.h5,
+          u = a.scrollBehavior,
+          l = a.fallback,
+          c = t.options.scrollBehavior;
+        t.options.scrollBehavior = function (e, t, r) {
+          return c && c(e, t, r), u(e, t, r);
+        }, t.fallback = l;
+        var s = new t.constructor(o(o({}, e.options.h5), {
+          base: t.options.base,
+          mode: t.options.mode,
+          routes: n
+        }));
+        t.matcher = s.matcher;
+      };
+    },
+    369: function _(e, t, r) {
+      "use strict";
+
+      Object.defineProperty(t, "__esModule", {
+        value: !0
+      }), t.addKeepAliveInclude = void 0;
+      var o = r(789),
+        n = ["", ""],
+        a = n[0],
+        i = n[1];
+      t.addKeepAliveInclude = function (e) {
+        var t = getApp(),
+          r = t.keepAliveInclude;
+        if (0 === e.runId && 0 === r.length) {
+          i = t.$route.params.__id__;
+          var n = (a = t.$route.meta.name) + "-" + i;
+          t.keepAliveInclude.push(n);
+        } else if ("" !== a) for (var u = t.keepAliveInclude, l = 0; l < u.length; l++) {
+          n = u[l];
+          var c = new RegExp(a + "-(\\d+)$"),
+            s = a + "-" + i;
+          if (c.test(n) && n !== s) {
+            o.removeSimpleValue(u, s), a = "";
+            break;
+          }
+        }
+      };
+    },
+    147: function _(e, t) {
+      "use strict";
+
+      var _r,
+        o = this && this.__extends || (_r = function r(e, t) {
+          return (_r = Object.setPrototypeOf || {
+            __proto__: []
+          } instanceof Array && function (e, t) {
+            e.__proto__ = t;
+          } || function (e, t) {
+            for (var r in t) {
+              Object.prototype.hasOwnProperty.call(t, r) && (e[r] = t[r]);
+            }
+          })(e, t);
+        }, function (e, t) {
+          function o() {
+            this.constructor = e;
+          }
+          _r(e, t), e.prototype = null === t ? Object.create(t) : (o.prototype = t.prototype, new o());
+        });
+      Object.defineProperty(t, "__esModule", {
+        value: !0
+      }), t.proxyH5Mount = t.proxyEachHook = t.MyArray = void 0;
+      var n = function (e) {
+        function t(r, o, n, a) {
+          var i = e.call(this) || this;
+          return i.router = r, i.vueEachArray = o, i.myEachHook = n, i.hookName = a, Object.setPrototypeOf(i, t.prototype), i;
+        }
+        return o(t, e), t.prototype.push = function (e) {
+          var t = this;
+          this.vueEachArray.push(e);
+          var r = this.length;
+          this[this.length] = function (e, o, n) {
+            r > 0 ? t.vueEachArray[r](e, o, function () {
+              n && n();
+            }) : t.myEachHook(e, o, function (a) {
+              !1 === a ? n(!1) : t.vueEachArray[r](e, o, function (e) {
+                n(a);
+              });
+            }, t.router, !0);
+          };
+        }, t;
+      }(Array);
+      t.MyArray = n, t.proxyEachHook = function (e, t) {
+        for (var r = ["beforeHooks", "afterHooks"], o = 0; o < r.length; o++) {
+          var a = r[o],
+            i = e.lifeCycle[a][0];
+          if (i) {
+            var u = t[a];
+            t[a] = new n(e, u, i, a);
+          }
+        }
+      }, t.proxyH5Mount = function (e) {
+        var t;
+        if (0 === e.mount.length) {
+          if (null === (t = e.options.h5) || void 0 === t ? void 0 : t.vueRouterDev) return;
+          navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) && setTimeout(function () {
+            if (document.getElementsByTagName("uni-page").length > 0) return !1;
+            window.location.reload();
+          }, 0);
+        } else e.mount[0].app.$mount(), e.mount = [];
+      };
+    },
+    814: function _(e, t) {
+      "use strict";
+
+      var r = this && this.__assign || function () {
+        return (r = Object.assign || function (e) {
+          for (var t, r = 1, o = arguments.length; r < o; r++) {
+            for (var n in t = arguments[r]) {
+              Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+            }
+          }
+          return e;
+        }).apply(this, arguments);
+      };
+      Object.defineProperty(t, "__esModule", {
+        value: !0
+      }), t.tabIndexSelect = t.HomeNvueSwitchTab = t.runtimeQuit = t.registerLoddingPage = void 0;
+      var o = null,
+        n = null;
+      t.registerLoddingPage = function (e) {
+        var t;
+        if (null === (t = e.options.APP) || void 0 === t ? void 0 : t.registerLoadingPage) {
+          var o = e.options.APP,
+            n = o.loadingPageHook,
+            a = o.loadingPageStyle;
+          n(new plus.nativeObj.View("router-loadding", r({
+            top: "0px",
+            left: "0px",
+            height: "100%",
+            width: "100%"
+          }, a())));
+        }
+      }, t.runtimeQuit = function (e) {
+        void 0 === e && (e = "再按一次退出应用");
+        var t = +new Date();
+        o ? t - o < 1e3 && plus.runtime.quit() : (o = t, uni.showToast({
+          title: e,
+          icon: "none",
+          position: "bottom",
+          duration: 1e3
+        }), setTimeout(function () {
+          o = null;
+        }, 1e3));
+      }, t.HomeNvueSwitchTab = function (e, t, r) {
+        return new Promise(function (t) {
+          return 0 !== e.runId ? t(!1) : __uniConfig.tabBar && Array.isArray(__uniConfig.tabBar.list) ? void r({
+            url: __uniConfig.entryPagePath,
+            animationDuration: 0,
+            complete: function complete() {
+              return t(!0);
+            }
+          }) : t(!1);
+        });
+      }, t.tabIndexSelect = function (e, t) {
+        if (!__uniConfig.tabBar || !Array.isArray(__uniConfig.tabBar.list)) return !1;
+        for (var r = __uniConfig.tabBar.list, o = [], a = 0, i = 0; i < r.length; i++) {
+          var u = r[i];
+          if ("/" + u.pagePath !== e.path && "/" + u.pagePath !== t.path || (u.pagePath === t.path && (a = i), o.push(u)), 2 === o.length) break;
+        }
+        return 2 === o.length && (null == n && (n = uni.requireNativePlugin("uni-tabview")), n.switchSelect({
+          index: a
+        }), !0);
+      };
+    },
+    334: function _(e, t) {
+      "use strict";
+
+      Object.defineProperty(t, "__esModule", {
+        value: !0
+      }), t.getEnterPath = void 0, t.getEnterPath = function (e, t) {
+        switch (t.options.platform) {
+          case "mp-alipay":
+          case "mp-weixin":
+          case "mp-toutiao":
+          case "mp-qq":
+            return e.$options.mpInstance.route;
+          case "mp-baidu":
+            return e.$options.mpInstance.is || e.$options.mpInstance.pageinstance.route;
+        }
+        return e.$options.mpInstance.route;
+      };
+    },
+    282: function _(e, t, r) {
+      "use strict";
+
+      Object.defineProperty(t, "__esModule", {
+        value: !0
+      }), t.proxyHookName = t.proxyHookDeps = t.lifeCycle = t.baseConfig = t.mpPlatformReg = void 0;
+      var o = r(883),
+        n = r(99);
+      t.mpPlatformReg = "(^mp-weixin$)|(^mp-baidu$)|(^mp-alipay$)|(^mp-toutiao$)|(^mp-qq$)|(^mp-360$)", t.baseConfig = {
+        h5: {
+          paramsToQuery: !1,
+          vueRouterDev: !1,
+          vueNext: !1,
+          mode: "hash",
+          base: "/",
+          linkActiveClass: "router-link-active",
+          linkExactActiveClass: "router-link-exact-active",
+          scrollBehavior: function scrollBehavior(e, t, r) {
+            return {
+              x: 0,
+              y: 0
+            };
+          },
+          fallback: !0
+        },
+        APP: {
+          registerLoadingPage: !0,
+          loadingPageStyle: function loadingPageStyle() {
+            return JSON.parse('{"backgroundColor":"#FFF"}');
+          },
+          loadingPageHook: function loadingPageHook(e) {
+            e.show();
+          },
+          launchedHook: function launchedHook() {
+            plus.navigator.closeSplashscreen();
+          },
+          animation: {}
+        },
+        applet: {
+          animationDuration: 300
+        },
+        beforeProxyHooks: {
+          onLoad: function onLoad(e, t, r) {
+            var o = e[0];
+            t([n.parseQuery({
+              query: o
+            }, r)]);
+          }
+        },
+        platform: "h5",
+        keepUniOriginNav: !1,
+        debugger: !1,
+        routerBeforeEach: function routerBeforeEach(e, t, r) {
+          r();
+        },
+        routerAfterEach: function routerAfterEach(e, t) {},
+        routerErrorEach: function routerErrorEach(e, t) {
+          t.$lockStatus = !1, o.err(e, t, !0);
+        },
+        detectBeforeLock: function detectBeforeLock(e, t, r) {},
+        routes: [{
+          path: "/choose-location"
+        }, {
+          path: "/open-location"
+        }, {
+          path: "/preview-image"
+        }]
+      }, t.lifeCycle = {
+        beforeHooks: [],
+        afterHooks: [],
+        routerBeforeHooks: [],
+        routerAfterHooks: [],
+        routerErrorHooks: []
+      }, t.proxyHookDeps = {
+        resetIndex: [],
+        hooks: {},
+        options: {}
+      }, t.proxyHookName = ["onLaunch", "onShow", "onHide", "onError", "onInit", "onLoad", "onReady", "onUnload", "onResize", "created", "beforeMount", "mounted", "beforeDestroy", "destroyed"];
+    },
+    801: function _(e, t, r) {
+      "use strict";
+
+      Object.defineProperty(t, "__esModule", {
+        value: !0
+      }), t.createRouteMap = void 0;
+      var o = r(883),
+        n = r(789);
+      t.createRouteMap = function (e, t) {
+        var r = {
+          finallyPathList: [],
+          finallyPathMap: Object.create(null),
+          aliasPathMap: Object.create(null),
+          pathMap: Object.create(null),
+          vueRouteMap: Object.create(null),
+          nameMap: Object.create(null)
+        };
+        return t.forEach(function (t) {
+          var a = n.getRoutePath(t, e),
+            i = a.finallyPath,
+            u = a.aliasPath,
+            l = a.path;
+          if (null == l) throw new Error("请提供一个完整的路由对象，包括以绝对路径开始的 ‘path’ 字符串 " + JSON.stringify(t));
+          if (i instanceof Array && !e.options.h5.vueRouterDev && "h5" === e.options.platform) throw new Error("非 vueRouterDev 模式下，route.alias 目前无法提供数组类型！ " + JSON.stringify(t));
+          var c = i,
+            s = u;
+          "h5" !== e.options.platform && 0 !== c.indexOf("/") && "*" !== l && o.warn("当前路由对象下，route：" + JSON.stringify(t) + " 是否缺少了前缀 ‘/’", e, !0), r.finallyPathMap[c] || (r.finallyPathMap[c] = t, r.aliasPathMap[s] = t, r.pathMap[l] = t, r.finallyPathList.push(c), null != t.name && (r.nameMap[t.name] = t));
+        }), r;
+      };
+    },
+    662: function _(e, t, r) {
+      "use strict";
+
+      Object.defineProperty(t, "__esModule", {
+        value: !0
+      }), t.registerEachHooks = t.registerRouterHooks = t.registerHook = void 0;
+      var o = r(366),
+        n = r(169);
+      function a(e, t) {
+        e[0] = t;
+      }
+      t.registerHook = a, t.registerRouterHooks = function (e, t) {
+        return a(e.routerBeforeHooks, function (e, r, o) {
+          t.routerBeforeEach(e, r, o);
+        }), a(e.routerAfterHooks, function (e, r) {
+          t.routerAfterEach(e, r);
+        }), a(e.routerErrorHooks, function (e, r) {
+          t.routerErrorEach(e, r);
+        }), e;
+      }, t.registerEachHooks = function (e, t, r) {
+        a(e.lifeCycle[t], function (e, a, i, u, l) {
+          l ? n.onTriggerEachHook(e, a, u, o.hookToggle[t], i) : r(e, a, i);
+        });
+      };
+    },
+    460: function _(e, t, r) {
+      "use strict";
+
+      var o = this && this.__assign || function () {
+        return (o = Object.assign || function (e) {
+          for (var t, r = 1, o = arguments.length; r < o; r++) {
+            for (var n in t = arguments[r]) {
+              Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+            }
+          }
+          return e;
+        }).apply(this, arguments);
+      };
+      Object.defineProperty(t, "__esModule", {
+        value: !0
+      }), t.initMixins = t.getMixins = void 0;
+      var n = r(801),
+        a = r(844),
+        i = r(147),
+        u = r(814),
+        l = r(845),
+        c = r(890),
+        s = r(789),
+        p = r(334),
+        f = r(282),
+        h = r(925),
+        v = !1,
+        y = !1,
+        g = {
+          app: !1,
+          page: ""
+        };
+      function d(e, t) {
+        var r = t.options.platform;
+        return new RegExp(f.mpPlatformReg, "g").test(r) && (r = "app-lets"), {
+          h5: {
+            beforeCreate: function beforeCreate() {
+              var e;
+              if (h.beforeProxyHook(this, t), this.$options.router) {
+                t.$route = this.$options.router;
+                var r = [];
+                (null === (e = t.options.h5) || void 0 === e ? void 0 : e.vueRouterDev) ? r = t.options.routes : (r = n.createRouteMap(t, this.$options.router.options.routes).finallyPathMap, t.routesMap.vueRouteMap = r, a.buildVueRoutes(t, r)), a.buildVueRouter(t, this.$options.router, r), i.proxyEachHook(t, this.$options.router);
+              }
+            }
+          },
+          "app-plus": {
+            beforeCreate: function beforeCreate() {
+              h.beforeProxyHook(this, t), v || (v = !0, l.proxyPageHook(this, t, "app"), u.registerLoddingPage(t));
+            }
+          },
+          "app-lets": {
+            beforeCreate: function beforeCreate() {
+              h.beforeProxyHook(this, t), s.voidFun("UNI-SIMPLE-ROUTER");
+              var e = !0,
+                r = this.$options.mpType;
+              y || ("component" === r ? e = s.assertParentChild(g.page, this) : "page" === r ? (g[r] = p.getEnterPath(this, t), t.enterPath = g[r]) : g[r] = !0, e && l.proxyPageHook(this, t, r));
+            },
+            onLoad: function onLoad() {
+              s.voidFun("UNI-SIMPLE-ROUTER"), !y && s.assertParentChild(g.page, this) && (y = !0, c.forceGuardEach(t));
+            }
+          }
+        }[r];
+      }
+      t.getMixins = d, t.initMixins = function (e, t) {
+        var r = n.createRouteMap(t, t.options.routes);
+        t.routesMap = r, e.mixin(o({}, d(0, t)));
+      };
+    },
+    789: function _(e, t, r) {
+      "use strict";
+
+      var o = this && this.__assign || function () {
+          return (o = Object.assign || function (e) {
+            for (var t, r = 1, o = arguments.length; r < o; r++) {
+              for (var n in t = arguments[r]) {
+                Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+              }
+            }
+            return e;
+          }).apply(this, arguments);
+        },
+        n = this && this.__rest || function (e, t) {
+          var r = {};
+          for (var o in e) {
+            Object.prototype.hasOwnProperty.call(e, o) && t.indexOf(o) < 0 && (r[o] = e[o]);
+          }
+          if (null != e && "function" == typeof Object.getOwnPropertySymbols) {
+            var n = 0;
+            for (o = Object.getOwnPropertySymbols(e); n < o.length; n++) {
+              t.indexOf(o[n]) < 0 && Object.prototype.propertyIsEnumerable.call(e, o[n]) && (r[o[n]] = e[o[n]]);
+            }
+          }
+          return r;
+        },
+        a = this && this.__spreadArrays || function () {
+          for (var e = 0, t = 0, r = arguments.length; t < r; t++) {
+            e += arguments[t].length;
+          }
+          var o = Array(e),
+            n = 0;
+          for (t = 0; t < r; t++) {
+            for (var a = arguments[t], i = 0, u = a.length; i < u; i++, n++) {
+              o[n] = a[i];
+            }
+          }
+          return o;
+        };
+      Object.defineProperty(t, "__esModule", {
+        value: !0
+      }), t.deepDecodeQuery = t.resolveAbsolutePath = t.assertParentChild = t.lockDetectWarn = t.deepClone = t.baseClone = t.assertDeepObject = t.paramsToQuery = t.forMatNextToFrom = t.urlToJson = t.getUniCachePage = t.removeSimpleValue = t.copyData = t.getDataType = t.routesForMapRoute = t.notRouteTo404 = t.getWildcardRule = t.assertNewOptions = t.getRoutePath = t.notDeepClearNull = t.mergeConfig = t.timeOut = t.def = t.voidFun = void 0;
+      var i = r(282),
+        u = r(169),
+        l = r(883),
+        c = r(890),
+        s = r(779);
+      function p(e, t) {
+        for (var r = Object.create(null), n = Object.keys(e).concat(["resolveQuery", "parseQuery"]), i = 0; i < n.length; i += 1) {
+          var u = n[i];
+          null != t[u] ? t[u].constructor === Object ? r[u] = o(o({}, e[u]), t[u]) : r[u] = "routes" === u ? a(e[u], t[u]) : t[u] : r[u] = e[u];
+        }
+        return r;
+      }
+      function f(e, t) {
+        var r = e.aliasPath || e.alias || e.path;
+        return "h5" !== t.options.platform && (r = e.path), {
+          finallyPath: r,
+          aliasPath: e.aliasPath || e.path,
+          path: e.path,
+          alias: e.alias
+        };
+      }
+      function h(e, t) {
+        var r = e.routesMap.finallyPathMap["*"];
+        if (r) return r;
+        throw t && u.ERRORHOOK[0](t, e), new Error("当前路由表匹配规则已全部匹配完成，未找到满足的匹配规则。你可以使用 '*' 通配符捕捉最后的异常");
+      }
+      function v(e) {
+        return Object.prototype.toString.call(e);
+      }
+      function y(e, t) {
+        if (null == e) t = e;else for (var r = 0, o = Object.keys(e); r < o.length; r++) {
+          var n = o[r],
+            a = n;
+          e[n] !== e && ("object" == _typeof(e[n]) ? (t[a] = "[object Array]" === v(e[n]) ? [] : {}, t[a] = y(e[n], t[a])) : t[a] = e[n]);
+        }
+        return t;
+      }
+      function g(e) {
+        var t = "[object Array]" === v(e) ? [] : {};
+        return y(e, t), t;
+      }
+      t.voidFun = function () {
+        for (var e = [], t = 0; t < arguments.length; t++) {
+          e[t] = arguments[t];
+        }
+      }, t.def = function (e, t, r) {
+        Object.defineProperty(e, t, {
+          get: function get() {
+            return r();
+          }
+        });
+      }, t.timeOut = function (e) {
+        return new Promise(function (t) {
+          setTimeout(function () {
+            t();
+          }, e);
+        });
+      }, t.mergeConfig = p, t.notDeepClearNull = function (e) {
+        for (var t in e) {
+          null == e[t] && delete e[t];
+        }
+        return e;
+      }, t.getRoutePath = f, t.assertNewOptions = function (e) {
+        var t,
+          r = e.platform,
+          o = e.routes;
+        if (null == r) throw new Error("你在实例化路由时必须传递 'platform'");
+        if (null == o || 0 === o.length) throw new Error("你在实例化路由时必须传递 routes 为空，这是无意义的。");
+        return "h5" === e.platform && (null === (t = e.h5) || void 0 === t ? void 0 : t.vueRouterDev) && (i.baseConfig.routes = []), p(i.baseConfig, e);
+      }, t.getWildcardRule = h, t.notRouteTo404 = function (e, t, r, o) {
+        if ("*" !== t.path) return t;
+        var n = t.redirect;
+        if (void 0 === n) throw new Error(" *  通配符必须配合 redirect 使用。redirect: string | Location | Function");
+        var a = n;
+        return "function" == typeof a && (a = a(r)), c.navjump(a, e, o, void 0, void 0, void 0, !1);
+      }, t.routesForMapRoute = function e(t, r, o, n) {
+        var a;
+        if (void 0 === n && (n = !1), null === (a = t.options.h5) || void 0 === a ? void 0 : a.vueRouterDev) return {
+          path: r
+        };
+        for (var i = r.split("?")[0], u = "", l = t.routesMap, c = 0; c < o.length; c++) {
+          for (var p = l[o[c]], f = 0, y = Object.entries(p); f < y.length; f++) {
+            var g = y[f],
+              d = g[0],
+              m = g[1];
+            if ("*" !== d) {
+              var b = m,
+                P = d;
+              if ("[object Array]" === v(p) && (P = b), null != s(P).exec(i)) return "[object String]" === v(b) ? l.finallyPathMap[b] : b;
+            } else "" === u && (u = "*");
+          }
+        }
+        if (n) return {};
+        if (l.aliasPathMap) {
+          var O = e(t, r, ["aliasPathMap"], !0);
+          if (Object.keys(O).length > 0) return O;
+        }
+        if ("" !== u) return h(t);
+        throw new Error(r + " 路径无法在路由表中找到！检查跳转路径及路由表");
+      }, t.getDataType = v, t.copyData = function (e) {
+        return JSON.parse(JSON.stringify(e));
+      }, t.removeSimpleValue = function (e, t) {
+        for (var r = 0; r < e.length; r++) {
+          if (e[r] === t) return e.splice(r, 1), !0;
+        }
+        return !1;
+      }, t.getUniCachePage = function (e) {
+        var t = getCurrentPages();
+        if (null == e) return t;
+        if (0 === t.length) return t;
+        var r = t.reverse()[e];
+        return null == r ? [] : r;
+      }, t.urlToJson = function (e) {
+        var t = {},
+          r = e.split("?"),
+          o = r[0],
+          n = r[1];
+        if (null != n) for (var a = 0, i = n.split("&"); a < i.length; a++) {
+          var u = i[a].split("=");
+          t[u[0]] = u[1];
+        }
+        return {
+          path: o,
+          query: t
+        };
+      }, t.forMatNextToFrom = function (e, t, r) {
+        var o = [t, r],
+          n = o[0],
+          a = o[1];
+        if ("h5" === e.options.platform) {
+          var i = e.options.h5,
+            u = i.vueNext,
+            l = i.vueRouterDev;
+          u || l || (n = c.createRoute(e, void 0, n), a = c.createRoute(e, void 0, a));
+        } else n = c.createRoute(e, void 0, g(n)), a = c.createRoute(e, void 0, g(a));
+        return {
+          matTo: n,
+          matFrom: a
+        };
+      }, t.paramsToQuery = function (e, t) {
+        var r;
+        if ("h5" === e.options.platform && !(null === (r = e.options.h5) || void 0 === r ? void 0 : r.paramsToQuery)) return t;
+        if ("[object Object]" === v(t)) {
+          var a = t,
+            i = a.name,
+            l = a.params,
+            c = n(a, ["name", "params"]),
+            s = l;
+          if ("h5" !== e.options.platform && null == s && (s = {}), null != i && null != s) {
+            var p = e.routesMap.nameMap[i];
+            null == p && (p = h(e, {
+              type: 2,
+              msg: "命名路由为：" + i + " 的路由，无法在路由表中找到！",
+              toRule: t
+            }));
+            var y = f(p, e).finallyPath;
+            if (!y.includes(":")) return o(o({}, c), {
+              path: y,
+              query: s
+            });
+            u.ERRORHOOK[0]({
+              type: 2,
+              msg: "动态路由：" + y + " 无法使用 paramsToQuery！",
+              toRule: t
+            }, e);
+          }
+        }
+        return t;
+      }, t.assertDeepObject = function (e) {
+        var t = null;
+        try {
+          t = JSON.stringify(e).match(/\{|\[|\}|\]/g);
+        } catch (e) {
+          l.warnLock("传递的参数解析对象失败。" + e);
+        }
+        return null != t && t.length > 3;
+      }, t.baseClone = y, t.deepClone = g, t.lockDetectWarn = function (e, t, r, o, n, a) {
+        if (void 0 === n && (n = {}), "afterHooks" === a) o();else {
+          var i = e.options.detectBeforeLock;
+          i && i(e, t, r), e.$lockStatus ? e.options.routerErrorEach({
+            type: 2,
+            msg: "当前页面正在处于跳转状态，请稍后再进行跳转....",
+            NAVTYPE: r,
+            uniActualData: n
+          }, e) : o();
+        }
+      }, t.assertParentChild = function (e, t) {
+        for (; null != t.$parent;) {
+          var r = t.$parent.$mp;
+          if (r.page && r.page.is === e) return !0;
+          t = t.$parent;
+        }
+        try {
+          if (t.$mp.page.is === e || t.$mp.page.route === e) return !0;
+        } catch (e) {
+          return !1;
+        }
+        return !1;
+      }, t.resolveAbsolutePath = function (e, t) {
+        var r = /^\/?([^\?\s]+)(\?.+)?$/,
+          o = e.trim();
+        if (!r.test(o)) throw new Error("【" + e + "】 路径错误，请提供完整的路径(10001)。");
+        var n = o.match(r);
+        if (null == n) throw new Error("【" + e + "】 路径错误，请提供完整的路径(10002)。");
+        var a = n[2] || "";
+        if (/^\.\/[^\.]+/.test(o)) return (t.currentRoute.path + e).replace(/[^\/]+\.\//, "");
+        var i = n[1].replace(/\//g, "\\/").replace(/\.\./g, "[^\\/]+").replace(/\./g, "\\."),
+          u = new RegExp("^\\/" + i + "$"),
+          l = t.options.routes.filter(function (e) {
+            return u.test(e.path);
+          });
+        if (1 !== l.length) throw new Error("【" + e + "】 路径错误，尝试转成绝对路径失败，请手动转成绝对路径(10003)。");
+        return l[0].path + a;
+      }, t.deepDecodeQuery = function e(t) {
+        for (var r = "[object Array]" === v(t) ? [] : {}, o = Object.keys(t), n = 0; n < o.length; n++) {
+          var a = o[n],
+            i = t[a];
+          if ("string" == typeof i) try {
+            var u = JSON.parse(decodeURIComponent(i));
+            "object" != _typeof(u) && (u = i), r[a] = u;
+          } catch (e) {
+            try {
+              r[a] = decodeURIComponent(i);
+            } catch (e) {
+              r[a] = i;
+            }
+          } else if ("object" == _typeof(i)) {
+            var l = e(i);
+            r[a] = l;
+          } else r[a] = i;
+        }
+        return r;
+      };
+    },
+    883: function _(e, t) {
+      "use strict";
+
+      function r(e, t, r, o) {
+        if (void 0 === o && (o = !1), !o) {
+          var n = "[object Object]" === t.toString();
+          if (!1 === t) return !1;
+          if (n && !1 === t[e]) return !1;
+        }
+        return console[e](r), !0;
+      }
+      Object.defineProperty(t, "__esModule", {
+        value: !0
+      }), t.warnLock = t.log = t.warn = t.err = t.isLog = void 0, t.isLog = r, t.err = function (e, t, o) {
+        r("error", t.options.debugger, e, o);
+      }, t.warn = function (e, t, o) {
+        r("warn", t.options.debugger, e, o);
+      }, t.log = function (e, t, o) {
+        r("log", t.options.debugger, e, o);
+      }, t.warnLock = function (e) {
+        console.warn(e);
+      };
+    },
+    607: function _(e, t, r) {
+      "use strict";
+
+      var o = this && this.__createBinding || (Object.create ? function (e, t, r, o) {
+          void 0 === o && (o = r), Object.defineProperty(e, o, {
+            enumerable: !0,
+            get: function get() {
+              return t[r];
+            }
+          });
+        } : function (e, t, r, o) {
+          void 0 === o && (o = r), e[o] = t[r];
+        }),
+        n = this && this.__exportStar || function (e, t) {
+          for (var r in e) {
+            "default" === r || Object.prototype.hasOwnProperty.call(t, r) || o(t, e, r);
+          }
+        };
+      Object.defineProperty(t, "__esModule", {
+        value: !0
+      }), t.createRouter = t.RouterMount = t.runtimeQuit = void 0, n(r(366), t), n(r(309), t), n(r(789), t);
+      var a = r(814);
+      Object.defineProperty(t, "runtimeQuit", {
+        enumerable: !0,
+        get: function get() {
+          return a.runtimeQuit;
+        }
+      });
+      var i = r(963);
+      Object.defineProperty(t, "RouterMount", {
+        enumerable: !0,
+        get: function get() {
+          return i.RouterMount;
+        }
+      }), Object.defineProperty(t, "createRouter", {
+        enumerable: !0,
+        get: function get() {
+          return i.createRouter;
+        }
+      });
+      var u = "2.0.8-BETA.4";
+      /[A-Z]/g.test(u) && console.warn("【" + "UNI-SIMPLE-ROUTER".toLocaleLowerCase() + " 提示】：当前版本 " + u.toLocaleLowerCase() + " 此版本为测试版。有BUG请退回正式版，线上正式版本：2.0.7");
+    },
+    366: function _(e, t) {
+      "use strict";
+
+      var r, o, n;
+      Object.defineProperty(t, "__esModule", {
+        value: !0
+      }), t.rewriteMethodToggle = t.navtypeToggle = t.hookToggle = void 0, (n = t.hookToggle || (t.hookToggle = {})).beforeHooks = "beforeEach", n.afterHooks = "afterEach", n.enterHooks = "beforeEnter", (o = t.navtypeToggle || (t.navtypeToggle = {})).push = "navigateTo", o.replace = "redirectTo", o.replaceAll = "reLaunch", o.pushTab = "switchTab", o.back = "navigateBack", (r = t.rewriteMethodToggle || (t.rewriteMethodToggle = {})).navigateTo = "push", r.navigate = "push", r.redirectTo = "replace", r.reLaunch = "replaceAll", r.switchTab = "pushTab", r.navigateBack = "back";
+    },
+    309: function _(e, t) {
+      "use strict";
+
+      Object.defineProperty(t, "__esModule", {
+        value: !0
+      });
+    },
+    925: function _(e, t, r) {
+      "use strict";
+
+      Object.defineProperty(t, "__esModule", {
+        value: !0
+      }), t.beforeProxyHook = void 0;
+      var o = r(789),
+        n = r(883);
+      t.beforeProxyHook = function (e, t) {
+        var r = e.$options,
+          a = t.options.beforeProxyHooks;
+        if (null == r) return !1;
+        if (null == a) return !1;
+        for (var i = Object.keys(a), u = function u(e) {
+            var u = i[e],
+              l = r[u];
+            if (l) for (var c = a[u], s = function s(e) {
+                if (l[e].toString().includes("UNI-SIMPLE-ROUTER")) return "continue";
+                var r = l.splice(e, 1, function () {
+                  for (var e = this, n = [], a = 0; a < arguments.length; a++) {
+                    n[a] = arguments[a];
+                  }
+                  var i = "UNI-SIMPLE-ROUTER";
+                  o.voidFun(i), c ? c.call(this, n, function (t) {
+                    r.apply(e, t);
+                  }, t) : r.apply(this, n);
+                })[0];
+              }, p = 0; p < l.length; p++) {
+              s(p);
+            } else n.warn("beforeProxyHooks ===> 当前组件不适合" + u + "，或者 hook: " + u + " 不存在，已为你规避处理，可以忽略。", t);
+          }, l = 0; l < i.length; l++) {
+          u(l);
+        }
+        return !0;
+      };
+    },
+    169: function _(e, t, r) {
+      "use strict";
+
+      var o = this && this.__rest || function (e, t) {
+        var r = {};
+        for (var o in e) {
+          Object.prototype.hasOwnProperty.call(e, o) && t.indexOf(o) < 0 && (r[o] = e[o]);
+        }
+        if (null != e && "function" == typeof Object.getOwnPropertySymbols) {
+          var n = 0;
+          for (o = Object.getOwnPropertySymbols(e); n < o.length; n++) {
+            t.indexOf(o[n]) < 0 && Object.prototype.propertyIsEnumerable.call(e, o[n]) && (r[o[n]] = e[o[n]]);
+          }
+        }
+        return r;
+      };
+      Object.defineProperty(t, "__esModule", {
+        value: !0
+      }), t.loopCallHook = t.transitionTo = t.onTriggerEachHook = t.callHook = t.callBeforeRouteLeave = t.HOOKLIST = t.ERRORHOOK = void 0;
+      var n = r(789),
+        a = r(890),
+        i = r(147),
+        u = r(369),
+        l = r(814);
+      function c(e, t, r, o) {
+        var a,
+          i = n.getUniCachePage(0);
+        if (Object.keys(i).length > 0) {
+          var u = void 0;
+          switch ("h5" === e.options.platform ? u = i.$options.beforeRouteLeave : null != i.$vm && (u = i.$vm.$options.beforeRouteLeave), n.getDataType(u)) {
+            case "[object Array]":
+              a = (a = u[0]).bind(i);
+              break;
+            case "[object Function]":
+              a = u.bind(i.$vm);
+          }
+        }
+        return s(a, t, r, e, o);
+      }
+      function s(e, t, r, o, n, a) {
+        void 0 === a && (a = !0), null != e && e instanceof Function ? !0 === a ? e(t, r, n, o, !1) : (e(t, r, function () {}, o, !1), n()) : n();
+      }
+      function p(e, t, r, o, a, i) {
+        var u = n.forMatNextToFrom(e, t, r),
+          l = u.matTo,
+          c = u.matFrom;
+        "h5" === e.options.platform ? f(a, 0, i, e, l, c, o) : f(a.slice(0, 4), 0, function () {
+          i(function () {
+            f(a.slice(4), 0, n.voidFun, e, l, c, o);
+          });
+        }, e, l, c, o);
+      }
+      function f(e, r, i, u, c, s, p) {
+        var h = n.routesForMapRoute(u, c.path, ["finallyPathMap", "pathMap"]);
+        if (e.length - 1 < r) return i();
+        var v = e[r],
+          y = t.ERRORHOOK[0];
+        v(u, c, s, h, function (t) {
+          if ("app-plus" === u.options.platform && (!1 !== t && "string" != typeof t && "object" != _typeof(t) || l.tabIndexSelect(c, s)), !1 === t) "h5" === u.options.platform && i(!1), y({
+            type: 0,
+            msg: "管道函数传递 false 导航被终止!",
+            matTo: c,
+            matFrom: s,
+            nextTo: t
+          }, u);else if ("string" == typeof t || "object" == _typeof(t)) {
+            var n = p,
+              h = t;
+            if ("object" == _typeof(t)) {
+              var v = t.NAVTYPE;
+              h = o(t, ["NAVTYPE"]), null != v && (n = v);
+            }
+            a.navjump(h, u, n, {
+              from: s,
+              next: i
+            });
+          } else null == t ? (r++, f(e, r, i, u, c, s, p)) : y({
+            type: 1,
+            msg: "管道函数传递未知类型，无法被识别。导航被终止！",
+            matTo: c,
+            matFrom: s,
+            nextTo: t
+          }, u);
+        });
+      }
+      t.ERRORHOOK = [function (e, t) {
+        return t.lifeCycle.routerErrorHooks[0](e, t);
+      }], t.HOOKLIST = [function (e, t, r, o, n) {
+        return s(e.lifeCycle.routerBeforeHooks[0], t, r, e, n);
+      }, function (e, t, r, o, n) {
+        return c(e, t, r, n);
+      }, function (e, t, r, o, n) {
+        return s(e.lifeCycle.beforeHooks[0], t, r, e, n);
+      }, function (e, t, r, o, n) {
+        return s(o.beforeEnter, t, r, e, n);
+      }, function (e, t, r, o, n) {
+        return s(e.lifeCycle.afterHooks[0], t, r, e, n, !1);
+      }, function (e, t, r, o, n) {
+        return e.$lockStatus = !1, "h5" === e.options.platform && (i.proxyH5Mount(e), u.addKeepAliveInclude(e)), e.runId++, s(e.lifeCycle.routerAfterHooks[0], t, r, e, n, !1);
+      }], t.callBeforeRouteLeave = c, t.callHook = s, t.onTriggerEachHook = function (e, r, o, n, a) {
+        var i = [];
+        switch (n) {
+          case "beforeEach":
+            i = t.HOOKLIST.slice(0, 3);
+            break;
+          case "afterEach":
+            i = t.HOOKLIST.slice(4);
+            break;
+          case "beforeEnter":
+            i = t.HOOKLIST.slice(3, 4);
+        }
+        p(o, e, r, "push", i, a);
+      }, t.transitionTo = p, t.loopCallHook = f;
+    },
+    890: function _(e, t, r) {
+      "use strict";
+
+      var o = this && this.__assign || function () {
+          return (o = Object.assign || function (e) {
+            for (var t, r = 1, o = arguments.length; r < o; r++) {
+              for (var n in t = arguments[r]) {
+                Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+              }
+            }
+            return e;
+          }).apply(this, arguments);
+        },
+        n = this && this.__rest || function (e, t) {
+          var r = {};
+          for (var o in e) {
+            Object.prototype.hasOwnProperty.call(e, o) && t.indexOf(o) < 0 && (r[o] = e[o]);
+          }
+          if (null != e && "function" == typeof Object.getOwnPropertySymbols) {
+            var n = 0;
+            for (o = Object.getOwnPropertySymbols(e); n < o.length; n++) {
+              t.indexOf(o[n]) < 0 && Object.prototype.propertyIsEnumerable.call(e, o[n]) && (r[o[n]] = e[o[n]]);
+            }
+          }
+          return r;
+        };
+      Object.defineProperty(t, "__esModule", {
+        value: !0
+      }), t.createRoute = t.forceGuardEach = t.backOptionsBuild = t.navjump = t.lockNavjump = void 0;
+      var a = r(366),
+        i = r(99),
+        u = r(789),
+        l = r(169),
+        c = r(845),
+        s = r(169);
+      function p(e, t, r, o, n) {
+        u.lockDetectWarn(t, e, r, function () {
+          "h5" !== t.options.platform && (t.$lockStatus = !0), f(e, t, r, void 0, o, n);
+        }, n);
+      }
+      function f(e, t, r, n, p, f, v) {
+        if (void 0 === v && (v = !0), "back" === r) {
+          var y = 1;
+          if ("string" == typeof e ? y = +e : (y = e.delta || 1, f = o(o({}, f || {}), e)), "h5" === t.options.platform) {
+            t.$route.go(-y);
+            var g = (f || {
+                success: u.voidFun
+              }).success || u.voidFun,
+              d = (f || {
+                complete: u.voidFun
+              }).complete || u.voidFun;
+            return g({
+              errMsg: "navigateBack:ok"
+            }), void d({
+              errMsg: "navigateBack:ok"
+            });
+          }
+          e = h(t, y, f);
+        }
+        var m = i.queryPageToMap(e, t).rule;
+        m.type = a.navtypeToggle[r];
+        var b = u.paramsToQuery(t, m),
+          P = i.resolveQuery(b, t);
+        if ("h5" === t.options.platform) {
+          if ("push" !== r && (r = "replace"), null != n) n.next(o({
+            replace: "push" !== r
+          }, P));else if ("push" === r && Reflect.has(P, "events")) {
+            if (Reflect.has(P, "name")) throw new Error("在h5端上使用 'push'、'navigateTo' 跳转时，如果包含 events 不允许使用 name 跳转，因为 name 实现了动态路由。请更换为 path 或者 url 跳转！");
+            uni.navigateTo(P, !0, u.voidFun, p);
+          } else t.$route[r](P, P.success || u.voidFun, P.fail || u.voidFun);
+        } else {
+          var O = {
+            path: ""
+          };
+          if (null == n) {
+            var k = u.routesForMapRoute(t, P.path, ["finallyPathMap", "pathMap"]);
+            k = u.notRouteTo404(t, k, P, r), P = o(o(o(o({}, k), {
+              params: {}
+            }), P), {
+              path: k.path
+            }), O = c.createToFrom(P, t);
+          } else O = n.from;
+          if (c.createFullPath(P, O), !1 === v) return P;
+          l.transitionTo(t, P, O, r, s.HOOKLIST, function (e) {
+            uni[a.navtypeToggle[r]](P, !0, e, p);
+          });
+        }
+      }
+      function h(e, t, r) {
+        void 0 === r && (r = {});
+        var n = v(e, t, void 0, o({
+            NAVTYPE: "back"
+          }, r)),
+          a = o(o({}, r), {
+            path: n.path,
+            query: n.query,
+            delta: t
+          });
+        if ("[object Object]" === u.getDataType(r)) {
+          var i = r,
+            l = i.animationDuration,
+            c = i.animationType;
+          null != l && (a.animationDuration = l), null != c && (a.animationType = c);
+          var s = r.from;
+          null != s && (a.BACKTYPE = s);
+        }
+        return a;
+      }
+      function v(e, t, r, l) {
+        void 0 === t && (t = 0), void 0 === l && (l = {});
+        var c = {
+          name: "",
+          meta: {},
+          path: "",
+          fullPath: "",
+          NAVTYPE: "",
+          query: {},
+          params: {},
+          BACKTYPE: (r || {
+            BACKTYPE: ""
+          }).BACKTYPE || ""
+        };
+        if (19970806 === t) return c;
+        if ("h5" === e.options.platform) {
+          var s = {
+            path: ""
+          };
+          s = null != r ? r : e.$route.currentRoute;
+          var p = u.copyData(s.params);
+          delete p.__id__;
+          var f = i.parseQuery(o(o({}, p), u.copyData(s.query)), e);
+          s = o(o({}, s), {
+            query: f
+          }), c.path = s.path, c.fullPath = s.fullPath || "", c.query = u.deepDecodeQuery(s.query || {}), c.NAVTYPE = a.rewriteMethodToggle[s.type || "reLaunch"];
+        } else {
+          var h = {};
+          if (null != r) h = o(o({}, r), {
+            openType: r.type
+          });else {
+            var v = u.getUniCachePage(t);
+            if (0 === Object.keys(v).length) {
+              var y = l.NAVTYPE,
+                g = n(l, ["NAVTYPE"]),
+                d = "不存在的页面栈，请确保有足够的页面可用，当前 level:" + t;
+              throw e.options.routerErrorEach({
+                type: 3,
+                msg: d,
+                NAVTYPE: y,
+                level: t,
+                uniActualData: g
+              }, e), new Error(d);
+            }
+            var m = v.options || {};
+            h = o(o({}, v.$page || {}), {
+              query: u.deepDecodeQuery(m),
+              fullPath: decodeURIComponent((v.$page || {}).fullPath || "/" + v.route)
+            }), "app-plus" !== e.options.platform && (h.path = "/" + v.route);
+          }
+          var b = h.openType;
+          c.query = h.query, c.path = h.path, c.fullPath = h.fullPath, c.NAVTYPE = a.rewriteMethodToggle[b || "reLaunch"];
+        }
+        var P = u.routesForMapRoute(e, c.path, ["finallyPathMap", "pathMap"]),
+          O = o(o({}, c), P);
+        return O.query = i.parseQuery(O.query, e), O;
+      }
+      t.lockNavjump = p, t.navjump = f, t.backOptionsBuild = h, t.forceGuardEach = function (e, t, r) {
+        if (void 0 === t && (t = "replaceAll"), void 0 === r && (r = !1), "h5" === e.options.platform) throw new Error("在h5端上使用：forceGuardEach 是无意义的，目前 forceGuardEach 仅支持在非h5端上使用");
+        var o = u.getUniCachePage(0);
+        0 === Object.keys(o).length && e.options.routerErrorEach({
+          type: 3,
+          NAVTYPE: t,
+          uniActualData: {},
+          level: 0,
+          msg: "不存在的页面栈，请确保有足够的页面可用，当前 level:0"
+        }, e);
+        var n = o,
+          a = n.route,
+          i = n.options;
+        p({
+          path: "/" + a,
+          query: u.deepDecodeQuery(i || {})
+        }, e, t, r);
+      }, t.createRoute = v;
+    },
+    845: function _(e, t, r) {
+      "use strict";
+
+      Object.defineProperty(t, "__esModule", {
+        value: !0
+      }), t.resetPageHook = t.resetAndCallPageHook = t.proxyPageHook = t.createFullPath = t.createToFrom = void 0;
+      var o = r(282),
+        n = r(789),
+        a = r(890),
+        i = r(99);
+      function u(e) {
+        for (var t = e.proxyHookDeps, r = 0, o = Object.entries(t.hooks); r < o.length; r++) {
+          (0, o[r][1].resetHook)();
+        }
+      }
+      t.createToFrom = function (e, t) {
+        var r = n.getUniCachePage(0);
+        return "[object Array]" === n.getDataType(r) ? n.deepClone(e) : a.createRoute(t);
+      }, t.createFullPath = function (e, t) {
+        if (null == e.fullPath) {
+          var r = i.stringifyQuery(e.query);
+          e.fullPath = e.path + r;
+        }
+        null == t.fullPath && (r = i.stringifyQuery(t.query), t.fullPath = t.path + r);
+      }, t.proxyPageHook = function (e, t, r) {
+        for (var n = t.proxyHookDeps, a = e.$options, i = function i(_i) {
+            var u = o.proxyHookName[_i],
+              l = a[u];
+            if (l) for (var c = function c(o) {
+                if (l[o].toString().includes("UNI-SIMPLE-ROUTER")) return "continue";
+                var a = Object.keys(n.hooks).length + 1,
+                  i = function i() {
+                    for (var e = [], t = 0; t < arguments.length; t++) {
+                      e[t] = arguments[t];
+                    }
+                    n.resetIndex.push(a), n.options[a] = e;
+                  },
+                  u = l.splice(o, 1, i)[0];
+                n.hooks[a] = {
+                  proxyHook: i,
+                  callHook: function callHook(o) {
+                    if (t.enterPath.replace(/^\//, "") === o.replace(/^\//, "") || "app" === r) {
+                      var i = n.options[a];
+                      u.apply(e, i);
+                    }
+                  },
+                  resetHook: function resetHook() {
+                    l.splice(o, 1, u);
+                  }
+                };
+              }, s = 0; s < l.length; s++) {
+              c(s);
+            }
+          }, u = 0; u < o.proxyHookName.length; u++) {
+          i(u);
+        }
+      }, t.resetAndCallPageHook = function (e, t, r) {
+        void 0 === r && (r = !0);
+        var o = t.trim().match(/^(\/?[^\?\s]+)(\?[\s\S]*$)?$/);
+        if (null == o) throw new Error("还原hook失败。请检查 【" + t + "】 路径是否正确。");
+        t = o[1];
+        for (var n = e.proxyHookDeps, a = n.resetIndex, i = 0; i < a.length; i++) {
+          var l = a[i];
+          (0, n.hooks[l].callHook)(t);
+        }
+        r && u(e);
+      }, t.resetPageHook = u;
+    },
+    99: function _(e, t, r) {
+      "use strict";
+
+      var o = this && this.__assign || function () {
+        return (o = Object.assign || function (e) {
+          for (var t, r = 1, o = arguments.length; r < o; r++) {
+            for (var n in t = arguments[r]) {
+              Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+            }
+          }
+          return e;
+        }).apply(this, arguments);
+      };
+      Object.defineProperty(t, "__esModule", {
+        value: !0
+      }), t.stringifyQuery = t.parseQuery = t.resolveQuery = t.queryPageToMap = void 0;
+      var n = r(789),
+        a = r(169),
+        i = r(883),
+        u = /[!'()*]/g,
+        l = function l(e) {
+          return "%" + e.charCodeAt(0).toString(16);
+        },
+        c = /%2C/g,
+        s = function s(e) {
+          return encodeURIComponent(e).replace(u, l).replace(c, ",");
+        };
+      t.queryPageToMap = function (e, t) {
+        var r = {},
+          i = "",
+          u = e.success,
+          l = e.fail;
+        if ("[object Object]" === n.getDataType(e)) {
+          var c = e;
+          if (null != c.path) {
+            var s = n.urlToJson(c.path),
+              p = s.path,
+              f = s.query;
+            i = n.routesForMapRoute(t, p, ["finallyPathList", "pathMap"]), r = o(o({}, f), e.query || {}), c.path = p, c.query = r, delete e.params;
+          } else null != c.name ? null == (i = t.routesMap.nameMap[c.name]) ? i = n.getWildcardRule(t, {
+            type: 2,
+            msg: "命名路由为：" + c.name + " 的路由，无法在路由表中找到！",
+            toRule: e
+          }) : (r = e.params || {}, delete e.query) : i = n.getWildcardRule(t, {
+            type: 2,
+            msg: e + " 解析失败，请检测当前路由表下是否有包含。",
+            toRule: e
+          });
+        } else e = n.urlToJson(e), i = n.routesForMapRoute(t, e.path, ["finallyPathList", "pathMap"]), r = e.query;
+        if ("h5" === t.options.platform) {
+          n.getRoutePath(i, t).finallyPath.includes(":") && null == e.name && a.ERRORHOOK[0]({
+            type: 2,
+            msg: "当有设置 alias或者aliasPath 为动态路由时，不允许使用 path 跳转。请使用 name 跳转！",
+            route: i
+          }, t);
+          var h = e.complete,
+            v = e.success,
+            y = e.fail;
+          if ("[object Function]" === n.getDataType(h)) {
+            var g = function g(e, t) {
+              "[object Function]" === n.getDataType(t) && t.apply(this, e), h.apply(this, e);
+            };
+            u = function u() {
+              for (var e = [], t = 0; t < arguments.length; t++) {
+                e[t] = arguments[t];
+              }
+              g.call(this, e, v);
+            }, l = function l() {
+              for (var e = [], t = 0; t < arguments.length; t++) {
+                e[t] = arguments[t];
+              }
+              g.call(this, e, y);
+            };
+          }
+        }
+        var d = e;
+        return "[object Function]" === n.getDataType(d.success) && (d.success = u), "[object Function]" === n.getDataType(d.fail) && (d.fail = l), {
+          rule: d,
+          route: i,
+          query: r
+        };
+      }, t.resolveQuery = function (e, t) {
+        var r = "query";
+        null != e.params && (r = "params"), null != e.query && (r = "query");
+        var o = n.copyData(e[r] || {}),
+          a = t.options.resolveQuery;
+        if (a) {
+          var u = a(o);
+          "[object Object]" !== n.getDataType(u) ? i.warn("请按格式返回参数： resolveQuery?:(jsonQuery:{[propName: string]: any;})=>{[propName: string]: any;}", t) : e[r] = u;
+        } else {
+          if (!n.assertDeepObject(o)) return e;
+          var l = JSON.stringify(o);
+          e[r] = {
+            query: l
+          };
+        }
+        return e;
+      }, t.parseQuery = function (e, t) {
+        var r = t.options.parseQuery;
+        if (r) e = r(n.copyData(e)), "[object Object]" !== n.getDataType(e) && i.warn("请按格式返回参数： parseQuery?:(jsonQuery:{[propName: string]: any;})=>{[propName: string]: any;}", t);else if (Reflect.get(e, "query")) {
+          var o = Reflect.get(e, "query");
+          if ("string" == typeof o) try {
+            o = JSON.parse(o);
+          } catch (e) {
+            i.warn("尝试解析深度对象失败，按原样输出。" + e, t);
+          }
+          if ("object" == _typeof(o)) return n.deepDecodeQuery(o);
+        }
+        return e;
+      }, t.stringifyQuery = function (e) {
+        var t = e ? Object.keys(e).map(function (t) {
+          var r = e[t];
+          if (void 0 === r) return "";
+          if (null === r) return s(t);
+          if (Array.isArray(r)) {
+            var o = [];
+            return r.forEach(function (e) {
+              void 0 !== e && (null === e ? o.push(s(t)) : o.push(s(t) + "=" + s(e)));
+            }), o.join("&");
+          }
+          return s(t) + "=" + s(r);
+        }).filter(function (e) {
+          return e.length > 0;
+        }).join("&") : null;
+        return t ? "?" + t : "";
+      };
+    },
+    314: function _(e, t, r) {
+      "use strict";
+
+      var o = this && this.__awaiter || function (e, t, r, o) {
+          return new (r || (r = Promise))(function (n, a) {
+            function i(e) {
+              try {
+                l(o.next(e));
+              } catch (e) {
+                a(e);
+              }
+            }
+            function u(e) {
+              try {
+                l(o.throw(e));
+              } catch (e) {
+                a(e);
+              }
+            }
+            function l(e) {
+              var t;
+              e.done ? n(e.value) : (t = e.value, t instanceof r ? t : new r(function (e) {
+                e(t);
+              })).then(i, u);
+            }
+            l((o = o.apply(e, t || [])).next());
+          });
+        },
+        n = this && this.__generator || function (e, t) {
+          var r,
+            o,
+            n,
+            a,
+            i = {
+              label: 0,
+              sent: function sent() {
+                if (1 & n[0]) throw n[1];
+                return n[1];
+              },
+              trys: [],
+              ops: []
+            };
+          return a = {
+            next: u(0),
+            throw: u(1),
+            return: u(2)
+          }, "function" == typeof Symbol && (a[Symbol.iterator] = function () {
+            return this;
+          }), a;
+          function u(a) {
+            return function (u) {
+              return function (a) {
+                if (r) throw new TypeError("Generator is already executing.");
+                for (; i;) {
+                  try {
+                    if (r = 1, o && (n = 2 & a[0] ? o.return : a[0] ? o.throw || ((n = o.return) && n.call(o), 0) : o.next) && !(n = n.call(o, a[1])).done) return n;
+                    switch (o = 0, n && (a = [2 & a[0], n.value]), a[0]) {
+                      case 0:
+                      case 1:
+                        n = a;
+                        break;
+                      case 4:
+                        return i.label++, {
+                          value: a[1],
+                          done: !1
+                        };
+                      case 5:
+                        i.label++, o = a[1], a = [0];
+                        continue;
+                      case 7:
+                        a = i.ops.pop(), i.trys.pop();
+                        continue;
+                      default:
+                        if (!((n = (n = i.trys).length > 0 && n[n.length - 1]) || 6 !== a[0] && 2 !== a[0])) {
+                          i = 0;
+                          continue;
+                        }
+                        if (3 === a[0] && (!n || a[1] > n[0] && a[1] < n[3])) {
+                          i.label = a[1];
+                          break;
+                        }
+                        if (6 === a[0] && i.label < n[1]) {
+                          i.label = n[1], n = a;
+                          break;
+                        }
+                        if (n && i.label < n[2]) {
+                          i.label = n[2], i.ops.push(a);
+                          break;
+                        }
+                        n[2] && i.ops.pop(), i.trys.pop();
+                        continue;
+                    }
+                    a = t.call(e, i);
+                  } catch (e) {
+                    a = [6, e], o = 0;
+                  } finally {
+                    r = n = 0;
+                  }
+                }
+                if (5 & a[0]) throw a[1];
+                return {
+                  value: a[0] ? a[1] : void 0,
+                  done: !0
+                };
+              }([a, u]);
+            };
+          }
+        };
+      Object.defineProperty(t, "__esModule", {
+        value: !0
+      }), t.rewriteMethod = void 0;
+      var a = r(366),
+        i = r(789),
+        u = r(883),
+        l = r(809),
+        c = r(814),
+        s = ["navigateTo", "redirectTo", "reLaunch", "switchTab", "navigateBack"],
+        p = {
+          navigateTo: function navigateTo() {},
+          redirectTo: function redirectTo() {},
+          reLaunch: function reLaunch() {},
+          switchTab: function switchTab() {},
+          navigateBack: function navigateBack() {}
+        };
+      t.rewriteMethod = function (e) {
+        !1 === e.options.keepUniOriginNav && s.forEach(function (t) {
+          var r = uni[t];
+          p[t] = r, uni[t] = function (s, f, h, v) {
+            return void 0 === f && (f = !1), o(this, void 0, void 0, function () {
+              return n(this, function (o) {
+                switch (o.label) {
+                  case 0:
+                    return f ? "app-plus" !== e.options.platform ? [3, 2] : [4, c.HomeNvueSwitchTab(e, s, p.reLaunch)] : [3, 3];
+                  case 1:
+                    o.sent(), o.label = 2;
+                  case 2:
+                    return l.uniOriginJump(e, r, t, s, h, v), [3, 4];
+                  case 3:
+                    "app-plus" === e.options.platform && 0 === Object.keys(e.appMain).length && (e.appMain = {
+                      NAVTYPE: t,
+                      path: s.url
+                    }), function (e, t, r) {
+                      if ("app-plus" === r.options.platform) {
+                        var o = null;
+                        e && (o = e.openType), null != o && "appLaunch" === o && (t = "reLaunch");
+                      }
+                      if ("reLaunch" === t && '{"url":"/"}' === JSON.stringify(e) && (u.warn("uni-app 原生方法：reLaunch({url:'/'}) 默认被重写啦！你可以使用 this.$Router.replaceAll() 或者 uni.reLaunch({url:'/?xxx=xxx'})", r), t = "navigateBack", e = {
+                        from: "backbutton"
+                      }), "navigateBack" === t) {
+                        var n = 1;
+                        null == e && (e = {
+                          delta: 1
+                        }), "[object Number]" === i.getDataType(e.delta) && (n = e.delta), r.back(n, e);
+                      } else {
+                        var l = a.rewriteMethodToggle[t],
+                          c = e.url;
+                        if (!c.startsWith("/")) {
+                          var s = i.resolveAbsolutePath(c, r);
+                          c = s, e.url = s;
+                        }
+                        if ("switchTab" === t) {
+                          var p = i.routesForMapRoute(r, c, ["pathMap", "finallyPathList"]),
+                            f = i.getRoutePath(p, r).finallyPath;
+                          if ("[object Array]" === i.getDataType(f) && u.warn("uni-app 原生方法跳转路径为：" + c + "。此路为是tab页面时，不允许设置 alias 为数组的情况，并且不能为动态路由！当然你可以通过通配符*解决！", r), "*" === f && u.warn("uni-app 原生方法跳转路径为：" + c + "。在路由表中找不到相关路由表！当然你可以通过通配符*解决！", r), "h5" === r.options.platform) {
+                            var h = e.success;
+                            e.success = function () {
+                              for (var t = [], r = 0; r < arguments.length; r++) {
+                                t[r] = arguments[r];
+                              }
+                              null == h || h.apply(null, t), i.timeOut(150).then(function () {
+                                var t = e.detail || {};
+                                if (Object.keys(t).length > 0 && Reflect.has(t, "index")) {
+                                  var r = i.getUniCachePage(0);
+                                  if (0 === Object.keys(r).length) return !1;
+                                  var o = r,
+                                    n = o.$options.onTabItemTap;
+                                  if (n) for (var a = 0; a < n.length; a++) {
+                                    n[a].call(o, t);
+                                  }
+                                }
+                              });
+                            };
+                          }
+                          c = f;
+                        }
+                        var v = e,
+                          y = v.events,
+                          g = v.success,
+                          d = v.fail,
+                          m = v.complete,
+                          b = v.animationType,
+                          P = {
+                            path: c,
+                            events: y,
+                            success: g,
+                            fail: d,
+                            complete: m,
+                            animationDuration: v.animationDuration,
+                            animationType: b
+                          };
+                        r[l](i.notDeepClearNull(P));
+                      }
+                    }(s, t, e), o.label = 4;
+                  case 4:
+                    return [2];
+                }
+              });
+            });
+          };
+        });
+      };
+    },
+    963: function _(e, t, r) {
+      "use strict";
+
+      var o = this && this.__assign || function () {
+        return (o = Object.assign || function (e) {
+          for (var t, r = 1, o = arguments.length; r < o; r++) {
+            for (var n in t = arguments[r]) {
+              Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+            }
+          }
+          return e;
+        }).apply(this, arguments);
+      };
+      Object.defineProperty(t, "__esModule", {
+        value: !0
+      }), t.createRouter = t.RouterMount = void 0;
+      var n = r(282),
+        a = r(789),
+        i = r(662),
+        u = r(460),
+        l = r(890),
+        c = r(314),
+        s = function s() {},
+        p = new Promise(function (e) {
+          return s = e;
+        });
+      t.createRouter = function (e) {
+        var t = a.assertNewOptions(e),
+          r = {
+            options: t,
+            mount: [],
+            runId: 0,
+            Vue: null,
+            proxyHookDeps: n.proxyHookDeps,
+            appMain: {},
+            enterPath: "",
+            $route: null,
+            $lockStatus: !1,
+            routesMap: {},
+            lifeCycle: i.registerRouterHooks(n.lifeCycle, t),
+            push: function push(e) {
+              l.lockNavjump(e, r, "push");
+            },
+            replace: function replace(e) {
+              l.lockNavjump(e, r, "replace");
+            },
+            replaceAll: function replaceAll(e) {
+              l.lockNavjump(e, r, "replaceAll");
+            },
+            pushTab: function pushTab(e) {
+              l.lockNavjump(e, r, "pushTab");
+            },
+            back: function back(e, t) {
+              void 0 === e && (e = 1), "[object Object]" !== a.getDataType(t) ? t = {
+                from: "navigateBack"
+              } : Reflect.has(t, "from") || (t = o(o({}, t), {
+                from: "navigateBack"
+              })), l.lockNavjump(e + "", r, "back", void 0, t);
+            },
+            forceGuardEach: function forceGuardEach(e, t) {
+              l.forceGuardEach(r, e, t);
+            },
+            beforeEach: function beforeEach(e) {
+              i.registerEachHooks(r, "beforeHooks", e);
+            },
+            afterEach: function afterEach(e) {
+              i.registerEachHooks(r, "afterHooks", e);
+            },
+            install: function install(e) {
+              r.Vue = e, c.rewriteMethod(this), u.initMixins(e, this), Object.defineProperty(e.prototype, "$Router", {
+                get: function get() {
+                  var e = r;
+                  return Object.defineProperty(this, "$Router", {
+                    value: e,
+                    writable: !1,
+                    configurable: !1,
+                    enumerable: !1
+                  }), Object.seal(e);
+                }
+              }), Object.defineProperty(e.prototype, "$Route", {
+                get: function get() {
+                  return l.createRoute(r);
+                }
+              }), Object.defineProperty(e.prototype, "$AppReady", {
+                get: function get() {
+                  return "h5" === r.options.platform ? Promise.resolve() : p;
+                },
+                set: function set(e) {
+                  !0 === e && s();
+                }
+              });
+            }
+          };
+        return a.def(r, "currentRoute", function () {
+          return l.createRoute(r);
+        }), r.beforeEach(function (e, t, r) {
+          return r();
+        }), r.afterEach(function () {}), r;
+      }, t.RouterMount = function (e, t, r) {
+        if (void 0 === r && (r = "#app"), "[object Array]" !== a.getDataType(t.mount)) throw new Error("挂载路由失败，router.app 应该为数组类型。当前类型：" + _typeof(t.mount));
+        if (t.mount.push({
+          app: e,
+          el: r
+        }), "h5" === t.options.platform) {
+          var o = t.$route;
+          o.replace({
+            path: o.currentRoute.fullPath
+          });
+        }
+      };
+    },
+    809: function _(e, t, r) {
+      "use strict";
+
+      var o = this && this.__assign || function () {
+          return (o = Object.assign || function (e) {
+            for (var t, r = 1, o = arguments.length; r < o; r++) {
+              for (var n in t = arguments[r]) {
+                Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
+              }
+            }
+            return e;
+          }).apply(this, arguments);
+        },
+        n = this && this.__awaiter || function (e, t, r, o) {
+          return new (r || (r = Promise))(function (n, a) {
+            function i(e) {
+              try {
+                l(o.next(e));
+              } catch (e) {
+                a(e);
+              }
+            }
+            function u(e) {
+              try {
+                l(o.throw(e));
+              } catch (e) {
+                a(e);
+              }
+            }
+            function l(e) {
+              var t;
+              e.done ? n(e.value) : (t = e.value, t instanceof r ? t : new r(function (e) {
+                e(t);
+              })).then(i, u);
+            }
+            l((o = o.apply(e, t || [])).next());
+          });
+        },
+        a = this && this.__generator || function (e, t) {
+          var r,
+            o,
+            n,
+            a,
+            i = {
+              label: 0,
+              sent: function sent() {
+                if (1 & n[0]) throw n[1];
+                return n[1];
+              },
+              trys: [],
+              ops: []
+            };
+          return a = {
+            next: u(0),
+            throw: u(1),
+            return: u(2)
+          }, "function" == typeof Symbol && (a[Symbol.iterator] = function () {
+            return this;
+          }), a;
+          function u(a) {
+            return function (u) {
+              return function (a) {
+                if (r) throw new TypeError("Generator is already executing.");
+                for (; i;) {
+                  try {
+                    if (r = 1, o && (n = 2 & a[0] ? o.return : a[0] ? o.throw || ((n = o.return) && n.call(o), 0) : o.next) && !(n = n.call(o, a[1])).done) return n;
+                    switch (o = 0, n && (a = [2 & a[0], n.value]), a[0]) {
+                      case 0:
+                      case 1:
+                        n = a;
+                        break;
+                      case 4:
+                        return i.label++, {
+                          value: a[1],
+                          done: !1
+                        };
+                      case 5:
+                        i.label++, o = a[1], a = [0];
+                        continue;
+                      case 7:
+                        a = i.ops.pop(), i.trys.pop();
+                        continue;
+                      default:
+                        if (!((n = (n = i.trys).length > 0 && n[n.length - 1]) || 6 !== a[0] && 2 !== a[0])) {
+                          i = 0;
+                          continue;
+                        }
+                        if (3 === a[0] && (!n || a[1] > n[0] && a[1] < n[3])) {
+                          i.label = a[1];
+                          break;
+                        }
+                        if (6 === a[0] && i.label < n[1]) {
+                          i.label = n[1], n = a;
+                          break;
+                        }
+                        if (n && i.label < n[2]) {
+                          i.label = n[2], i.ops.push(a);
+                          break;
+                        }
+                        n[2] && i.ops.pop(), i.trys.pop();
+                        continue;
+                    }
+                    a = t.call(e, i);
+                  } catch (e) {
+                    a = [6, e], o = 0;
+                  } finally {
+                    r = n = 0;
+                  }
+                }
+                if (5 & a[0]) throw a[1];
+                return {
+                  value: a[0] ? a[1] : void 0,
+                  done: !0
+                };
+              }([a, u]);
+            };
+          }
+        },
+        i = this && this.__rest || function (e, t) {
+          var r = {};
+          for (var o in e) {
+            Object.prototype.hasOwnProperty.call(e, o) && t.indexOf(o) < 0 && (r[o] = e[o]);
+          }
+          if (null != e && "function" == typeof Object.getOwnPropertySymbols) {
+            var n = 0;
+            for (o = Object.getOwnPropertySymbols(e); n < o.length; n++) {
+              t.indexOf(o[n]) < 0 && Object.prototype.propertyIsEnumerable.call(e, o[n]) && (r[o[n]] = e[o[n]]);
+            }
+          }
+          return r;
+        };
+      Object.defineProperty(t, "__esModule", {
+        value: !0
+      }), t.formatOriginURLQuery = t.uniOriginJump = void 0;
+      var u = r(99),
+        l = r(789),
+        c = r(282),
+        s = r(845),
+        p = 0,
+        f = "reLaunch";
+      function h(e, t, r) {
+        var n,
+          a = t.url,
+          i = t.path,
+          c = t.query,
+          s = t.animationType,
+          p = t.animationDuration,
+          f = t.events,
+          h = t.success,
+          v = t.fail,
+          y = t.complete,
+          g = t.delta,
+          d = t.animation,
+          m = u.stringifyQuery(c || {}),
+          b = "" === m ? i || a : (i || a) + m,
+          P = {};
+        return "app-plus" === e.options.platform && "navigateBack" !== r && (P = (null === (n = e.options.APP) || void 0 === n ? void 0 : n.animation) || {}, P = o(o({}, P), d || {})), l.notDeepClearNull({
+          delta: g,
+          url: b,
+          animationType: s || P.animationType,
+          animationDuration: p || P.animationDuration,
+          events: f,
+          success: h,
+          fail: v,
+          complete: y
+        });
+      }
+      t.uniOriginJump = function (e, t, r, u, v, y) {
+        var g = h(e, u, r),
+          d = g.complete,
+          m = i(g, ["complete"]),
+          b = e.options.platform;
+        null != y && !1 === y ? (0 === p && (p++, "h5" !== b && (s.resetAndCallPageHook(e, m.url), e.Vue.prototype.$AppReady = !0)), d && d.apply(null, {
+          msg: "forceGuardEach强制触发并且不执行跳转"
+        }), v && v.apply(null, {
+          msg: "forceGuardEach强制触发并且不执行跳转"
+        })) : (0 === p && ("app-plus" === b ? s.resetAndCallPageHook(e, m.url) : new RegExp(c.mpPlatformReg, "g").test(b) && s.resetAndCallPageHook(e, m.url, !1)), t(o(o({}, m), {
+          from: u.BACKTYPE,
+          complete: function complete() {
+            for (var t, o, i, u, h = [], y = 0; y < arguments.length; y++) {
+              h[y] = arguments[y];
+            }
+            return n(this, void 0, void 0, function () {
+              var n, y, g;
+              return a(this, function (a) {
+                switch (a.label) {
+                  case 0:
+                    return 0 === p && (p++, "h5" !== b && (new RegExp(c.mpPlatformReg, "g").test(b) && s.resetPageHook(e), e.Vue.prototype.$AppReady = !0, "app-plus" === b && ((n = plus.nativeObj.View.getViewById("router-loadding")) && n.close(), (y = null === (t = e.options.APP) || void 0 === t ? void 0 : t.launchedHook) && y()))), g = 0, new RegExp(c.mpPlatformReg, "g").test(b) ? g = null === (o = e.options.applet) || void 0 === o ? void 0 : o.animationDuration : "app-plus" === b && "navigateBack" === r && "navigateTo" === f && (g = null === (u = null === (i = e.options.APP) || void 0 === i ? void 0 : i.animation) || void 0 === u ? void 0 : u.animationDuration), "navigateTo" !== r && "navigateBack" !== r || 0 === g ? [3, 2] : [4, l.timeOut(g)];
+                  case 1:
+                    a.sent(), a.label = 2;
+                  case 2:
+                    return f = r, d && d.apply(null, h), v && v.apply(null, h), [2];
+                }
+              });
+            });
+          }
+        })));
+      }, t.formatOriginURLQuery = h;
+    }
+  }, t = {}, function r(o) {
+    if (t[o]) return t[o].exports;
+    var n = t[o] = {
+      exports: {}
+    };
+    return e[o].call(n.exports, n, n.exports, r), n.exports;
+  }(607);
+  var e, t;
+});
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"], __webpack_require__(/*! ./../../../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/webpack/buildin/module.js */ 35)(module)))
+
+/***/ }),
+/* 35 */
+/*!***********************************!*\
+  !*** (webpack)/buildin/module.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if (!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if (!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
 
 /***/ }),
 /* 36 */
-/*!***************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/index.js ***!
-  \***************************************************************************************/
+/*!***********************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/index.js ***!
+  \***********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9741,9 +11792,9 @@ exports.default = _default;
 
 /***/ }),
 /* 37 */
-/*!**************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/mixin/mixin.js ***!
-  \**************************************************************************************************/
+/*!**********************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/mixin/mixin.js ***!
+  \**********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9909,9 +11960,9 @@ exports.default = _default;
 
 /***/ }),
 /* 38 */
-/*!****************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/mixin/mpMixin.js ***!
-  \****************************************************************************************************/
+/*!************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/mixin/mpMixin.js ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9932,9 +11983,9 @@ exports.default = _default;
 
 /***/ }),
 /* 39 */
-/*!*********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/index.js ***!
-  \*********************************************************************************************************/
+/*!*****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/index.js ***!
+  \*****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9952,9 +12003,9 @@ exports.default = _default;
 
 /***/ }),
 /* 40 */
-/*!****************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/core/Request.js ***!
-  \****************************************************************************************************************/
+/*!************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/core/Request.js ***!
+  \************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10158,9 +12209,9 @@ exports.default = Request;
 
 /***/ }),
 /* 41 */
-/*!************************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/core/dispatchRequest.js ***!
-  \************************************************************************************************************************/
+/*!********************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/core/dispatchRequest.js ***!
+  \********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10180,9 +12231,9 @@ exports.default = _default;
 
 /***/ }),
 /* 42 */
-/*!******************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/adapters/index.js ***!
-  \******************************************************************************************************************/
+/*!**************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/adapters/index.js ***!
+  \**************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10261,9 +12312,9 @@ exports.default = _default;
 
 /***/ }),
 /* 43 */
-/*!********************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/helpers/buildURL.js ***!
-  \********************************************************************************************************************/
+/*!****************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/helpers/buildURL.js ***!
+  \****************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10331,9 +12382,9 @@ function buildURL(url, params) {
 
 /***/ }),
 /* 44 */
-/*!*********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/utils.js ***!
-  \*********************************************************************************************************/
+/*!*****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/utils.js ***!
+  \*****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10484,9 +12535,9 @@ function isUndefined(val) {
 
 /***/ }),
 /* 45 */
-/*!**********************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/core/buildFullPath.js ***!
-  \**********************************************************************************************************************/
+/*!******************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/core/buildFullPath.js ***!
+  \******************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10518,9 +12569,9 @@ function buildFullPath(baseURL, requestedURL) {
 
 /***/ }),
 /* 46 */
-/*!*************************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/helpers/isAbsoluteURL.js ***!
-  \*************************************************************************************************************************/
+/*!*********************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/helpers/isAbsoluteURL.js ***!
+  \*********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10546,9 +12597,9 @@ function isAbsoluteURL(url) {
 
 /***/ }),
 /* 47 */
-/*!***********************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/helpers/combineURLs.js ***!
-  \***********************************************************************************************************************/
+/*!*******************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/helpers/combineURLs.js ***!
+  \*******************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10572,9 +12623,9 @@ function combineURLs(baseURL, relativeURL) {
 
 /***/ }),
 /* 48 */
-/*!***************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/core/settle.js ***!
-  \***************************************************************************************************************/
+/*!***********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/core/settle.js ***!
+  \***********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10604,9 +12655,9 @@ function settle(resolve, reject, response) {
 
 /***/ }),
 /* 49 */
-/*!***************************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/core/InterceptorManager.js ***!
-  \***************************************************************************************************************************/
+/*!***********************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/core/InterceptorManager.js ***!
+  \***********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10668,9 +12719,9 @@ exports.default = _default;
 
 /***/ }),
 /* 50 */
-/*!********************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/core/mergeConfig.js ***!
-  \********************************************************************************************************************/
+/*!****************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/core/mergeConfig.js ***!
+  \****************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10744,9 +12795,9 @@ exports.default = _default;
 
 /***/ }),
 /* 51 */
-/*!*****************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/core/defaults.js ***!
-  \*****************************************************************************************************************/
+/*!*************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/core/defaults.js ***!
+  \*************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10776,9 +12827,9 @@ exports.default = _default;
 
 /***/ }),
 /* 52 */
-/*!***************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/utils/clone.js ***!
-  \***************************************************************************************************************/
+/*!***********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/luch-request/utils/clone.js ***!
+  \***********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13100,9 +15151,9 @@ module.exports = Array.isArray || function (arr) {
 
 /***/ }),
 /* 57 */
-/*!*************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/util/route.js ***!
-  \*************************************************************************************************/
+/*!*********************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/util/route.js ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13662,9 +15713,9 @@ module.exports = _asyncToGenerator, module.exports.__esModule = true, module.exp
 
 /***/ }),
 /* 61 */
-/*!*************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/function/colorGradient.js ***!
-  \*************************************************************************************************************/
+/*!*********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/function/colorGradient.js ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13817,9 +15868,9 @@ exports.default = _default;
 
 /***/ }),
 /* 62 */
-/*!****************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/function/test.js ***!
-  \****************************************************************************************************/
+/*!************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/function/test.js ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14122,9 +16173,9 @@ exports.default = _default;
 
 /***/ }),
 /* 63 */
-/*!********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/function/debounce.js ***!
-  \********************************************************************************************************/
+/*!****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/function/debounce.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14169,9 +16220,9 @@ exports.default = _default;
 
 /***/ }),
 /* 64 */
-/*!********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/function/throttle.js ***!
-  \********************************************************************************************************/
+/*!****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/function/throttle.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -14218,9 +16269,9 @@ exports.default = _default;
 
 /***/ }),
 /* 65 */
-/*!*****************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/function/index.js ***!
-  \*****************************************************************************************************/
+/*!*************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/function/index.js ***!
+  \*************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15019,9 +17070,9 @@ exports.default = _default;
 
 /***/ }),
 /* 66 */
-/*!*****************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/function/digit.js ***!
-  \*****************************************************************************************************/
+/*!*************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/function/digit.js ***!
+  \*************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15238,9 +17289,9 @@ module.exports = _toArray, module.exports.__esModule = true, module.exports["def
 
 /***/ }),
 /* 68 */
-/*!****************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/config.js ***!
-  \****************************************************************************************************/
+/*!************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/config.js ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15282,9 +17333,9 @@ exports.default = _default;
 
 /***/ }),
 /* 69 */
-/*!***************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props.js ***!
-  \***************************************************************************************************/
+/*!***********************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props.js ***!
+  \***********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15394,9 +17445,9 @@ exports.default = _default;
 
 /***/ }),
 /* 70 */
-/*!***************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/actionSheet.js ***!
-  \***************************************************************************************************************/
+/*!***********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/actionSheet.js ***!
+  \***********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15438,9 +17489,9 @@ exports.default = _default;
 
 /***/ }),
 /* 71 */
-/*!*********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/album.js ***!
-  \*********************************************************************************************************/
+/*!*****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/album.js ***!
+  \*****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15482,9 +17533,9 @@ exports.default = _default;
 
 /***/ }),
 /* 72 */
-/*!*********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/alert.js ***!
-  \*********************************************************************************************************/
+/*!*****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/alert.js ***!
+  \*****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15521,9 +17572,9 @@ exports.default = _default;
 
 /***/ }),
 /* 73 */
-/*!**********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/avatar.js ***!
-  \**********************************************************************************************************/
+/*!******************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/avatar.js ***!
+  \******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15566,9 +17617,9 @@ exports.default = _default;
 
 /***/ }),
 /* 74 */
-/*!***************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/avatarGroup.js ***!
-  \***************************************************************************************************************/
+/*!***********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/avatarGroup.js ***!
+  \***********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15608,9 +17659,9 @@ exports.default = _default;
 
 /***/ }),
 /* 75 */
-/*!***********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/backtop.js ***!
-  \***********************************************************************************************************/
+/*!*******************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/backtop.js ***!
+  \*******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15654,9 +17705,9 @@ exports.default = _default;
 
 /***/ }),
 /* 76 */
-/*!*********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/badge.js ***!
-  \*********************************************************************************************************/
+/*!*****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/badge.js ***!
+  \*****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15700,9 +17751,9 @@ exports.default = _default;
 
 /***/ }),
 /* 77 */
-/*!**********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/button.js ***!
-  \**********************************************************************************************************/
+/*!******************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/button.js ***!
+  \******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15759,9 +17810,9 @@ exports.default = _default;
 
 /***/ }),
 /* 78 */
-/*!************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/calendar.js ***!
-  \************************************************************************************************************/
+/*!********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/calendar.js ***!
+  \********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15822,9 +17873,9 @@ exports.default = _default;
 
 /***/ }),
 /* 79 */
-/*!***************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/carKeyboard.js ***!
-  \***************************************************************************************************************/
+/*!***********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/carKeyboard.js ***!
+  \***********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15854,9 +17905,9 @@ exports.default = _default;
 
 /***/ }),
 /* 80 */
-/*!********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/cell.js ***!
-  \********************************************************************************************************/
+/*!****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/cell.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15906,9 +17957,9 @@ exports.default = _default;
 
 /***/ }),
 /* 81 */
-/*!*************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/cellGroup.js ***!
-  \*************************************************************************************************************/
+/*!*********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/cellGroup.js ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15940,9 +17991,9 @@ exports.default = _default;
 
 /***/ }),
 /* 82 */
-/*!************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/checkbox.js ***!
-  \************************************************************************************************************/
+/*!********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/checkbox.js ***!
+  \********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15984,9 +18035,9 @@ exports.default = _default;
 
 /***/ }),
 /* 83 */
-/*!*****************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/checkboxGroup.js ***!
-  \*****************************************************************************************************************/
+/*!*************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/checkboxGroup.js ***!
+  \*************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16032,9 +18083,9 @@ exports.default = _default;
 
 /***/ }),
 /* 84 */
-/*!******************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/circleProgress.js ***!
-  \******************************************************************************************************************/
+/*!**************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/circleProgress.js ***!
+  \**************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16064,9 +18115,9 @@ exports.default = _default;
 
 /***/ }),
 /* 85 */
-/*!********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/code.js ***!
-  \********************************************************************************************************/
+/*!****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/code.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16101,9 +18152,9 @@ exports.default = _default;
 
 /***/ }),
 /* 86 */
-/*!*************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/codeInput.js ***!
-  \*************************************************************************************************************/
+/*!*********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/codeInput.js ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16147,9 +18198,9 @@ exports.default = _default;
 
 /***/ }),
 /* 87 */
-/*!*******************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/col.js ***!
-  \*******************************************************************************************************/
+/*!***************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/col.js ***!
+  \***************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16183,9 +18234,9 @@ exports.default = _default;
 
 /***/ }),
 /* 88 */
-/*!************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/collapse.js ***!
-  \************************************************************************************************************/
+/*!********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/collapse.js ***!
+  \********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16217,9 +18268,9 @@ exports.default = _default;
 
 /***/ }),
 /* 89 */
-/*!****************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/collapseItem.js ***!
-  \****************************************************************************************************************/
+/*!************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/collapseItem.js ***!
+  \************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16259,9 +18310,9 @@ exports.default = _default;
 
 /***/ }),
 /* 90 */
-/*!****************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/columnNotice.js ***!
-  \****************************************************************************************************************/
+/*!************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/columnNotice.js ***!
+  \************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16300,9 +18351,9 @@ exports.default = _default;
 
 /***/ }),
 /* 91 */
-/*!*************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/countDown.js ***!
-  \*************************************************************************************************************/
+/*!*********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/countDown.js ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16335,9 +18386,9 @@ exports.default = _default;
 
 /***/ }),
 /* 92 */
-/*!***********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/countTo.js ***!
-  \***********************************************************************************************************/
+/*!*******************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/countTo.js ***!
+  \*******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16377,9 +18428,9 @@ exports.default = _default;
 
 /***/ }),
 /* 93 */
-/*!******************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/datetimePicker.js ***!
-  \******************************************************************************************************************/
+/*!**************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/datetimePicker.js ***!
+  \**************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16432,9 +18483,9 @@ exports.default = _default;
 
 /***/ }),
 /* 94 */
-/*!***********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/divider.js ***!
-  \***********************************************************************************************************/
+/*!*******************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/divider.js ***!
+  \*******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16471,9 +18522,9 @@ exports.default = _default;
 
 /***/ }),
 /* 95 */
-/*!*********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/empty.js ***!
-  \*********************************************************************************************************/
+/*!*****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/empty.js ***!
+  \*****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16513,9 +18564,9 @@ exports.default = _default;
 
 /***/ }),
 /* 96 */
-/*!********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/form.js ***!
-  \********************************************************************************************************/
+/*!****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/form.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16558,9 +18609,9 @@ exports.default = _default;
 
 /***/ }),
 /* 97 */
-/*!************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/formItem.js ***!
-  \************************************************************************************************************/
+/*!********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/formItem.js ***!
+  \********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16598,9 +18649,9 @@ exports.default = _default;
 
 /***/ }),
 /* 98 */
-/*!*******************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/gap.js ***!
-  \*******************************************************************************************************/
+/*!***************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/gap.js ***!
+  \***************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16634,9 +18685,9 @@ exports.default = _default;
 
 /***/ }),
 /* 99 */
-/*!********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/grid.js ***!
-  \********************************************************************************************************/
+/*!****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/grid.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16668,9 +18719,9 @@ exports.default = _default;
 
 /***/ }),
 /* 100 */
-/*!************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/gridItem.js ***!
-  \************************************************************************************************************/
+/*!********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/gridItem.js ***!
+  \********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16701,9 +18752,9 @@ exports.default = _default;
 
 /***/ }),
 /* 101 */
-/*!********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/icon.js ***!
-  \********************************************************************************************************/
+/*!****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/icon.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16753,9 +18804,9 @@ exports.default = _default;
 
 /***/ }),
 /* 102 */
-/*!*********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/image.js ***!
-  \*********************************************************************************************************/
+/*!*****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/image.js ***!
+  \*****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16800,9 +18851,9 @@ exports.default = _default;
 
 /***/ }),
 /* 103 */
-/*!***************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/indexAnchor.js ***!
-  \***************************************************************************************************************/
+/*!***********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/indexAnchor.js ***!
+  \***********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16836,9 +18887,9 @@ exports.default = _default;
 
 /***/ }),
 /* 104 */
-/*!*************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/indexList.js ***!
-  \*************************************************************************************************************/
+/*!*********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/indexList.js ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16874,9 +18925,9 @@ exports.default = _default;
 
 /***/ }),
 /* 105 */
-/*!*********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/input.js ***!
-  \*********************************************************************************************************/
+/*!*****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/input.js ***!
+  \*****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16939,9 +18990,9 @@ exports.default = _default;
 
 /***/ }),
 /* 106 */
-/*!************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/keyboard.js ***!
-  \************************************************************************************************************/
+/*!********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/keyboard.js ***!
+  \********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -16986,9 +19037,9 @@ exports.default = _default;
 
 /***/ }),
 /* 107 */
-/*!********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/line.js ***!
-  \********************************************************************************************************/
+/*!****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/line.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17023,9 +19074,9 @@ exports.default = _default;
 
 /***/ }),
 /* 108 */
-/*!****************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/lineProgress.js ***!
-  \****************************************************************************************************************/
+/*!************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/lineProgress.js ***!
+  \************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17059,9 +19110,9 @@ exports.default = _default;
 
 /***/ }),
 /* 109 */
-/*!********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/link.js ***!
-  \********************************************************************************************************/
+/*!****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/link.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17101,9 +19152,9 @@ exports.default = _default;
 
 /***/ }),
 /* 110 */
-/*!********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/list.js ***!
-  \********************************************************************************************************/
+/*!****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/list.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17146,9 +19197,9 @@ exports.default = _default;
 
 /***/ }),
 /* 111 */
-/*!************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/listItem.js ***!
-  \************************************************************************************************************/
+/*!********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/listItem.js ***!
+  \********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17178,9 +19229,9 @@ exports.default = _default;
 
 /***/ }),
 /* 112 */
-/*!***************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/loadingIcon.js ***!
-  \***************************************************************************************************************/
+/*!***********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/loadingIcon.js ***!
+  \***********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17224,9 +19275,9 @@ exports.default = _default;
 
 /***/ }),
 /* 113 */
-/*!***************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/loadingPage.js ***!
-  \***************************************************************************************************************/
+/*!***********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/loadingPage.js ***!
+  \***********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17264,9 +19315,9 @@ exports.default = _default;
 
 /***/ }),
 /* 114 */
-/*!************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/loadmore.js ***!
-  \************************************************************************************************************/
+/*!********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/loadmore.js ***!
+  \********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17313,9 +19364,9 @@ exports.default = _default;
 
 /***/ }),
 /* 115 */
-/*!*********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/modal.js ***!
-  \*********************************************************************************************************/
+/*!*****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/modal.js ***!
+  \*****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17360,9 +19411,9 @@ exports.default = _default;
 
 /***/ }),
 /* 116 */
-/*!**********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/navbar.js ***!
-  \**********************************************************************************************************/
+/*!******************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/navbar.js ***!
+  \******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17409,9 +19460,9 @@ exports.default = _default;
 
 /***/ }),
 /* 117 */
-/*!***************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/color.js ***!
-  \***************************************************************************************************/
+/*!***********************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/color.js ***!
+  \***********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17442,9 +19493,9 @@ exports.default = _default;
 
 /***/ }),
 /* 118 */
-/*!*************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/noNetwork.js ***!
-  \*************************************************************************************************************/
+/*!*********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/noNetwork.js ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17476,9 +19527,9 @@ exports.default = _default;
 
 /***/ }),
 /* 119 */
-/*!*************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/noticeBar.js ***!
-  \*************************************************************************************************************/
+/*!*********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/noticeBar.js ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17522,9 +19573,9 @@ exports.default = _default;
 
 /***/ }),
 /* 120 */
-/*!**********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/notify.js ***!
-  \**********************************************************************************************************/
+/*!******************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/notify.js ***!
+  \******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17561,9 +19612,9 @@ exports.default = _default;
 
 /***/ }),
 /* 121 */
-/*!*************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/numberBox.js ***!
-  \*************************************************************************************************************/
+/*!*********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/numberBox.js ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17613,9 +19664,9 @@ exports.default = _default;
 
 /***/ }),
 /* 122 */
-/*!******************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/numberKeyboard.js ***!
-  \******************************************************************************************************************/
+/*!**************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/numberKeyboard.js ***!
+  \**************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17647,9 +19698,9 @@ exports.default = _default;
 
 /***/ }),
 /* 123 */
-/*!***********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/overlay.js ***!
-  \***********************************************************************************************************/
+/*!*******************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/overlay.js ***!
+  \*******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17682,9 +19733,9 @@ exports.default = _default;
 
 /***/ }),
 /* 124 */
-/*!*********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/parse.js ***!
-  \*********************************************************************************************************/
+/*!*****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/parse.js ***!
+  \*****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17721,9 +19772,9 @@ exports.default = _default;
 
 /***/ }),
 /* 125 */
-/*!**********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/picker.js ***!
-  \**********************************************************************************************************/
+/*!******************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/picker.js ***!
+  \******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17771,9 +19822,9 @@ exports.default = _default;
 
 /***/ }),
 /* 126 */
-/*!*********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/popup.js ***!
-  \*********************************************************************************************************/
+/*!*****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/popup.js ***!
+  \*****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17817,9 +19868,9 @@ exports.default = _default;
 
 /***/ }),
 /* 127 */
-/*!*********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/radio.js ***!
-  \*********************************************************************************************************/
+/*!*****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/radio.js ***!
+  \*****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17861,9 +19912,9 @@ exports.default = _default;
 
 /***/ }),
 /* 128 */
-/*!**************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/radioGroup.js ***!
-  \**************************************************************************************************************/
+/*!**********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/radioGroup.js ***!
+  \**********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17908,9 +19959,9 @@ exports.default = _default;
 
 /***/ }),
 /* 129 */
-/*!********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/rate.js ***!
-  \********************************************************************************************************/
+/*!****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/rate.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17951,9 +20002,9 @@ exports.default = _default;
 
 /***/ }),
 /* 130 */
-/*!************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/readMore.js ***!
-  \************************************************************************************************************/
+/*!********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/readMore.js ***!
+  \********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17990,9 +20041,9 @@ exports.default = _default;
 
 /***/ }),
 /* 131 */
-/*!*******************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/row.js ***!
-  \*******************************************************************************************************/
+/*!***************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/row.js ***!
+  \***************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18024,9 +20075,9 @@ exports.default = _default;
 
 /***/ }),
 /* 132 */
-/*!*************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/rowNotice.js ***!
-  \*************************************************************************************************************/
+/*!*********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/rowNotice.js ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18062,9 +20113,9 @@ exports.default = _default;
 
 /***/ }),
 /* 133 */
-/*!**************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/scrollList.js ***!
-  \**************************************************************************************************************/
+/*!**********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/scrollList.js ***!
+  \**********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18099,9 +20150,9 @@ exports.default = _default;
 
 /***/ }),
 /* 134 */
-/*!**********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/search.js ***!
-  \**********************************************************************************************************/
+/*!******************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/search.js ***!
+  \******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18157,9 +20208,9 @@ exports.default = _default;
 
 /***/ }),
 /* 135 */
-/*!***********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/section.js ***!
-  \***********************************************************************************************************/
+/*!*******************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/section.js ***!
+  \*******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18198,9 +20249,9 @@ exports.default = _default;
 
 /***/ }),
 /* 136 */
-/*!************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/skeleton.js ***!
-  \************************************************************************************************************/
+/*!********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/skeleton.js ***!
+  \********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18240,9 +20291,9 @@ exports.default = _default;
 
 /***/ }),
 /* 137 */
-/*!**********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/slider.js ***!
-  \**********************************************************************************************************/
+/*!******************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/slider.js ***!
+  \******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18282,9 +20333,9 @@ exports.default = _default;
 
 /***/ }),
 /* 138 */
-/*!*************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/statusBar.js ***!
-  \*************************************************************************************************************/
+/*!*********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/statusBar.js ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18314,9 +20365,9 @@ exports.default = _default;
 
 /***/ }),
 /* 139 */
-/*!*********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/steps.js ***!
-  \*********************************************************************************************************/
+/*!*****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/steps.js ***!
+  \*****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18352,9 +20403,9 @@ exports.default = _default;
 
 /***/ }),
 /* 140 */
-/*!*************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/stepsItem.js ***!
-  \*************************************************************************************************************/
+/*!*********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/stepsItem.js ***!
+  \*********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18387,9 +20438,9 @@ exports.default = _default;
 
 /***/ }),
 /* 141 */
-/*!**********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/sticky.js ***!
-  \**********************************************************************************************************/
+/*!******************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/sticky.js ***!
+  \******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18424,9 +20475,9 @@ exports.default = _default;
 
 /***/ }),
 /* 142 */
-/*!**************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/subsection.js ***!
-  \**************************************************************************************************************/
+/*!**********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/subsection.js ***!
+  \**********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18464,9 +20515,9 @@ exports.default = _default;
 
 /***/ }),
 /* 143 */
-/*!***************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/swipeAction.js ***!
-  \***************************************************************************************************************/
+/*!***********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/swipeAction.js ***!
+  \***********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18496,9 +20547,9 @@ exports.default = _default;
 
 /***/ }),
 /* 144 */
-/*!*******************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/swipeActionItem.js ***!
-  \*******************************************************************************************************************/
+/*!***************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/swipeActionItem.js ***!
+  \***************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18534,9 +20585,9 @@ exports.default = _default;
 
 /***/ }),
 /* 145 */
-/*!**********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/swiper.js ***!
-  \**********************************************************************************************************/
+/*!******************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/swiper.js ***!
+  \******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18591,9 +20642,9 @@ exports.default = _default;
 
 /***/ }),
 /* 146 */
-/*!********************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/swipterIndicator.js ***!
-  \********************************************************************************************************************/
+/*!****************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/swipterIndicator.js ***!
+  \****************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18627,9 +20678,9 @@ exports.default = _default;
 
 /***/ }),
 /* 147 */
-/*!**********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/switch.js ***!
-  \**********************************************************************************************************/
+/*!******************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/switch.js ***!
+  \******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18668,9 +20719,9 @@ exports.default = _default;
 
 /***/ }),
 /* 148 */
-/*!**********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/tabbar.js ***!
-  \**********************************************************************************************************/
+/*!******************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/tabbar.js ***!
+  \******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18707,9 +20758,9 @@ exports.default = _default;
 
 /***/ }),
 /* 149 */
-/*!**************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/tabbarItem.js ***!
-  \**************************************************************************************************************/
+/*!**********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/tabbarItem.js ***!
+  \**********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18744,9 +20795,9 @@ exports.default = _default;
 
 /***/ }),
 /* 150 */
-/*!********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/tabs.js ***!
-  \********************************************************************************************************/
+/*!****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/tabs.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18801,9 +20852,9 @@ exports.default = _default;
 
 /***/ }),
 /* 151 */
-/*!*******************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/tag.js ***!
-  \*******************************************************************************************************/
+/*!***************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/tag.js ***!
+  \***************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18847,9 +20898,9 @@ exports.default = _default;
 
 /***/ }),
 /* 152 */
-/*!********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/text.js ***!
-  \********************************************************************************************************/
+/*!****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/text.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18903,9 +20954,9 @@ exports.default = _default;
 
 /***/ }),
 /* 153 */
-/*!************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/textarea.js ***!
-  \************************************************************************************************************/
+/*!********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/textarea.js ***!
+  \********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18956,9 +21007,9 @@ exports.default = _default;
 
 /***/ }),
 /* 154 */
-/*!*********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/toast.js ***!
-  \*********************************************************************************************************/
+/*!*****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/toast.js ***!
+  \*****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19002,9 +21053,9 @@ exports.default = _default;
 
 /***/ }),
 /* 155 */
-/*!***********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/toolbar.js ***!
-  \***********************************************************************************************************/
+/*!*******************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/toolbar.js ***!
+  \*******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19039,9 +21090,9 @@ exports.default = _default;
 
 /***/ }),
 /* 156 */
-/*!***********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/tooltip.js ***!
-  \***********************************************************************************************************/
+/*!*******************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/tooltip.js ***!
+  \*******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19083,9 +21134,9 @@ exports.default = _default;
 
 /***/ }),
 /* 157 */
-/*!**************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/transition.js ***!
-  \**************************************************************************************************************/
+/*!**********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/transition.js ***!
+  \**********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19118,9 +21169,9 @@ exports.default = _default;
 
 /***/ }),
 /* 158 */
-/*!**********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/props/upload.js ***!
-  \**********************************************************************************************************/
+/*!******************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/props/upload.js ***!
+  \******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19177,9 +21228,9 @@ exports.default = _default;
 
 /***/ }),
 /* 159 */
-/*!****************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/config/zIndex.js ***!
-  \****************************************************************************************************/
+/*!************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/config/zIndex.js ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19213,9 +21264,9 @@ exports.default = _default;
 
 /***/ }),
 /* 160 */
-/*!********************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/uni_modules/uview-ui/libs/function/platform.js ***!
-  \********************************************************************************************************/
+/*!****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/libs/function/platform.js ***!
+  \****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19242,25 +21293,10 @@ var _default = platform;
 exports.default = _default;
 
 /***/ }),
-/* 161 */,
-/* 162 */,
-/* 163 */,
-/* 164 */,
-/* 165 */,
-/* 166 */,
-/* 167 */,
-/* 168 */,
-/* 169 */,
-/* 170 */,
-/* 171 */,
-/* 172 */,
-/* 173 */,
-/* 174 */,
-/* 175 */,
-/* 176 */
-/*!************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/common/util/tools/index.js ***!
-  \************************************************************************************/
+/* 161 */
+/*!********************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/common/util/tools/index.js ***!
+  \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19271,7 +21307,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var _router = __webpack_require__(/*! @/common/router */ 177);
+var _router = __webpack_require__(/*! @/common/router */ 33);
 var _default = {
   /**
    * 跳转再封装，不支持复杂传参。
@@ -19369,2101 +21405,1186 @@ var _default = {
 exports.default = _default;
 
 /***/ }),
-/* 177 */
-/*!**************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/common/router.js ***!
-  \**************************************************************************/
+/* 162 */,
+/* 163 */,
+/* 164 */,
+/* 165 */,
+/* 166 */,
+/* 167 */,
+/* 168 */,
+/* 169 */,
+/* 170 */,
+/* 171 */,
+/* 172 */,
+/* 173 */,
+/* 174 */
+/*!***********************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/static/imgs/mine/touxiang.png ***!
+  \***********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAMAAAAOusbgAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAADAUExURQAAAP////////////////////////////v6+v////////////////////////////////////////////////7+/v7//wMAAObl5fnS0uDg4Pzx8TIuL/jl5Xl1duvt7ltXVhYNDG5oZ/T09CEdHoiEhE5KSs7NzkE7OfjLzKSiobe0s8DBwvrq6pOQj5qYmdnX162sq/11BchvHEghDLReE/jGxJg2AGknAuRdAci8u+HAnnRIIPidTf/97P/GftHRMyoAAAAUdFJOUwAuVAITOyUz/u0bfZYJ16jM37Fm2QEF+AAAC29JREFUaN7FWwl72jgTTqDJipCzlSxjjO8rNjYQyNEk3f3//+obyQcGjxxI8z3RPu1SLPx6Zl7NJfnk5IgxvLo4P/0HHafnF1fDk//LuPqhAt2C/7j6atThj/N/DhrnP75S7h3Us8H48uft9WhEKCWj0fXtz8vx4GwH+6uE3Wr4bHxzxygy2N3NeAt++gVit2B/3VyjoA349c2vL4NuYAc3I3rAGN0MGui/IfJ5reFrevC4rnV+/lmKDy8q2MsRPWqMLivoi+FfaPlo2Db0J/Rdizv+BKyEHn9O6Mq6g1v66XE7+ISlKzVfMvoXg10ere5SzQMFlcXT+PF8SXa/ot2nvC6FvjgOd0yUsqycyHGiyEkp1QBQq77WOhPJ+BhDl+a9UevQMQsQ149D0wEwENQOnSQKbXiGjtQ3paEPQB5K3LMeVjlRo+EgFP8Lg8QLPTPwCKLu27MDkSXu4G7Xqqz5oNHUlOZkVGP01fQpjdxMXpybboyo+25wEHKJO+rQKQvDMJOfonnzLcujJY2ChgweN7AlfQjyBYIL8vqelWYLz4H7zp0Wf/OIFC6r/g3CJglVIl8ciyuALWlLukgMGlotdRreii9rS2gaXbrLTyH/wHBhLK3qQ+pQK21deLXMcGf5mClVIys9yZXwV2eI28jCWiRvVWStC6kb7Uycmit8JdwJbp8qvOfwVLWObM+u7Gg4TluZjlB0YxKNvga6ynOfqQl2ofIbjKZetYSAuD5tHBULvN15jqlc/TdKM0sDj1HnzGjhVaIsI38rIVm2iAaGyHmGLORqjBVmlooeKP1zKhwzE/xleMjSNEITU41LiSDY6RBV9JkqtQIsfeHMGcWjkPyW0AXXe4Dp9Rmm7CsZf9WxVSzieQ8uSJTxtD9Ay/h8hYSGgeqewFc98tSY5aQ4Cha9c5hQ9jnCrFu1uPNkobTuNpAUPLH7oG87/JLMGqvvmJrxB7iaCFxUN3nWN3G8zy8h8NlIKW+R6PTA9MviXg/y6GxXZCmwmllh4veL237IVw4xmvXxqyVyj8BwCyvxD5VX5kGBiMrsIJHVAoOgYeAfk9OKVIHPlRqSIh8k8MLVj8umpUPPVDLviHyuoLTwkHMe0+PSesFui6cqio23a3koVtc1/vA23IEdWU+I+aH4He44Bdqw0fRAwRTTOxpXyAzMENpGPfeg0fW5Kn2HXCug9BP1k4hUlrCRpgjM5014wKkVtxOM46AJZCc2KvGoDhVC079wRbvhJxRdeVBCgwC/9qvS9bky4bGCg8mEREk25Q5qqErX0l3eYT81+F5FwtCKVcWCKXhPlNp3Ja+vVJymSVT/TMi0xP3XylrhyJqWA8FsquD1lUx50ICY8cZFM7oMeJB15/gR59y0MWRg9pS6CcavsUyBhIl/YsCQujb3s10AQCoyj7vwn4l3GWkOywJLO39KI+MmZiBwK+N0AsDg1v4sHZ4mMjwe4tomM4gXyKU7GShEgMB+ZbYEZrwAVyRIumdgEDejPndRkSHPJjO+6AIzEShOFNyKeSvp0Hk0DzrAELkAuIDlDvTHE88ZuBEFu04U3HLala4wsWvysFPZAHAQp5yvFAs8Jzp2bVwBIzkAcXeWoAniWnzZVYscrgIYdD0T1QWaDZzgpF41db4UbSXuH+5ZC2YEbgq0dhUxW9OmMyCpgdL6BM+no2TPmkFQIPwseBoIdTMcGIw8Jd3FIPPrEzwJCELEGSNRzhGKBk2j/ppJXUcmmgycoDHRcOOtviCuszIRQryQBapeqIMUABfcxyIjBqzR1CW1kgVwXzarz/uqlumMxSLnxIFJB3gbEAFW68+jaV+SMp1Nc7forJkKWL2KtXwymcwISF3qmnVhmXgyrfzT0Q3QerrXr5BDCZxEpXlnT/di5EJqAbuL7EtgCEOzGTxe/Xx7EufUjFTA3f5D4ghpNP/+HiSe3N9PxaKl+m4GFutlRjm7r8asYxRNAHfbfUTJ6sQpM7YSeFLd0g/1lpbjouyITJ7KSZP7py7ydDbb8wl9rN5RtbhleUdIwoo2AaW7gimTetxPCAacKIGvkVZ41SSWanyaEK1pd9VjXn5mk/vJFnm6T/ActfG1wmVqNHTLpSQi22yWaxWrVp78UtI7DOV1rQK+l3/Ynq8GBwKsdlQu82cHeN5EIk2Ois3zIG2sbGV5LoDz2sRg41zbT+sBON8Pp9sgcdl17rxoHKaQttplSRPPcaxila0Wlmm/vUnHVpP6adLBFQuNCs+lCItIImCaiJNi0ZLqq9CDYRURePN7osnYJwUW67iT4QJw2PXVY3Xqs+J6t1hetKNBuPj3LRfWFpYghGwNsn1SEDingalMfbBkDyk//Lhu4Ur3YeVv8h+VN9c6Ph3yWxB42U1PymRPUcGEvL/DBLROP+j0gcB5LhNcNL1FE3q4I0/6S7W3RyvW+gvGmRS46DxfmdDjJYwGuVJvY1J7W+cGUU2QwQoUPaWB271LWcIoizant+3C6u6MqnIF3HyK9wXKok1dpgZc780ANNZTtbNcMHohUtP9WVWZqijMZcdHtuiObwmAoonUc8q9niaIohUBgAYXTod9AncqeAV6RlsCdStC1XwRMgfSzx4utFSrVoqrJyKjJkzZfOlrNwHDRKeadt0SPl+wuYSFrHbbV2R+K+Nv2k09DTbRIocKeE6bXhnrTzg1NgVYSAegwIjsWlXMNnS2w+mLj1qKMN23OA/CuCoNtHqZ7y972WEiJaoeurJxUe4WifrAMHykpahsotYpO1QLPPAyffs4nTjEyHSaT0XmYywSzs2spR2f+YbNkCZq78ZA+fO5BXW5GzjpXCf7Stmm22SZWVDQul7cTvWFnpmiU967M1BJZyxcC0q0wHQgGKev8XI2nRLAJGQ6M+LXbOElokNjWnHrR1TiGr6iUd4vcrPJF9L45fdzAMNsjyRwYYj6PAqz/b6W4JWhK7cGPtgMkewxEpt6zw8PD+tHz3MiM5C9gM3LMzfTLF5yy24xkrbl1dWbIR+LrFHPouT9958/AP3wuxri80vpFWUOq+Hy+rqv2P7p3fCqKubEp/OXhyeAEmI/PDzKv583VfC0XORHJS7brqbOhlf/Fp/s4YFgi+c///73Z+O+gMwv7uY3wFpVcaxhrQ4icCER0WEwfIuvXMvqTU3KEiCr9bwuwuBlvdm8bDbr9817WEYvRle2j3R+QGAJ6FfELjc1h3uHW/u2ceHOIhFKNkVaeJvnh/f39/X6mQdGddWwCHWtfRODhUsVM70ExrZx+zeuGXUs4UUkcWPzeQ1jE8FDeJbw48SbU6wKBollA1gA26qN6w+26pOMLqusWos368f1i8RZFp4VLry0qvNYV9WkUbVqq77ncAKVi3hZt6XJ++P6cVPvdMTpIqY4rQFQ133f1iXHxsozKBfqY1xZtG15UJB4/ezIWrHpgIn46aPsgrUkTaw+jtFzAIWuovYu54sE3uPSnC/RhawLbL88gHI67Dtyg2WcWbLlmb0BTT9ujE5DNUYCmy+Abb//yI36kBE1qn0HoVrnBXAlubZeWRyA6laj8goRWdcHh4wUx6okq726mRm5ECYAeeOULYO6FWO6K6Xb++yBLnHf6ozH3HGSjVjHjxsetbZl5mYWFH+Bqzg6J/ZGXCdbLbwopbZlbjYb07LTxEnLWBh75pzyohf3wEN7XYbZJrfCUpv2fCU6p5SFUeRYlmhP2NRXAR94WFB1PFL0yqsWVLuLbayKsMiEe7IVwAcfj1QeCA05qXO7cpAdVhscbVsffiBUeQR2mfqkNfy9T/YCORp53BHY7qFftiMbbWW0ZUuXKQrWYw/9ft8x56882H165BH+7zrK/n2H97/xdYXve0HjG19J+caXcL7vtaNvfNGqYvihr5ZdfPkrdd/zMt3Xvz74P1nsoI8vuMxrAAAAAElFTkSuQmCC"
+
+/***/ }),
+/* 175 */,
+/* 176 */,
+/* 177 */,
+/* 178 */,
+/* 179 */,
+/* 180 */,
+/* 181 */,
+/* 182 */,
+/* 183 */,
+/* 184 */
+/*!*******************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/components/u-swiper/props.js ***!
+  \*******************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  props: {
+    // 列表数组，元素可为字符串，如为对象可通过keyName指定目标属性名
+    list: {
+      type: Array,
+      default: uni.$u.props.swiper.list
+    },
+    // 是否显示面板指示器
+    indicator: {
+      type: Boolean,
+      default: uni.$u.props.swiper.indicator
+    },
+    // 指示器非激活颜色
+    indicatorActiveColor: {
+      type: String,
+      default: uni.$u.props.swiper.indicatorActiveColor
+    },
+    // 指示器的激活颜色
+    indicatorInactiveColor: {
+      type: String,
+      default: uni.$u.props.swiper.indicatorInactiveColor
+    },
+    // 指示器样式，可通过bottom，left，right进行定位
+    indicatorStyle: {
+      type: [String, Object],
+      default: uni.$u.props.swiper.indicatorStyle
+    },
+    // 指示器模式，line-线型，dot-点型
+    indicatorMode: {
+      type: String,
+      default: uni.$u.props.swiper.indicatorMode
+    },
+    // 是否自动切换
+    autoplay: {
+      type: Boolean,
+      default: uni.$u.props.swiper.autoplay
+    },
+    // 当前所在滑块的 index
+    current: {
+      type: [String, Number],
+      default: uni.$u.props.swiper.current
+    },
+    // 当前所在滑块的 item-id ，不能与 current 被同时指定
+    currentItemId: {
+      type: String,
+      default: uni.$u.props.swiper.currentItemId
+    },
+    // 滑块自动切换时间间隔
+    interval: {
+      type: [String, Number],
+      default: uni.$u.props.swiper.interval
+    },
+    // 滑块切换过程所需时间
+    duration: {
+      type: [String, Number],
+      default: uni.$u.props.swiper.duration
+    },
+    // 播放到末尾后是否重新回到开头
+    circular: {
+      type: Boolean,
+      default: uni.$u.props.swiper.circular
+    },
+    // 前边距，可用于露出前一项的一小部分，nvue和支付宝不支持
+    previousMargin: {
+      type: [String, Number],
+      default: uni.$u.props.swiper.previousMargin
+    },
+    // 后边距，可用于露出后一项的一小部分，nvue和支付宝不支持
+    nextMargin: {
+      type: [String, Number],
+      default: uni.$u.props.swiper.nextMargin
+    },
+    // 当开启时，会根据滑动速度，连续滑动多屏，支付宝不支持
+    acceleration: {
+      type: Boolean,
+      default: uni.$u.props.swiper.acceleration
+    },
+    // 同时显示的滑块数量，nvue、支付宝小程序不支持
+    displayMultipleItems: {
+      type: Number,
+      default: uni.$u.props.swiper.displayMultipleItems
+    },
+    // 指定swiper切换缓动动画类型，有效值：default、linear、easeInCubic、easeOutCubic、easeInOutCubic
+    // 只对微信小程序有效
+    easingFunction: {
+      type: String,
+      default: uni.$u.props.swiper.easingFunction
+    },
+    // list数组中指定对象的目标属性名
+    keyName: {
+      type: String,
+      default: uni.$u.props.swiper.keyName
+    },
+    // 图片的裁剪模式
+    imgMode: {
+      type: String,
+      default: uni.$u.props.swiper.imgMode
+    },
+    // 组件高度
+    height: {
+      type: [String, Number],
+      default: uni.$u.props.swiper.height
+    },
+    // 背景颜色
+    bgColor: {
+      type: String,
+      default: uni.$u.props.swiper.bgColor
+    },
+    // 组件圆角，数值或带单位的字符串
+    radius: {
+      type: [String, Number],
+      default: uni.$u.props.swiper.radius
+    },
+    // 是否加载中
+    loading: {
+      type: Boolean,
+      default: uni.$u.props.swiper.loading
+    },
+    // 是否显示标题，要求数组对象中有title属性
+    showTitle: {
+      type: Boolean,
+      default: uni.$u.props.swiper.showTitle
+    }
+  }
+};
+exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+
+/***/ }),
+/* 185 */,
+/* 186 */,
+/* 187 */,
+/* 188 */,
+/* 189 */,
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */
+/*!*****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/components/u-line/props.js ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  props: {
+    color: {
+      type: String,
+      default: uni.$u.props.line.color
+    },
+    // 长度，竖向时表现为高度，横向时表现为长度，可以为百分比，带px单位的值等
+    length: {
+      type: [String, Number],
+      default: uni.$u.props.line.length
+    },
+    // 线条方向，col-竖向，row-横向
+    direction: {
+      type: String,
+      default: uni.$u.props.line.direction
+    },
+    // 是否显示细边框
+    hairline: {
+      type: Boolean,
+      default: uni.$u.props.line.hairline
+    },
+    // 线条与上下左右元素的间距，字符串形式，如"30px"、"20px 30px"
+    margin: {
+      type: [String, Number],
+      default: uni.$u.props.line.margin
+    },
+    // 是否虚线，true-虚线，false-实线
+    dashed: {
+      type: Boolean,
+      default: uni.$u.props.line.dashed
+    }
+  }
+};
+exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+
+/***/ }),
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */
+/*!****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/components/u-tag/props.js ***!
+  \****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  props: {
+    // 标签类型info、primary、success、warning、error
+    type: {
+      type: String,
+      default: uni.$u.props.tag.type
+    },
+    // 不可用
+    disabled: {
+      type: [Boolean, String],
+      default: uni.$u.props.tag.disabled
+    },
+    // 标签的大小，large，medium，mini
+    size: {
+      type: String,
+      default: uni.$u.props.tag.size
+    },
+    // tag的形状，circle（两边半圆形）, square（方形，带圆角）
+    shape: {
+      type: String,
+      default: uni.$u.props.tag.shape
+    },
+    // 标签文字
+    text: {
+      type: [String, Number],
+      default: uni.$u.props.tag.text
+    },
+    // 背景颜色，默认为空字符串，即不处理
+    bgColor: {
+      type: String,
+      default: uni.$u.props.tag.bgColor
+    },
+    // 标签字体颜色，默认为空字符串，即不处理
+    color: {
+      type: String,
+      default: uni.$u.props.tag.color
+    },
+    // 标签的边框颜色
+    borderColor: {
+      type: String,
+      default: uni.$u.props.tag.borderColor
+    },
+    // 关闭按钮图标的颜色
+    closeColor: {
+      type: String,
+      default: uni.$u.props.tag.closeColor
+    },
+    // 点击时返回的索引值，用于区分例遍的数组哪个元素被点击了
+    name: {
+      type: [String, Number],
+      default: uni.$u.props.tag.name
+    },
+    // // 模式选择，dark|light|plain
+    // mode: {
+    // 	type: String,
+    // 	default: 'light'
+    // },
+    // 镂空时是否填充背景色
+    plainFill: {
+      type: Boolean,
+      default: uni.$u.props.tag.plainFill
+    },
+    // 是否镂空
+    plain: {
+      type: Boolean,
+      default: uni.$u.props.tag.plain
+    },
+    // 是否可关闭
+    closable: {
+      type: Boolean,
+      default: uni.$u.props.tag.closable
+    },
+    // 是否显示
+    show: {
+      type: Boolean,
+      default: uni.$u.props.tag.show
+    },
+    // 内置图标，或绝对路径的图片
+    icon: {
+      type: String,
+      default: uni.$u.props.tag.icon
+    }
+  }
+};
+exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+
+/***/ }),
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */
+/*!*************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/components/u-loading-icon/props.js ***!
+  \*************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  props: {
+    // 是否显示组件
+    show: {
+      type: Boolean,
+      default: uni.$u.props.loadingIcon.show
+    },
+    // 颜色
+    color: {
+      type: String,
+      default: uni.$u.props.loadingIcon.color
+    },
+    // 提示文字颜色
+    textColor: {
+      type: String,
+      default: uni.$u.props.loadingIcon.textColor
+    },
+    // 文字和图标是否垂直排列
+    vertical: {
+      type: Boolean,
+      default: uni.$u.props.loadingIcon.vertical
+    },
+    // 模式选择，circle-圆形，spinner-花朵形，semicircle-半圆形
+    mode: {
+      type: String,
+      default: uni.$u.props.loadingIcon.mode
+    },
+    // 图标大小，单位默认px
+    size: {
+      type: [String, Number],
+      default: uni.$u.props.loadingIcon.size
+    },
+    // 文字大小
+    textSize: {
+      type: [String, Number],
+      default: uni.$u.props.loadingIcon.textSize
+    },
+    // 文字内容
+    text: {
+      type: [String, Number],
+      default: uni.$u.props.loadingIcon.text
+    },
+    // 动画模式
+    timingFunction: {
+      type: String,
+      default: uni.$u.props.loadingIcon.timingFunction
+    },
+    // 动画执行周期时间
+    duration: {
+      type: [String, Number],
+      default: uni.$u.props.loadingIcon.duration
+    },
+    // mode=circle时的暗边颜色
+    inactiveColor: {
+      type: String,
+      default: uni.$u.props.loadingIcon.inactiveColor
+    }
+  }
+};
+exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+
+/***/ }),
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */
+/*!*****************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/components/u-swiper-indicator/props.js ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  props: {
+    // 轮播的长度
+    length: {
+      type: [String, Number],
+      default: uni.$u.props.swiperIndicator.length
+    },
+    // 当前处于活动状态的轮播的索引
+    current: {
+      type: [String, Number],
+      default: uni.$u.props.swiperIndicator.current
+    },
+    // 指示器非激活颜色
+    indicatorActiveColor: {
+      type: String,
+      default: uni.$u.props.swiperIndicator.indicatorActiveColor
+    },
+    // 指示器的激活颜色
+    indicatorInactiveColor: {
+      type: String,
+      default: uni.$u.props.swiperIndicator.indicatorInactiveColor
+    },
+    // 指示器模式，line-线型，dot-点型
+    indicatorMode: {
+      type: String,
+      default: uni.$u.props.swiperIndicator.indicatorMode
+    }
+  }
+};
+exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+
+/***/ }),
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */
+/*!***********************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/components/u-transition/props.js ***!
+  \***********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  props: {
+    // 是否展示组件
+    show: {
+      type: Boolean,
+      default: uni.$u.props.transition.show
+    },
+    // 使用的动画模式
+    mode: {
+      type: String,
+      default: uni.$u.props.transition.mode
+    },
+    // 动画的执行时间，单位ms
+    duration: {
+      type: [String, Number],
+      default: uni.$u.props.transition.duration
+    },
+    // 使用的动画过渡函数
+    timingFunction: {
+      type: String,
+      default: uni.$u.props.transition.timingFunction
+    }
+  }
+};
+exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+
+/***/ }),
+/* 232 */
+/*!****************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/components/u-transition/transition.js ***!
+  \****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ 4);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-Object.defineProperty(exports, "RouterMount", {
-  enumerable: true,
-  get: function get() {
-    return _uniSimpleRouter.RouterMount;
-  }
-});
-exports.router = void 0;
-var _toConsumableArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ 18));
-var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 25));
-var _uniSimpleRouter = __webpack_require__(/*! uni-simple-router */ 178);
-// import { RouterMount,createRouter } from 'uni-simple-router'
-// const Router = require('uni-simple-router')
-// import store from '@/common/store'
+exports.default = void 0;
+var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 58));
+var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 60));
+var _nvueAniMap = _interopRequireDefault(__webpack_require__(/*! ./nvue.ani-map.js */ 233));
+// 定义一个一定时间后自动成功的promise，让调用nextTick方法处，进入下一个then方法
+var nextTick = function nextTick() {
+  return new Promise(function (resolve) {
+    return setTimeout(resolve, 1000 / 50);
+  });
+};
+// nvue动画模块实现细节抽离在外部文件
 
-// Vue.use(Router)
-//初始化
-var router = (0, _uniSimpleRouter.createRouter)({
-  platform: "mp-weixin",
-  // APP: {
-  // 	animation: {
-  // 		animationType: 'pop-in',
-  // 		animationDuration: 300
-  // 	}
-  // },
-  // encodeURI: false,
-  routes: (0, _toConsumableArray2.default)([{"path":"/pages/index/index","aliasPath":"/"},{"path":"/pages/mine/mine"}]) //路由表
-});
-
-//全局路由前置守卫
-exports.router = router;
-router.beforeEach(function (to, from, next) {
-  console.log('------beforeEach-------');
-  // 有两个个判断条件,一个是token,还有一个路由元信息
-  if (to.meta && to.meta.needLogin) {
-    if (!uni.getStorageSync('XD_HOSPITAL_TOKEN')) {
-      uni.navigateTo({
-        url: '/pages/login'
+// 定义类名，通过给元素动态切换类名，赋予元素一定的css动画样式
+var getClassNames = function getClassNames(name) {
+  return {
+    enter: "u-".concat(name, "-enter u-").concat(name, "-enter-active"),
+    'enter-to': "u-".concat(name, "-enter-to u-").concat(name, "-enter-active"),
+    leave: "u-".concat(name, "-leave u-").concat(name, "-leave-active"),
+    'leave-to': "u-".concat(name, "-leave-to u-").concat(name, "-leave-active")
+  };
+};
+var _default = {
+  methods: {
+    // 组件被点击发出事件
+    clickHandler: function clickHandler() {
+      this.$emit('click');
+    },
+    // vue版本的组件进场处理
+    vueEnter: function vueEnter() {
+      var _this = this;
+      // 动画进入时的类名
+      var classNames = getClassNames(this.mode);
+      // 定义状态和发出动画进入前事件
+      this.status = 'enter';
+      this.$emit('beforeEnter');
+      this.inited = true;
+      this.display = true;
+      this.classes = classNames.enter;
+      this.$nextTick( /*#__PURE__*/(0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
+        return _regenerator.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                // 标识动画尚未结束
+                _this.$emit('enter');
+                _this.transitionEnded = false;
+                // 组件动画进入后触发的事件
+                _this.$emit('afterEnter');
+                // 赋予组件enter-to类名
+                _this.classes = classNames['enter-to'];
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      })));
+    },
+    // 动画离场处理
+    vueLeave: function vueLeave() {
+      var _this2 = this;
+      // 如果不是展示状态，无需执行逻辑
+      if (!this.display) return;
+      var classNames = getClassNames(this.mode);
+      // 标记离开状态和发出事件
+      this.status = 'leave';
+      this.$emit('beforeLeave');
+      // 获得类名
+      this.classes = classNames.leave;
+      this.$nextTick(function () {
+        // 动画正在离场的状态
+        _this2.transitionEnded = false;
+        _this2.$emit('leave');
+        // 组件执行动画，到了执行的执行时间后，执行一些额外处理
+        setTimeout(_this2.onTransitionEnd, _this2.duration);
+        _this2.classes = classNames['leave-to'];
       });
-      return;
+    },
+    // 完成过渡后触发
+    onTransitionEnd: function onTransitionEnd() {
+      // 如果已经是结束的状态，无需再处理
+      if (this.transitionEnded) return;
+      this.transitionEnded = true;
+      // 发出组件动画执行后的事件
+      this.$emit(this.status === 'leave' ? 'afterLeave' : 'afterEnter');
+      if (!this.show && this.display) {
+        this.display = false;
+        this.inited = false;
+      }
     }
   }
-  next();
-});
-// 全局路由后置守卫
-router.afterEach(function (to, from) {
-  console.log('------afterEach-------');
-});
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
+};
+exports.default = _default;
 
 /***/ }),
-/* 178 */
-/*!**************************************************************************************************************************************************!*\
-  !*** /Users/zhudi/Documents/workSpace/weChat-Demo/nbjy/node_modules/_uni-simple-router@2.0.8-beta.4@uni-simple-router/dist/uni-simple-router.js ***!
-  \**************************************************************************************************************************************************/
+/* 233 */
+/*!******************************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/components/u-transition/nvue.ani-map.js ***!
+  \******************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(uni, module) {var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof = __webpack_require__(/*! @babel/runtime/helpers/typeof */ 13);
-!function (e, t) {
-  "object" == ( false ? undefined : _typeof(exports)) && "object" == ( false ? undefined : _typeof(module)) ? module.exports = t() :  true ? !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (t),
-				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : undefined;
-}(self, function () {
-  return e = {
-    779: function _(e, t, r) {
-      var o = r(173);
-      e.exports = function e(t, r, n) {
-        return o(r) || (n = r || n, r = []), n = n || {}, t instanceof RegExp ? function (e, t) {
-          var r = e.source.match(/\((?!\?)/g);
-          if (r) for (var o = 0; o < r.length; o++) {
-            t.push({
-              name: o,
-              prefix: null,
-              delimiter: null,
-              optional: !1,
-              repeat: !1,
-              partial: !1,
-              asterisk: !1,
-              pattern: null
-            });
-          }
-          return s(e, t);
-        }(t, r) : o(t) ? function (t, r, o) {
-          for (var n = [], a = 0; a < t.length; a++) {
-            n.push(e(t[a], r, o).source);
-          }
-          return s(new RegExp("(?:" + n.join("|") + ")", p(o)), r);
-        }(t, r, n) : function (e, t, r) {
-          return f(a(e, r), t, r);
-        }(t, r, n);
-      }, e.exports.parse = a, e.exports.compile = function (e, t) {
-        return u(a(e, t), t);
-      }, e.exports.tokensToFunction = u, e.exports.tokensToRegExp = f;
-      var n = new RegExp(["(\\\\.)", "([\\/.])?(?:(?:\\:(\\w+)(?:\\(((?:\\\\.|[^\\\\()])+)\\))?|\\(((?:\\\\.|[^\\\\()])+)\\))([+*?])?|(\\*))"].join("|"), "g");
-      function a(e, t) {
-        for (var r, o = [], a = 0, i = 0, u = "", s = t && t.delimiter || "/"; null != (r = n.exec(e));) {
-          var p = r[0],
-            f = r[1],
-            h = r.index;
-          if (u += e.slice(i, h), i = h + p.length, f) u += f[1];else {
-            var v = e[i],
-              y = r[2],
-              g = r[3],
-              d = r[4],
-              m = r[5],
-              b = r[6],
-              P = r[7];
-            u && (o.push(u), u = "");
-            var O = null != y && null != v && v !== y,
-              k = "+" === b || "*" === b,
-              w = "?" === b || "*" === b,
-              j = r[2] || s,
-              R = d || m;
-            o.push({
-              name: g || a++,
-              prefix: y || "",
-              delimiter: j,
-              optional: w,
-              repeat: k,
-              partial: O,
-              asterisk: !!P,
-              pattern: R ? c(R) : P ? ".*" : "[^" + l(j) + "]+?"
-            });
-          }
-        }
-        return i < e.length && (u += e.substr(i)), u && o.push(u), o;
-      }
-      function i(e) {
-        return encodeURI(e).replace(/[\/?#]/g, function (e) {
-          return "%" + e.charCodeAt(0).toString(16).toUpperCase();
-        });
-      }
-      function u(e, t) {
-        for (var r = new Array(e.length), n = 0; n < e.length; n++) {
-          "object" == _typeof(e[n]) && (r[n] = new RegExp("^(?:" + e[n].pattern + ")$", p(t)));
-        }
-        return function (t, n) {
-          for (var a = "", u = t || {}, l = (n || {}).pretty ? i : encodeURIComponent, c = 0; c < e.length; c++) {
-            var s = e[c];
-            if ("string" != typeof s) {
-              var p,
-                f = u[s.name];
-              if (null == f) {
-                if (s.optional) {
-                  s.partial && (a += s.prefix);
-                  continue;
-                }
-                throw new TypeError('Expected "' + s.name + '" to be defined');
-              }
-              if (o(f)) {
-                if (!s.repeat) throw new TypeError('Expected "' + s.name + '" to not repeat, but received `' + JSON.stringify(f) + "`");
-                if (0 === f.length) {
-                  if (s.optional) continue;
-                  throw new TypeError('Expected "' + s.name + '" to not be empty');
-                }
-                for (var h = 0; h < f.length; h++) {
-                  if (p = l(f[h]), !r[c].test(p)) throw new TypeError('Expected all "' + s.name + '" to match "' + s.pattern + '", but received `' + JSON.stringify(p) + "`");
-                  a += (0 === h ? s.prefix : s.delimiter) + p;
-                }
-              } else {
-                if (p = s.asterisk ? encodeURI(f).replace(/[?#]/g, function (e) {
-                  return "%" + e.charCodeAt(0).toString(16).toUpperCase();
-                }) : l(f), !r[c].test(p)) throw new TypeError('Expected "' + s.name + '" to match "' + s.pattern + '", but received "' + p + '"');
-                a += s.prefix + p;
-              }
-            } else a += s;
-          }
-          return a;
-        };
-      }
-      function l(e) {
-        return e.replace(/([.+*?=^!:${}()[\]|\/\\])/g, "\\$1");
-      }
-      function c(e) {
-        return e.replace(/([=!:$\/()])/g, "\\$1");
-      }
-      function s(e, t) {
-        return e.keys = t, e;
-      }
-      function p(e) {
-        return e && e.sensitive ? "" : "i";
-      }
-      function f(e, t, r) {
-        o(t) || (r = t || r, t = []);
-        for (var n = (r = r || {}).strict, a = !1 !== r.end, i = "", u = 0; u < e.length; u++) {
-          var c = e[u];
-          if ("string" == typeof c) i += l(c);else {
-            var f = l(c.prefix),
-              h = "(?:" + c.pattern + ")";
-            t.push(c), c.repeat && (h += "(?:" + f + h + ")*"), i += h = c.optional ? c.partial ? f + "(" + h + ")?" : "(?:" + f + "(" + h + "))?" : f + "(" + h + ")";
-          }
-        }
-        var v = l(r.delimiter || "/"),
-          y = i.slice(-v.length) === v;
-        return n || (i = (y ? i.slice(0, -v.length) : i) + "(?:" + v + "(?=$))?"), i += a ? "$" : n && y ? "" : "(?=" + v + "|$)", s(new RegExp("^" + i, p(r)), t);
-      }
-    },
-    173: function _(e) {
-      e.exports = Array.isArray || function (e) {
-        return "[object Array]" == Object.prototype.toString.call(e);
-      };
-    },
-    844: function _(e, t, r) {
-      "use strict";
+"use strict";
 
-      var o = this && this.__assign || function () {
-        return (o = Object.assign || function (e) {
-          for (var t, r = 1, o = arguments.length; r < o; r++) {
-            for (var n in t = arguments[r]) {
-              Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
-            }
-          }
-          return e;
-        }).apply(this, arguments);
-      };
-      Object.defineProperty(t, "__esModule", {
-        value: !0
-      }), t.buildVueRouter = t.buildVueRoutes = void 0;
-      var n = r(366),
-        a = r(883),
-        i = r(789),
-        u = r(169);
-      t.buildVueRoutes = function (e, t) {
-        for (var r = e.routesMap, o = r.pathMap, l = r.finallyPathList, c = Object.keys(t), s = 0; s < c.length; s++) {
-          var p = c[s],
-            f = o[p],
-            h = t[p];
-          if (f) {
-            var v = i.getRoutePath(f, e).finallyPath;
-            if (v instanceof Array) throw new Error("非 vueRouterDev 模式下，alias、aliasPath、path 无法提供数组类型！ " + JSON.stringify(f));
-            null != f.name && (h.name = f.name);
-            var y = h.path,
-              g = h.alias;
-            delete h.alias, h.path = v, "/" === y && null != g && (h.alias = g, h.path = y), f.beforeEnter && (h.beforeEnter = function (t, r, o) {
-              u.onTriggerEachHook(t, r, e, n.hookToggle.enterHooks, o);
-            });
-          } else a.warn(p + " 路由地址在路由表中未找到，确定是否传递漏啦", e, !0);
-        }
-        return l.includes("*") && (t["*"] = o["*"]), t;
-      }, t.buildVueRouter = function (e, t, r) {
-        var n;
-        n = "[object Array]" === i.getDataType(r) ? r : Object.values(r);
-        var a = e.options.h5,
-          u = a.scrollBehavior,
-          l = a.fallback,
-          c = t.options.scrollBehavior;
-        t.options.scrollBehavior = function (e, t, r) {
-          return c && c(e, t, r), u(e, t, r);
-        }, t.fallback = l;
-        var s = new t.constructor(o(o({}, e.options.h5), {
-          base: t.options.base,
-          mode: t.options.mode,
-          routes: n
-        }));
-        t.matcher = s.matcher;
-      };
-    },
-    369: function _(e, t, r) {
-      "use strict";
 
-      Object.defineProperty(t, "__esModule", {
-        value: !0
-      }), t.addKeepAliveInclude = void 0;
-      var o = r(789),
-        n = ["", ""],
-        a = n[0],
-        i = n[1];
-      t.addKeepAliveInclude = function (e) {
-        var t = getApp(),
-          r = t.keepAliveInclude;
-        if (0 === e.runId && 0 === r.length) {
-          i = t.$route.params.__id__;
-          var n = (a = t.$route.meta.name) + "-" + i;
-          t.keepAliveInclude.push(n);
-        } else if ("" !== a) for (var u = t.keepAliveInclude, l = 0; l < u.length; l++) {
-          n = u[l];
-          var c = new RegExp(a + "-(\\d+)$"),
-            s = a + "-" + i;
-          if (c.test(n) && n !== s) {
-            o.removeSimpleValue(u, s), a = "";
-            break;
-          }
-        }
-      };
-    },
-    147: function _(e, t) {
-      "use strict";
-
-      var _r,
-        o = this && this.__extends || (_r = function r(e, t) {
-          return (_r = Object.setPrototypeOf || {
-            __proto__: []
-          } instanceof Array && function (e, t) {
-            e.__proto__ = t;
-          } || function (e, t) {
-            for (var r in t) {
-              Object.prototype.hasOwnProperty.call(t, r) && (e[r] = t[r]);
-            }
-          })(e, t);
-        }, function (e, t) {
-          function o() {
-            this.constructor = e;
-          }
-          _r(e, t), e.prototype = null === t ? Object.create(t) : (o.prototype = t.prototype, new o());
-        });
-      Object.defineProperty(t, "__esModule", {
-        value: !0
-      }), t.proxyH5Mount = t.proxyEachHook = t.MyArray = void 0;
-      var n = function (e) {
-        function t(r, o, n, a) {
-          var i = e.call(this) || this;
-          return i.router = r, i.vueEachArray = o, i.myEachHook = n, i.hookName = a, Object.setPrototypeOf(i, t.prototype), i;
-        }
-        return o(t, e), t.prototype.push = function (e) {
-          var t = this;
-          this.vueEachArray.push(e);
-          var r = this.length;
-          this[this.length] = function (e, o, n) {
-            r > 0 ? t.vueEachArray[r](e, o, function () {
-              n && n();
-            }) : t.myEachHook(e, o, function (a) {
-              !1 === a ? n(!1) : t.vueEachArray[r](e, o, function (e) {
-                n(a);
-              });
-            }, t.router, !0);
-          };
-        }, t;
-      }(Array);
-      t.MyArray = n, t.proxyEachHook = function (e, t) {
-        for (var r = ["beforeHooks", "afterHooks"], o = 0; o < r.length; o++) {
-          var a = r[o],
-            i = e.lifeCycle[a][0];
-          if (i) {
-            var u = t[a];
-            t[a] = new n(e, u, i, a);
-          }
-        }
-      }, t.proxyH5Mount = function (e) {
-        var t;
-        if (0 === e.mount.length) {
-          if (null === (t = e.options.h5) || void 0 === t ? void 0 : t.vueRouterDev) return;
-          navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/) && setTimeout(function () {
-            if (document.getElementsByTagName("uni-page").length > 0) return !1;
-            window.location.reload();
-          }, 0);
-        } else e.mount[0].app.$mount(), e.mount = [];
-      };
-    },
-    814: function _(e, t) {
-      "use strict";
-
-      var r = this && this.__assign || function () {
-        return (r = Object.assign || function (e) {
-          for (var t, r = 1, o = arguments.length; r < o; r++) {
-            for (var n in t = arguments[r]) {
-              Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
-            }
-          }
-          return e;
-        }).apply(this, arguments);
-      };
-      Object.defineProperty(t, "__esModule", {
-        value: !0
-      }), t.tabIndexSelect = t.HomeNvueSwitchTab = t.runtimeQuit = t.registerLoddingPage = void 0;
-      var o = null,
-        n = null;
-      t.registerLoddingPage = function (e) {
-        var t;
-        if (null === (t = e.options.APP) || void 0 === t ? void 0 : t.registerLoadingPage) {
-          var o = e.options.APP,
-            n = o.loadingPageHook,
-            a = o.loadingPageStyle;
-          n(new plus.nativeObj.View("router-loadding", r({
-            top: "0px",
-            left: "0px",
-            height: "100%",
-            width: "100%"
-          }, a())));
-        }
-      }, t.runtimeQuit = function (e) {
-        void 0 === e && (e = "再按一次退出应用");
-        var t = +new Date();
-        o ? t - o < 1e3 && plus.runtime.quit() : (o = t, uni.showToast({
-          title: e,
-          icon: "none",
-          position: "bottom",
-          duration: 1e3
-        }), setTimeout(function () {
-          o = null;
-        }, 1e3));
-      }, t.HomeNvueSwitchTab = function (e, t, r) {
-        return new Promise(function (t) {
-          return 0 !== e.runId ? t(!1) : __uniConfig.tabBar && Array.isArray(__uniConfig.tabBar.list) ? void r({
-            url: __uniConfig.entryPagePath,
-            animationDuration: 0,
-            complete: function complete() {
-              return t(!0);
-            }
-          }) : t(!1);
-        });
-      }, t.tabIndexSelect = function (e, t) {
-        if (!__uniConfig.tabBar || !Array.isArray(__uniConfig.tabBar.list)) return !1;
-        for (var r = __uniConfig.tabBar.list, o = [], a = 0, i = 0; i < r.length; i++) {
-          var u = r[i];
-          if ("/" + u.pagePath !== e.path && "/" + u.pagePath !== t.path || (u.pagePath === t.path && (a = i), o.push(u)), 2 === o.length) break;
-        }
-        return 2 === o.length && (null == n && (n = uni.requireNativePlugin("uni-tabview")), n.switchSelect({
-          index: a
-        }), !0);
-      };
-    },
-    334: function _(e, t) {
-      "use strict";
-
-      Object.defineProperty(t, "__esModule", {
-        value: !0
-      }), t.getEnterPath = void 0, t.getEnterPath = function (e, t) {
-        switch (t.options.platform) {
-          case "mp-alipay":
-          case "mp-weixin":
-          case "mp-toutiao":
-          case "mp-qq":
-            return e.$options.mpInstance.route;
-          case "mp-baidu":
-            return e.$options.mpInstance.is || e.$options.mpInstance.pageinstance.route;
-        }
-        return e.$options.mpInstance.route;
-      };
-    },
-    282: function _(e, t, r) {
-      "use strict";
-
-      Object.defineProperty(t, "__esModule", {
-        value: !0
-      }), t.proxyHookName = t.proxyHookDeps = t.lifeCycle = t.baseConfig = t.mpPlatformReg = void 0;
-      var o = r(883),
-        n = r(99);
-      t.mpPlatformReg = "(^mp-weixin$)|(^mp-baidu$)|(^mp-alipay$)|(^mp-toutiao$)|(^mp-qq$)|(^mp-360$)", t.baseConfig = {
-        h5: {
-          paramsToQuery: !1,
-          vueRouterDev: !1,
-          vueNext: !1,
-          mode: "hash",
-          base: "/",
-          linkActiveClass: "router-link-active",
-          linkExactActiveClass: "router-link-exact-active",
-          scrollBehavior: function scrollBehavior(e, t, r) {
-            return {
-              x: 0,
-              y: 0
-            };
-          },
-          fallback: !0
-        },
-        APP: {
-          registerLoadingPage: !0,
-          loadingPageStyle: function loadingPageStyle() {
-            return JSON.parse('{"backgroundColor":"#FFF"}');
-          },
-          loadingPageHook: function loadingPageHook(e) {
-            e.show();
-          },
-          launchedHook: function launchedHook() {
-            plus.navigator.closeSplashscreen();
-          },
-          animation: {}
-        },
-        applet: {
-          animationDuration: 300
-        },
-        beforeProxyHooks: {
-          onLoad: function onLoad(e, t, r) {
-            var o = e[0];
-            t([n.parseQuery({
-              query: o
-            }, r)]);
-          }
-        },
-        platform: "h5",
-        keepUniOriginNav: !1,
-        debugger: !1,
-        routerBeforeEach: function routerBeforeEach(e, t, r) {
-          r();
-        },
-        routerAfterEach: function routerAfterEach(e, t) {},
-        routerErrorEach: function routerErrorEach(e, t) {
-          t.$lockStatus = !1, o.err(e, t, !0);
-        },
-        detectBeforeLock: function detectBeforeLock(e, t, r) {},
-        routes: [{
-          path: "/choose-location"
-        }, {
-          path: "/open-location"
-        }, {
-          path: "/preview-image"
-        }]
-      }, t.lifeCycle = {
-        beforeHooks: [],
-        afterHooks: [],
-        routerBeforeHooks: [],
-        routerAfterHooks: [],
-        routerErrorHooks: []
-      }, t.proxyHookDeps = {
-        resetIndex: [],
-        hooks: {},
-        options: {}
-      }, t.proxyHookName = ["onLaunch", "onShow", "onHide", "onError", "onInit", "onLoad", "onReady", "onUnload", "onResize", "created", "beforeMount", "mounted", "beforeDestroy", "destroyed"];
-    },
-    801: function _(e, t, r) {
-      "use strict";
-
-      Object.defineProperty(t, "__esModule", {
-        value: !0
-      }), t.createRouteMap = void 0;
-      var o = r(883),
-        n = r(789);
-      t.createRouteMap = function (e, t) {
-        var r = {
-          finallyPathList: [],
-          finallyPathMap: Object.create(null),
-          aliasPathMap: Object.create(null),
-          pathMap: Object.create(null),
-          vueRouteMap: Object.create(null),
-          nameMap: Object.create(null)
-        };
-        return t.forEach(function (t) {
-          var a = n.getRoutePath(t, e),
-            i = a.finallyPath,
-            u = a.aliasPath,
-            l = a.path;
-          if (null == l) throw new Error("请提供一个完整的路由对象，包括以绝对路径开始的 ‘path’ 字符串 " + JSON.stringify(t));
-          if (i instanceof Array && !e.options.h5.vueRouterDev && "h5" === e.options.platform) throw new Error("非 vueRouterDev 模式下，route.alias 目前无法提供数组类型！ " + JSON.stringify(t));
-          var c = i,
-            s = u;
-          "h5" !== e.options.platform && 0 !== c.indexOf("/") && "*" !== l && o.warn("当前路由对象下，route：" + JSON.stringify(t) + " 是否缺少了前缀 ‘/’", e, !0), r.finallyPathMap[c] || (r.finallyPathMap[c] = t, r.aliasPathMap[s] = t, r.pathMap[l] = t, r.finallyPathList.push(c), null != t.name && (r.nameMap[t.name] = t));
-        }), r;
-      };
-    },
-    662: function _(e, t, r) {
-      "use strict";
-
-      Object.defineProperty(t, "__esModule", {
-        value: !0
-      }), t.registerEachHooks = t.registerRouterHooks = t.registerHook = void 0;
-      var o = r(366),
-        n = r(169);
-      function a(e, t) {
-        e[0] = t;
-      }
-      t.registerHook = a, t.registerRouterHooks = function (e, t) {
-        return a(e.routerBeforeHooks, function (e, r, o) {
-          t.routerBeforeEach(e, r, o);
-        }), a(e.routerAfterHooks, function (e, r) {
-          t.routerAfterEach(e, r);
-        }), a(e.routerErrorHooks, function (e, r) {
-          t.routerErrorEach(e, r);
-        }), e;
-      }, t.registerEachHooks = function (e, t, r) {
-        a(e.lifeCycle[t], function (e, a, i, u, l) {
-          l ? n.onTriggerEachHook(e, a, u, o.hookToggle[t], i) : r(e, a, i);
-        });
-      };
-    },
-    460: function _(e, t, r) {
-      "use strict";
-
-      var o = this && this.__assign || function () {
-        return (o = Object.assign || function (e) {
-          for (var t, r = 1, o = arguments.length; r < o; r++) {
-            for (var n in t = arguments[r]) {
-              Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
-            }
-          }
-          return e;
-        }).apply(this, arguments);
-      };
-      Object.defineProperty(t, "__esModule", {
-        value: !0
-      }), t.initMixins = t.getMixins = void 0;
-      var n = r(801),
-        a = r(844),
-        i = r(147),
-        u = r(814),
-        l = r(845),
-        c = r(890),
-        s = r(789),
-        p = r(334),
-        f = r(282),
-        h = r(925),
-        v = !1,
-        y = !1,
-        g = {
-          app: !1,
-          page: ""
-        };
-      function d(e, t) {
-        var r = t.options.platform;
-        return new RegExp(f.mpPlatformReg, "g").test(r) && (r = "app-lets"), {
-          h5: {
-            beforeCreate: function beforeCreate() {
-              var e;
-              if (h.beforeProxyHook(this, t), this.$options.router) {
-                t.$route = this.$options.router;
-                var r = [];
-                (null === (e = t.options.h5) || void 0 === e ? void 0 : e.vueRouterDev) ? r = t.options.routes : (r = n.createRouteMap(t, this.$options.router.options.routes).finallyPathMap, t.routesMap.vueRouteMap = r, a.buildVueRoutes(t, r)), a.buildVueRouter(t, this.$options.router, r), i.proxyEachHook(t, this.$options.router);
-              }
-            }
-          },
-          "app-plus": {
-            beforeCreate: function beforeCreate() {
-              h.beforeProxyHook(this, t), v || (v = !0, l.proxyPageHook(this, t, "app"), u.registerLoddingPage(t));
-            }
-          },
-          "app-lets": {
-            beforeCreate: function beforeCreate() {
-              h.beforeProxyHook(this, t), s.voidFun("UNI-SIMPLE-ROUTER");
-              var e = !0,
-                r = this.$options.mpType;
-              y || ("component" === r ? e = s.assertParentChild(g.page, this) : "page" === r ? (g[r] = p.getEnterPath(this, t), t.enterPath = g[r]) : g[r] = !0, e && l.proxyPageHook(this, t, r));
-            },
-            onLoad: function onLoad() {
-              s.voidFun("UNI-SIMPLE-ROUTER"), !y && s.assertParentChild(g.page, this) && (y = !0, c.forceGuardEach(t));
-            }
-          }
-        }[r];
-      }
-      t.getMixins = d, t.initMixins = function (e, t) {
-        var r = n.createRouteMap(t, t.options.routes);
-        t.routesMap = r, e.mixin(o({}, d(0, t)));
-      };
-    },
-    789: function _(e, t, r) {
-      "use strict";
-
-      var o = this && this.__assign || function () {
-          return (o = Object.assign || function (e) {
-            for (var t, r = 1, o = arguments.length; r < o; r++) {
-              for (var n in t = arguments[r]) {
-                Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
-              }
-            }
-            return e;
-          }).apply(this, arguments);
-        },
-        n = this && this.__rest || function (e, t) {
-          var r = {};
-          for (var o in e) {
-            Object.prototype.hasOwnProperty.call(e, o) && t.indexOf(o) < 0 && (r[o] = e[o]);
-          }
-          if (null != e && "function" == typeof Object.getOwnPropertySymbols) {
-            var n = 0;
-            for (o = Object.getOwnPropertySymbols(e); n < o.length; n++) {
-              t.indexOf(o[n]) < 0 && Object.prototype.propertyIsEnumerable.call(e, o[n]) && (r[o[n]] = e[o[n]]);
-            }
-          }
-          return r;
-        },
-        a = this && this.__spreadArrays || function () {
-          for (var e = 0, t = 0, r = arguments.length; t < r; t++) {
-            e += arguments[t].length;
-          }
-          var o = Array(e),
-            n = 0;
-          for (t = 0; t < r; t++) {
-            for (var a = arguments[t], i = 0, u = a.length; i < u; i++, n++) {
-              o[n] = a[i];
-            }
-          }
-          return o;
-        };
-      Object.defineProperty(t, "__esModule", {
-        value: !0
-      }), t.deepDecodeQuery = t.resolveAbsolutePath = t.assertParentChild = t.lockDetectWarn = t.deepClone = t.baseClone = t.assertDeepObject = t.paramsToQuery = t.forMatNextToFrom = t.urlToJson = t.getUniCachePage = t.removeSimpleValue = t.copyData = t.getDataType = t.routesForMapRoute = t.notRouteTo404 = t.getWildcardRule = t.assertNewOptions = t.getRoutePath = t.notDeepClearNull = t.mergeConfig = t.timeOut = t.def = t.voidFun = void 0;
-      var i = r(282),
-        u = r(169),
-        l = r(883),
-        c = r(890),
-        s = r(779);
-      function p(e, t) {
-        for (var r = Object.create(null), n = Object.keys(e).concat(["resolveQuery", "parseQuery"]), i = 0; i < n.length; i += 1) {
-          var u = n[i];
-          null != t[u] ? t[u].constructor === Object ? r[u] = o(o({}, e[u]), t[u]) : r[u] = "routes" === u ? a(e[u], t[u]) : t[u] : r[u] = e[u];
-        }
-        return r;
-      }
-      function f(e, t) {
-        var r = e.aliasPath || e.alias || e.path;
-        return "h5" !== t.options.platform && (r = e.path), {
-          finallyPath: r,
-          aliasPath: e.aliasPath || e.path,
-          path: e.path,
-          alias: e.alias
-        };
-      }
-      function h(e, t) {
-        var r = e.routesMap.finallyPathMap["*"];
-        if (r) return r;
-        throw t && u.ERRORHOOK[0](t, e), new Error("当前路由表匹配规则已全部匹配完成，未找到满足的匹配规则。你可以使用 '*' 通配符捕捉最后的异常");
-      }
-      function v(e) {
-        return Object.prototype.toString.call(e);
-      }
-      function y(e, t) {
-        if (null == e) t = e;else for (var r = 0, o = Object.keys(e); r < o.length; r++) {
-          var n = o[r],
-            a = n;
-          e[n] !== e && ("object" == _typeof(e[n]) ? (t[a] = "[object Array]" === v(e[n]) ? [] : {}, t[a] = y(e[n], t[a])) : t[a] = e[n]);
-        }
-        return t;
-      }
-      function g(e) {
-        var t = "[object Array]" === v(e) ? [] : {};
-        return y(e, t), t;
-      }
-      t.voidFun = function () {
-        for (var e = [], t = 0; t < arguments.length; t++) {
-          e[t] = arguments[t];
-        }
-      }, t.def = function (e, t, r) {
-        Object.defineProperty(e, t, {
-          get: function get() {
-            return r();
-          }
-        });
-      }, t.timeOut = function (e) {
-        return new Promise(function (t) {
-          setTimeout(function () {
-            t();
-          }, e);
-        });
-      }, t.mergeConfig = p, t.notDeepClearNull = function (e) {
-        for (var t in e) {
-          null == e[t] && delete e[t];
-        }
-        return e;
-      }, t.getRoutePath = f, t.assertNewOptions = function (e) {
-        var t,
-          r = e.platform,
-          o = e.routes;
-        if (null == r) throw new Error("你在实例化路由时必须传递 'platform'");
-        if (null == o || 0 === o.length) throw new Error("你在实例化路由时必须传递 routes 为空，这是无意义的。");
-        return "h5" === e.platform && (null === (t = e.h5) || void 0 === t ? void 0 : t.vueRouterDev) && (i.baseConfig.routes = []), p(i.baseConfig, e);
-      }, t.getWildcardRule = h, t.notRouteTo404 = function (e, t, r, o) {
-        if ("*" !== t.path) return t;
-        var n = t.redirect;
-        if (void 0 === n) throw new Error(" *  通配符必须配合 redirect 使用。redirect: string | Location | Function");
-        var a = n;
-        return "function" == typeof a && (a = a(r)), c.navjump(a, e, o, void 0, void 0, void 0, !1);
-      }, t.routesForMapRoute = function e(t, r, o, n) {
-        var a;
-        if (void 0 === n && (n = !1), null === (a = t.options.h5) || void 0 === a ? void 0 : a.vueRouterDev) return {
-          path: r
-        };
-        for (var i = r.split("?")[0], u = "", l = t.routesMap, c = 0; c < o.length; c++) {
-          for (var p = l[o[c]], f = 0, y = Object.entries(p); f < y.length; f++) {
-            var g = y[f],
-              d = g[0],
-              m = g[1];
-            if ("*" !== d) {
-              var b = m,
-                P = d;
-              if ("[object Array]" === v(p) && (P = b), null != s(P).exec(i)) return "[object String]" === v(b) ? l.finallyPathMap[b] : b;
-            } else "" === u && (u = "*");
-          }
-        }
-        if (n) return {};
-        if (l.aliasPathMap) {
-          var O = e(t, r, ["aliasPathMap"], !0);
-          if (Object.keys(O).length > 0) return O;
-        }
-        if ("" !== u) return h(t);
-        throw new Error(r + " 路径无法在路由表中找到！检查跳转路径及路由表");
-      }, t.getDataType = v, t.copyData = function (e) {
-        return JSON.parse(JSON.stringify(e));
-      }, t.removeSimpleValue = function (e, t) {
-        for (var r = 0; r < e.length; r++) {
-          if (e[r] === t) return e.splice(r, 1), !0;
-        }
-        return !1;
-      }, t.getUniCachePage = function (e) {
-        var t = getCurrentPages();
-        if (null == e) return t;
-        if (0 === t.length) return t;
-        var r = t.reverse()[e];
-        return null == r ? [] : r;
-      }, t.urlToJson = function (e) {
-        var t = {},
-          r = e.split("?"),
-          o = r[0],
-          n = r[1];
-        if (null != n) for (var a = 0, i = n.split("&"); a < i.length; a++) {
-          var u = i[a].split("=");
-          t[u[0]] = u[1];
-        }
-        return {
-          path: o,
-          query: t
-        };
-      }, t.forMatNextToFrom = function (e, t, r) {
-        var o = [t, r],
-          n = o[0],
-          a = o[1];
-        if ("h5" === e.options.platform) {
-          var i = e.options.h5,
-            u = i.vueNext,
-            l = i.vueRouterDev;
-          u || l || (n = c.createRoute(e, void 0, n), a = c.createRoute(e, void 0, a));
-        } else n = c.createRoute(e, void 0, g(n)), a = c.createRoute(e, void 0, g(a));
-        return {
-          matTo: n,
-          matFrom: a
-        };
-      }, t.paramsToQuery = function (e, t) {
-        var r;
-        if ("h5" === e.options.platform && !(null === (r = e.options.h5) || void 0 === r ? void 0 : r.paramsToQuery)) return t;
-        if ("[object Object]" === v(t)) {
-          var a = t,
-            i = a.name,
-            l = a.params,
-            c = n(a, ["name", "params"]),
-            s = l;
-          if ("h5" !== e.options.platform && null == s && (s = {}), null != i && null != s) {
-            var p = e.routesMap.nameMap[i];
-            null == p && (p = h(e, {
-              type: 2,
-              msg: "命名路由为：" + i + " 的路由，无法在路由表中找到！",
-              toRule: t
-            }));
-            var y = f(p, e).finallyPath;
-            if (!y.includes(":")) return o(o({}, c), {
-              path: y,
-              query: s
-            });
-            u.ERRORHOOK[0]({
-              type: 2,
-              msg: "动态路由：" + y + " 无法使用 paramsToQuery！",
-              toRule: t
-            }, e);
-          }
-        }
-        return t;
-      }, t.assertDeepObject = function (e) {
-        var t = null;
-        try {
-          t = JSON.stringify(e).match(/\{|\[|\}|\]/g);
-        } catch (e) {
-          l.warnLock("传递的参数解析对象失败。" + e);
-        }
-        return null != t && t.length > 3;
-      }, t.baseClone = y, t.deepClone = g, t.lockDetectWarn = function (e, t, r, o, n, a) {
-        if (void 0 === n && (n = {}), "afterHooks" === a) o();else {
-          var i = e.options.detectBeforeLock;
-          i && i(e, t, r), e.$lockStatus ? e.options.routerErrorEach({
-            type: 2,
-            msg: "当前页面正在处于跳转状态，请稍后再进行跳转....",
-            NAVTYPE: r,
-            uniActualData: n
-          }, e) : o();
-        }
-      }, t.assertParentChild = function (e, t) {
-        for (; null != t.$parent;) {
-          var r = t.$parent.$mp;
-          if (r.page && r.page.is === e) return !0;
-          t = t.$parent;
-        }
-        try {
-          if (t.$mp.page.is === e || t.$mp.page.route === e) return !0;
-        } catch (e) {
-          return !1;
-        }
-        return !1;
-      }, t.resolveAbsolutePath = function (e, t) {
-        var r = /^\/?([^\?\s]+)(\?.+)?$/,
-          o = e.trim();
-        if (!r.test(o)) throw new Error("【" + e + "】 路径错误，请提供完整的路径(10001)。");
-        var n = o.match(r);
-        if (null == n) throw new Error("【" + e + "】 路径错误，请提供完整的路径(10002)。");
-        var a = n[2] || "";
-        if (/^\.\/[^\.]+/.test(o)) return (t.currentRoute.path + e).replace(/[^\/]+\.\//, "");
-        var i = n[1].replace(/\//g, "\\/").replace(/\.\./g, "[^\\/]+").replace(/\./g, "\\."),
-          u = new RegExp("^\\/" + i + "$"),
-          l = t.options.routes.filter(function (e) {
-            return u.test(e.path);
-          });
-        if (1 !== l.length) throw new Error("【" + e + "】 路径错误，尝试转成绝对路径失败，请手动转成绝对路径(10003)。");
-        return l[0].path + a;
-      }, t.deepDecodeQuery = function e(t) {
-        for (var r = "[object Array]" === v(t) ? [] : {}, o = Object.keys(t), n = 0; n < o.length; n++) {
-          var a = o[n],
-            i = t[a];
-          if ("string" == typeof i) try {
-            var u = JSON.parse(decodeURIComponent(i));
-            "object" != _typeof(u) && (u = i), r[a] = u;
-          } catch (e) {
-            try {
-              r[a] = decodeURIComponent(i);
-            } catch (e) {
-              r[a] = i;
-            }
-          } else if ("object" == _typeof(i)) {
-            var l = e(i);
-            r[a] = l;
-          } else r[a] = i;
-        }
-        return r;
-      };
-    },
-    883: function _(e, t) {
-      "use strict";
-
-      function r(e, t, r, o) {
-        if (void 0 === o && (o = !1), !o) {
-          var n = "[object Object]" === t.toString();
-          if (!1 === t) return !1;
-          if (n && !1 === t[e]) return !1;
-        }
-        return console[e](r), !0;
-      }
-      Object.defineProperty(t, "__esModule", {
-        value: !0
-      }), t.warnLock = t.log = t.warn = t.err = t.isLog = void 0, t.isLog = r, t.err = function (e, t, o) {
-        r("error", t.options.debugger, e, o);
-      }, t.warn = function (e, t, o) {
-        r("warn", t.options.debugger, e, o);
-      }, t.log = function (e, t, o) {
-        r("log", t.options.debugger, e, o);
-      }, t.warnLock = function (e) {
-        console.warn(e);
-      };
-    },
-    607: function _(e, t, r) {
-      "use strict";
-
-      var o = this && this.__createBinding || (Object.create ? function (e, t, r, o) {
-          void 0 === o && (o = r), Object.defineProperty(e, o, {
-            enumerable: !0,
-            get: function get() {
-              return t[r];
-            }
-          });
-        } : function (e, t, r, o) {
-          void 0 === o && (o = r), e[o] = t[r];
-        }),
-        n = this && this.__exportStar || function (e, t) {
-          for (var r in e) {
-            "default" === r || Object.prototype.hasOwnProperty.call(t, r) || o(t, e, r);
-          }
-        };
-      Object.defineProperty(t, "__esModule", {
-        value: !0
-      }), t.createRouter = t.RouterMount = t.runtimeQuit = void 0, n(r(366), t), n(r(309), t), n(r(789), t);
-      var a = r(814);
-      Object.defineProperty(t, "runtimeQuit", {
-        enumerable: !0,
-        get: function get() {
-          return a.runtimeQuit;
-        }
-      });
-      var i = r(963);
-      Object.defineProperty(t, "RouterMount", {
-        enumerable: !0,
-        get: function get() {
-          return i.RouterMount;
-        }
-      }), Object.defineProperty(t, "createRouter", {
-        enumerable: !0,
-        get: function get() {
-          return i.createRouter;
-        }
-      });
-      var u = "2.0.8-BETA.4";
-      /[A-Z]/g.test(u) && console.warn("【" + "UNI-SIMPLE-ROUTER".toLocaleLowerCase() + " 提示】：当前版本 " + u.toLocaleLowerCase() + " 此版本为测试版。有BUG请退回正式版，线上正式版本：2.0.7");
-    },
-    366: function _(e, t) {
-      "use strict";
-
-      var r, o, n;
-      Object.defineProperty(t, "__esModule", {
-        value: !0
-      }), t.rewriteMethodToggle = t.navtypeToggle = t.hookToggle = void 0, (n = t.hookToggle || (t.hookToggle = {})).beforeHooks = "beforeEach", n.afterHooks = "afterEach", n.enterHooks = "beforeEnter", (o = t.navtypeToggle || (t.navtypeToggle = {})).push = "navigateTo", o.replace = "redirectTo", o.replaceAll = "reLaunch", o.pushTab = "switchTab", o.back = "navigateBack", (r = t.rewriteMethodToggle || (t.rewriteMethodToggle = {})).navigateTo = "push", r.navigate = "push", r.redirectTo = "replace", r.reLaunch = "replaceAll", r.switchTab = "pushTab", r.navigateBack = "back";
-    },
-    309: function _(e, t) {
-      "use strict";
-
-      Object.defineProperty(t, "__esModule", {
-        value: !0
-      });
-    },
-    925: function _(e, t, r) {
-      "use strict";
-
-      Object.defineProperty(t, "__esModule", {
-        value: !0
-      }), t.beforeProxyHook = void 0;
-      var o = r(789),
-        n = r(883);
-      t.beforeProxyHook = function (e, t) {
-        var r = e.$options,
-          a = t.options.beforeProxyHooks;
-        if (null == r) return !1;
-        if (null == a) return !1;
-        for (var i = Object.keys(a), u = function u(e) {
-            var u = i[e],
-              l = r[u];
-            if (l) for (var c = a[u], s = function s(e) {
-                if (l[e].toString().includes("UNI-SIMPLE-ROUTER")) return "continue";
-                var r = l.splice(e, 1, function () {
-                  for (var e = this, n = [], a = 0; a < arguments.length; a++) {
-                    n[a] = arguments[a];
-                  }
-                  var i = "UNI-SIMPLE-ROUTER";
-                  o.voidFun(i), c ? c.call(this, n, function (t) {
-                    r.apply(e, t);
-                  }, t) : r.apply(this, n);
-                })[0];
-              }, p = 0; p < l.length; p++) {
-              s(p);
-            } else n.warn("beforeProxyHooks ===> 当前组件不适合" + u + "，或者 hook: " + u + " 不存在，已为你规避处理，可以忽略。", t);
-          }, l = 0; l < i.length; l++) {
-          u(l);
-        }
-        return !0;
-      };
-    },
-    169: function _(e, t, r) {
-      "use strict";
-
-      var o = this && this.__rest || function (e, t) {
-        var r = {};
-        for (var o in e) {
-          Object.prototype.hasOwnProperty.call(e, o) && t.indexOf(o) < 0 && (r[o] = e[o]);
-        }
-        if (null != e && "function" == typeof Object.getOwnPropertySymbols) {
-          var n = 0;
-          for (o = Object.getOwnPropertySymbols(e); n < o.length; n++) {
-            t.indexOf(o[n]) < 0 && Object.prototype.propertyIsEnumerable.call(e, o[n]) && (r[o[n]] = e[o[n]]);
-          }
-        }
-        return r;
-      };
-      Object.defineProperty(t, "__esModule", {
-        value: !0
-      }), t.loopCallHook = t.transitionTo = t.onTriggerEachHook = t.callHook = t.callBeforeRouteLeave = t.HOOKLIST = t.ERRORHOOK = void 0;
-      var n = r(789),
-        a = r(890),
-        i = r(147),
-        u = r(369),
-        l = r(814);
-      function c(e, t, r, o) {
-        var a,
-          i = n.getUniCachePage(0);
-        if (Object.keys(i).length > 0) {
-          var u = void 0;
-          switch ("h5" === e.options.platform ? u = i.$options.beforeRouteLeave : null != i.$vm && (u = i.$vm.$options.beforeRouteLeave), n.getDataType(u)) {
-            case "[object Array]":
-              a = (a = u[0]).bind(i);
-              break;
-            case "[object Function]":
-              a = u.bind(i.$vm);
-          }
-        }
-        return s(a, t, r, e, o);
-      }
-      function s(e, t, r, o, n, a) {
-        void 0 === a && (a = !0), null != e && e instanceof Function ? !0 === a ? e(t, r, n, o, !1) : (e(t, r, function () {}, o, !1), n()) : n();
-      }
-      function p(e, t, r, o, a, i) {
-        var u = n.forMatNextToFrom(e, t, r),
-          l = u.matTo,
-          c = u.matFrom;
-        "h5" === e.options.platform ? f(a, 0, i, e, l, c, o) : f(a.slice(0, 4), 0, function () {
-          i(function () {
-            f(a.slice(4), 0, n.voidFun, e, l, c, o);
-          });
-        }, e, l, c, o);
-      }
-      function f(e, r, i, u, c, s, p) {
-        var h = n.routesForMapRoute(u, c.path, ["finallyPathMap", "pathMap"]);
-        if (e.length - 1 < r) return i();
-        var v = e[r],
-          y = t.ERRORHOOK[0];
-        v(u, c, s, h, function (t) {
-          if ("app-plus" === u.options.platform && (!1 !== t && "string" != typeof t && "object" != _typeof(t) || l.tabIndexSelect(c, s)), !1 === t) "h5" === u.options.platform && i(!1), y({
-            type: 0,
-            msg: "管道函数传递 false 导航被终止!",
-            matTo: c,
-            matFrom: s,
-            nextTo: t
-          }, u);else if ("string" == typeof t || "object" == _typeof(t)) {
-            var n = p,
-              h = t;
-            if ("object" == _typeof(t)) {
-              var v = t.NAVTYPE;
-              h = o(t, ["NAVTYPE"]), null != v && (n = v);
-            }
-            a.navjump(h, u, n, {
-              from: s,
-              next: i
-            });
-          } else null == t ? (r++, f(e, r, i, u, c, s, p)) : y({
-            type: 1,
-            msg: "管道函数传递未知类型，无法被识别。导航被终止！",
-            matTo: c,
-            matFrom: s,
-            nextTo: t
-          }, u);
-        });
-      }
-      t.ERRORHOOK = [function (e, t) {
-        return t.lifeCycle.routerErrorHooks[0](e, t);
-      }], t.HOOKLIST = [function (e, t, r, o, n) {
-        return s(e.lifeCycle.routerBeforeHooks[0], t, r, e, n);
-      }, function (e, t, r, o, n) {
-        return c(e, t, r, n);
-      }, function (e, t, r, o, n) {
-        return s(e.lifeCycle.beforeHooks[0], t, r, e, n);
-      }, function (e, t, r, o, n) {
-        return s(o.beforeEnter, t, r, e, n);
-      }, function (e, t, r, o, n) {
-        return s(e.lifeCycle.afterHooks[0], t, r, e, n, !1);
-      }, function (e, t, r, o, n) {
-        return e.$lockStatus = !1, "h5" === e.options.platform && (i.proxyH5Mount(e), u.addKeepAliveInclude(e)), e.runId++, s(e.lifeCycle.routerAfterHooks[0], t, r, e, n, !1);
-      }], t.callBeforeRouteLeave = c, t.callHook = s, t.onTriggerEachHook = function (e, r, o, n, a) {
-        var i = [];
-        switch (n) {
-          case "beforeEach":
-            i = t.HOOKLIST.slice(0, 3);
-            break;
-          case "afterEach":
-            i = t.HOOKLIST.slice(4);
-            break;
-          case "beforeEnter":
-            i = t.HOOKLIST.slice(3, 4);
-        }
-        p(o, e, r, "push", i, a);
-      }, t.transitionTo = p, t.loopCallHook = f;
-    },
-    890: function _(e, t, r) {
-      "use strict";
-
-      var o = this && this.__assign || function () {
-          return (o = Object.assign || function (e) {
-            for (var t, r = 1, o = arguments.length; r < o; r++) {
-              for (var n in t = arguments[r]) {
-                Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
-              }
-            }
-            return e;
-          }).apply(this, arguments);
-        },
-        n = this && this.__rest || function (e, t) {
-          var r = {};
-          for (var o in e) {
-            Object.prototype.hasOwnProperty.call(e, o) && t.indexOf(o) < 0 && (r[o] = e[o]);
-          }
-          if (null != e && "function" == typeof Object.getOwnPropertySymbols) {
-            var n = 0;
-            for (o = Object.getOwnPropertySymbols(e); n < o.length; n++) {
-              t.indexOf(o[n]) < 0 && Object.prototype.propertyIsEnumerable.call(e, o[n]) && (r[o[n]] = e[o[n]]);
-            }
-          }
-          return r;
-        };
-      Object.defineProperty(t, "__esModule", {
-        value: !0
-      }), t.createRoute = t.forceGuardEach = t.backOptionsBuild = t.navjump = t.lockNavjump = void 0;
-      var a = r(366),
-        i = r(99),
-        u = r(789),
-        l = r(169),
-        c = r(845),
-        s = r(169);
-      function p(e, t, r, o, n) {
-        u.lockDetectWarn(t, e, r, function () {
-          "h5" !== t.options.platform && (t.$lockStatus = !0), f(e, t, r, void 0, o, n);
-        }, n);
-      }
-      function f(e, t, r, n, p, f, v) {
-        if (void 0 === v && (v = !0), "back" === r) {
-          var y = 1;
-          if ("string" == typeof e ? y = +e : (y = e.delta || 1, f = o(o({}, f || {}), e)), "h5" === t.options.platform) {
-            t.$route.go(-y);
-            var g = (f || {
-                success: u.voidFun
-              }).success || u.voidFun,
-              d = (f || {
-                complete: u.voidFun
-              }).complete || u.voidFun;
-            return g({
-              errMsg: "navigateBack:ok"
-            }), void d({
-              errMsg: "navigateBack:ok"
-            });
-          }
-          e = h(t, y, f);
-        }
-        var m = i.queryPageToMap(e, t).rule;
-        m.type = a.navtypeToggle[r];
-        var b = u.paramsToQuery(t, m),
-          P = i.resolveQuery(b, t);
-        if ("h5" === t.options.platform) {
-          if ("push" !== r && (r = "replace"), null != n) n.next(o({
-            replace: "push" !== r
-          }, P));else if ("push" === r && Reflect.has(P, "events")) {
-            if (Reflect.has(P, "name")) throw new Error("在h5端上使用 'push'、'navigateTo' 跳转时，如果包含 events 不允许使用 name 跳转，因为 name 实现了动态路由。请更换为 path 或者 url 跳转！");
-            uni.navigateTo(P, !0, u.voidFun, p);
-          } else t.$route[r](P, P.success || u.voidFun, P.fail || u.voidFun);
-        } else {
-          var O = {
-            path: ""
-          };
-          if (null == n) {
-            var k = u.routesForMapRoute(t, P.path, ["finallyPathMap", "pathMap"]);
-            k = u.notRouteTo404(t, k, P, r), P = o(o(o(o({}, k), {
-              params: {}
-            }), P), {
-              path: k.path
-            }), O = c.createToFrom(P, t);
-          } else O = n.from;
-          if (c.createFullPath(P, O), !1 === v) return P;
-          l.transitionTo(t, P, O, r, s.HOOKLIST, function (e) {
-            uni[a.navtypeToggle[r]](P, !0, e, p);
-          });
-        }
-      }
-      function h(e, t, r) {
-        void 0 === r && (r = {});
-        var n = v(e, t, void 0, o({
-            NAVTYPE: "back"
-          }, r)),
-          a = o(o({}, r), {
-            path: n.path,
-            query: n.query,
-            delta: t
-          });
-        if ("[object Object]" === u.getDataType(r)) {
-          var i = r,
-            l = i.animationDuration,
-            c = i.animationType;
-          null != l && (a.animationDuration = l), null != c && (a.animationType = c);
-          var s = r.from;
-          null != s && (a.BACKTYPE = s);
-        }
-        return a;
-      }
-      function v(e, t, r, l) {
-        void 0 === t && (t = 0), void 0 === l && (l = {});
-        var c = {
-          name: "",
-          meta: {},
-          path: "",
-          fullPath: "",
-          NAVTYPE: "",
-          query: {},
-          params: {},
-          BACKTYPE: (r || {
-            BACKTYPE: ""
-          }).BACKTYPE || ""
-        };
-        if (19970806 === t) return c;
-        if ("h5" === e.options.platform) {
-          var s = {
-            path: ""
-          };
-          s = null != r ? r : e.$route.currentRoute;
-          var p = u.copyData(s.params);
-          delete p.__id__;
-          var f = i.parseQuery(o(o({}, p), u.copyData(s.query)), e);
-          s = o(o({}, s), {
-            query: f
-          }), c.path = s.path, c.fullPath = s.fullPath || "", c.query = u.deepDecodeQuery(s.query || {}), c.NAVTYPE = a.rewriteMethodToggle[s.type || "reLaunch"];
-        } else {
-          var h = {};
-          if (null != r) h = o(o({}, r), {
-            openType: r.type
-          });else {
-            var v = u.getUniCachePage(t);
-            if (0 === Object.keys(v).length) {
-              var y = l.NAVTYPE,
-                g = n(l, ["NAVTYPE"]),
-                d = "不存在的页面栈，请确保有足够的页面可用，当前 level:" + t;
-              throw e.options.routerErrorEach({
-                type: 3,
-                msg: d,
-                NAVTYPE: y,
-                level: t,
-                uniActualData: g
-              }, e), new Error(d);
-            }
-            var m = v.options || {};
-            h = o(o({}, v.$page || {}), {
-              query: u.deepDecodeQuery(m),
-              fullPath: decodeURIComponent((v.$page || {}).fullPath || "/" + v.route)
-            }), "app-plus" !== e.options.platform && (h.path = "/" + v.route);
-          }
-          var b = h.openType;
-          c.query = h.query, c.path = h.path, c.fullPath = h.fullPath, c.NAVTYPE = a.rewriteMethodToggle[b || "reLaunch"];
-        }
-        var P = u.routesForMapRoute(e, c.path, ["finallyPathMap", "pathMap"]),
-          O = o(o({}, c), P);
-        return O.query = i.parseQuery(O.query, e), O;
-      }
-      t.lockNavjump = p, t.navjump = f, t.backOptionsBuild = h, t.forceGuardEach = function (e, t, r) {
-        if (void 0 === t && (t = "replaceAll"), void 0 === r && (r = !1), "h5" === e.options.platform) throw new Error("在h5端上使用：forceGuardEach 是无意义的，目前 forceGuardEach 仅支持在非h5端上使用");
-        var o = u.getUniCachePage(0);
-        0 === Object.keys(o).length && e.options.routerErrorEach({
-          type: 3,
-          NAVTYPE: t,
-          uniActualData: {},
-          level: 0,
-          msg: "不存在的页面栈，请确保有足够的页面可用，当前 level:0"
-        }, e);
-        var n = o,
-          a = n.route,
-          i = n.options;
-        p({
-          path: "/" + a,
-          query: u.deepDecodeQuery(i || {})
-        }, e, t, r);
-      }, t.createRoute = v;
-    },
-    845: function _(e, t, r) {
-      "use strict";
-
-      Object.defineProperty(t, "__esModule", {
-        value: !0
-      }), t.resetPageHook = t.resetAndCallPageHook = t.proxyPageHook = t.createFullPath = t.createToFrom = void 0;
-      var o = r(282),
-        n = r(789),
-        a = r(890),
-        i = r(99);
-      function u(e) {
-        for (var t = e.proxyHookDeps, r = 0, o = Object.entries(t.hooks); r < o.length; r++) {
-          (0, o[r][1].resetHook)();
-        }
-      }
-      t.createToFrom = function (e, t) {
-        var r = n.getUniCachePage(0);
-        return "[object Array]" === n.getDataType(r) ? n.deepClone(e) : a.createRoute(t);
-      }, t.createFullPath = function (e, t) {
-        if (null == e.fullPath) {
-          var r = i.stringifyQuery(e.query);
-          e.fullPath = e.path + r;
-        }
-        null == t.fullPath && (r = i.stringifyQuery(t.query), t.fullPath = t.path + r);
-      }, t.proxyPageHook = function (e, t, r) {
-        for (var n = t.proxyHookDeps, a = e.$options, i = function i(_i) {
-            var u = o.proxyHookName[_i],
-              l = a[u];
-            if (l) for (var c = function c(o) {
-                if (l[o].toString().includes("UNI-SIMPLE-ROUTER")) return "continue";
-                var a = Object.keys(n.hooks).length + 1,
-                  i = function i() {
-                    for (var e = [], t = 0; t < arguments.length; t++) {
-                      e[t] = arguments[t];
-                    }
-                    n.resetIndex.push(a), n.options[a] = e;
-                  },
-                  u = l.splice(o, 1, i)[0];
-                n.hooks[a] = {
-                  proxyHook: i,
-                  callHook: function callHook(o) {
-                    if (t.enterPath.replace(/^\//, "") === o.replace(/^\//, "") || "app" === r) {
-                      var i = n.options[a];
-                      u.apply(e, i);
-                    }
-                  },
-                  resetHook: function resetHook() {
-                    l.splice(o, 1, u);
-                  }
-                };
-              }, s = 0; s < l.length; s++) {
-              c(s);
-            }
-          }, u = 0; u < o.proxyHookName.length; u++) {
-          i(u);
-        }
-      }, t.resetAndCallPageHook = function (e, t, r) {
-        void 0 === r && (r = !0);
-        var o = t.trim().match(/^(\/?[^\?\s]+)(\?[\s\S]*$)?$/);
-        if (null == o) throw new Error("还原hook失败。请检查 【" + t + "】 路径是否正确。");
-        t = o[1];
-        for (var n = e.proxyHookDeps, a = n.resetIndex, i = 0; i < a.length; i++) {
-          var l = a[i];
-          (0, n.hooks[l].callHook)(t);
-        }
-        r && u(e);
-      }, t.resetPageHook = u;
-    },
-    99: function _(e, t, r) {
-      "use strict";
-
-      var o = this && this.__assign || function () {
-        return (o = Object.assign || function (e) {
-          for (var t, r = 1, o = arguments.length; r < o; r++) {
-            for (var n in t = arguments[r]) {
-              Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
-            }
-          }
-          return e;
-        }).apply(this, arguments);
-      };
-      Object.defineProperty(t, "__esModule", {
-        value: !0
-      }), t.stringifyQuery = t.parseQuery = t.resolveQuery = t.queryPageToMap = void 0;
-      var n = r(789),
-        a = r(169),
-        i = r(883),
-        u = /[!'()*]/g,
-        l = function l(e) {
-          return "%" + e.charCodeAt(0).toString(16);
-        },
-        c = /%2C/g,
-        s = function s(e) {
-          return encodeURIComponent(e).replace(u, l).replace(c, ",");
-        };
-      t.queryPageToMap = function (e, t) {
-        var r = {},
-          i = "",
-          u = e.success,
-          l = e.fail;
-        if ("[object Object]" === n.getDataType(e)) {
-          var c = e;
-          if (null != c.path) {
-            var s = n.urlToJson(c.path),
-              p = s.path,
-              f = s.query;
-            i = n.routesForMapRoute(t, p, ["finallyPathList", "pathMap"]), r = o(o({}, f), e.query || {}), c.path = p, c.query = r, delete e.params;
-          } else null != c.name ? null == (i = t.routesMap.nameMap[c.name]) ? i = n.getWildcardRule(t, {
-            type: 2,
-            msg: "命名路由为：" + c.name + " 的路由，无法在路由表中找到！",
-            toRule: e
-          }) : (r = e.params || {}, delete e.query) : i = n.getWildcardRule(t, {
-            type: 2,
-            msg: e + " 解析失败，请检测当前路由表下是否有包含。",
-            toRule: e
-          });
-        } else e = n.urlToJson(e), i = n.routesForMapRoute(t, e.path, ["finallyPathList", "pathMap"]), r = e.query;
-        if ("h5" === t.options.platform) {
-          n.getRoutePath(i, t).finallyPath.includes(":") && null == e.name && a.ERRORHOOK[0]({
-            type: 2,
-            msg: "当有设置 alias或者aliasPath 为动态路由时，不允许使用 path 跳转。请使用 name 跳转！",
-            route: i
-          }, t);
-          var h = e.complete,
-            v = e.success,
-            y = e.fail;
-          if ("[object Function]" === n.getDataType(h)) {
-            var g = function g(e, t) {
-              "[object Function]" === n.getDataType(t) && t.apply(this, e), h.apply(this, e);
-            };
-            u = function u() {
-              for (var e = [], t = 0; t < arguments.length; t++) {
-                e[t] = arguments[t];
-              }
-              g.call(this, e, v);
-            }, l = function l() {
-              for (var e = [], t = 0; t < arguments.length; t++) {
-                e[t] = arguments[t];
-              }
-              g.call(this, e, y);
-            };
-          }
-        }
-        var d = e;
-        return "[object Function]" === n.getDataType(d.success) && (d.success = u), "[object Function]" === n.getDataType(d.fail) && (d.fail = l), {
-          rule: d,
-          route: i,
-          query: r
-        };
-      }, t.resolveQuery = function (e, t) {
-        var r = "query";
-        null != e.params && (r = "params"), null != e.query && (r = "query");
-        var o = n.copyData(e[r] || {}),
-          a = t.options.resolveQuery;
-        if (a) {
-          var u = a(o);
-          "[object Object]" !== n.getDataType(u) ? i.warn("请按格式返回参数： resolveQuery?:(jsonQuery:{[propName: string]: any;})=>{[propName: string]: any;}", t) : e[r] = u;
-        } else {
-          if (!n.assertDeepObject(o)) return e;
-          var l = JSON.stringify(o);
-          e[r] = {
-            query: l
-          };
-        }
-        return e;
-      }, t.parseQuery = function (e, t) {
-        var r = t.options.parseQuery;
-        if (r) e = r(n.copyData(e)), "[object Object]" !== n.getDataType(e) && i.warn("请按格式返回参数： parseQuery?:(jsonQuery:{[propName: string]: any;})=>{[propName: string]: any;}", t);else if (Reflect.get(e, "query")) {
-          var o = Reflect.get(e, "query");
-          if ("string" == typeof o) try {
-            o = JSON.parse(o);
-          } catch (e) {
-            i.warn("尝试解析深度对象失败，按原样输出。" + e, t);
-          }
-          if ("object" == _typeof(o)) return n.deepDecodeQuery(o);
-        }
-        return e;
-      }, t.stringifyQuery = function (e) {
-        var t = e ? Object.keys(e).map(function (t) {
-          var r = e[t];
-          if (void 0 === r) return "";
-          if (null === r) return s(t);
-          if (Array.isArray(r)) {
-            var o = [];
-            return r.forEach(function (e) {
-              void 0 !== e && (null === e ? o.push(s(t)) : o.push(s(t) + "=" + s(e)));
-            }), o.join("&");
-          }
-          return s(t) + "=" + s(r);
-        }).filter(function (e) {
-          return e.length > 0;
-        }).join("&") : null;
-        return t ? "?" + t : "";
-      };
-    },
-    314: function _(e, t, r) {
-      "use strict";
-
-      var o = this && this.__awaiter || function (e, t, r, o) {
-          return new (r || (r = Promise))(function (n, a) {
-            function i(e) {
-              try {
-                l(o.next(e));
-              } catch (e) {
-                a(e);
-              }
-            }
-            function u(e) {
-              try {
-                l(o.throw(e));
-              } catch (e) {
-                a(e);
-              }
-            }
-            function l(e) {
-              var t;
-              e.done ? n(e.value) : (t = e.value, t instanceof r ? t : new r(function (e) {
-                e(t);
-              })).then(i, u);
-            }
-            l((o = o.apply(e, t || [])).next());
-          });
-        },
-        n = this && this.__generator || function (e, t) {
-          var r,
-            o,
-            n,
-            a,
-            i = {
-              label: 0,
-              sent: function sent() {
-                if (1 & n[0]) throw n[1];
-                return n[1];
-              },
-              trys: [],
-              ops: []
-            };
-          return a = {
-            next: u(0),
-            throw: u(1),
-            return: u(2)
-          }, "function" == typeof Symbol && (a[Symbol.iterator] = function () {
-            return this;
-          }), a;
-          function u(a) {
-            return function (u) {
-              return function (a) {
-                if (r) throw new TypeError("Generator is already executing.");
-                for (; i;) {
-                  try {
-                    if (r = 1, o && (n = 2 & a[0] ? o.return : a[0] ? o.throw || ((n = o.return) && n.call(o), 0) : o.next) && !(n = n.call(o, a[1])).done) return n;
-                    switch (o = 0, n && (a = [2 & a[0], n.value]), a[0]) {
-                      case 0:
-                      case 1:
-                        n = a;
-                        break;
-                      case 4:
-                        return i.label++, {
-                          value: a[1],
-                          done: !1
-                        };
-                      case 5:
-                        i.label++, o = a[1], a = [0];
-                        continue;
-                      case 7:
-                        a = i.ops.pop(), i.trys.pop();
-                        continue;
-                      default:
-                        if (!((n = (n = i.trys).length > 0 && n[n.length - 1]) || 6 !== a[0] && 2 !== a[0])) {
-                          i = 0;
-                          continue;
-                        }
-                        if (3 === a[0] && (!n || a[1] > n[0] && a[1] < n[3])) {
-                          i.label = a[1];
-                          break;
-                        }
-                        if (6 === a[0] && i.label < n[1]) {
-                          i.label = n[1], n = a;
-                          break;
-                        }
-                        if (n && i.label < n[2]) {
-                          i.label = n[2], i.ops.push(a);
-                          break;
-                        }
-                        n[2] && i.ops.pop(), i.trys.pop();
-                        continue;
-                    }
-                    a = t.call(e, i);
-                  } catch (e) {
-                    a = [6, e], o = 0;
-                  } finally {
-                    r = n = 0;
-                  }
-                }
-                if (5 & a[0]) throw a[1];
-                return {
-                  value: a[0] ? a[1] : void 0,
-                  done: !0
-                };
-              }([a, u]);
-            };
-          }
-        };
-      Object.defineProperty(t, "__esModule", {
-        value: !0
-      }), t.rewriteMethod = void 0;
-      var a = r(366),
-        i = r(789),
-        u = r(883),
-        l = r(809),
-        c = r(814),
-        s = ["navigateTo", "redirectTo", "reLaunch", "switchTab", "navigateBack"],
-        p = {
-          navigateTo: function navigateTo() {},
-          redirectTo: function redirectTo() {},
-          reLaunch: function reLaunch() {},
-          switchTab: function switchTab() {},
-          navigateBack: function navigateBack() {}
-        };
-      t.rewriteMethod = function (e) {
-        !1 === e.options.keepUniOriginNav && s.forEach(function (t) {
-          var r = uni[t];
-          p[t] = r, uni[t] = function (s, f, h, v) {
-            return void 0 === f && (f = !1), o(this, void 0, void 0, function () {
-              return n(this, function (o) {
-                switch (o.label) {
-                  case 0:
-                    return f ? "app-plus" !== e.options.platform ? [3, 2] : [4, c.HomeNvueSwitchTab(e, s, p.reLaunch)] : [3, 3];
-                  case 1:
-                    o.sent(), o.label = 2;
-                  case 2:
-                    return l.uniOriginJump(e, r, t, s, h, v), [3, 4];
-                  case 3:
-                    "app-plus" === e.options.platform && 0 === Object.keys(e.appMain).length && (e.appMain = {
-                      NAVTYPE: t,
-                      path: s.url
-                    }), function (e, t, r) {
-                      if ("app-plus" === r.options.platform) {
-                        var o = null;
-                        e && (o = e.openType), null != o && "appLaunch" === o && (t = "reLaunch");
-                      }
-                      if ("reLaunch" === t && '{"url":"/"}' === JSON.stringify(e) && (u.warn("uni-app 原生方法：reLaunch({url:'/'}) 默认被重写啦！你可以使用 this.$Router.replaceAll() 或者 uni.reLaunch({url:'/?xxx=xxx'})", r), t = "navigateBack", e = {
-                        from: "backbutton"
-                      }), "navigateBack" === t) {
-                        var n = 1;
-                        null == e && (e = {
-                          delta: 1
-                        }), "[object Number]" === i.getDataType(e.delta) && (n = e.delta), r.back(n, e);
-                      } else {
-                        var l = a.rewriteMethodToggle[t],
-                          c = e.url;
-                        if (!c.startsWith("/")) {
-                          var s = i.resolveAbsolutePath(c, r);
-                          c = s, e.url = s;
-                        }
-                        if ("switchTab" === t) {
-                          var p = i.routesForMapRoute(r, c, ["pathMap", "finallyPathList"]),
-                            f = i.getRoutePath(p, r).finallyPath;
-                          if ("[object Array]" === i.getDataType(f) && u.warn("uni-app 原生方法跳转路径为：" + c + "。此路为是tab页面时，不允许设置 alias 为数组的情况，并且不能为动态路由！当然你可以通过通配符*解决！", r), "*" === f && u.warn("uni-app 原生方法跳转路径为：" + c + "。在路由表中找不到相关路由表！当然你可以通过通配符*解决！", r), "h5" === r.options.platform) {
-                            var h = e.success;
-                            e.success = function () {
-                              for (var t = [], r = 0; r < arguments.length; r++) {
-                                t[r] = arguments[r];
-                              }
-                              null == h || h.apply(null, t), i.timeOut(150).then(function () {
-                                var t = e.detail || {};
-                                if (Object.keys(t).length > 0 && Reflect.has(t, "index")) {
-                                  var r = i.getUniCachePage(0);
-                                  if (0 === Object.keys(r).length) return !1;
-                                  var o = r,
-                                    n = o.$options.onTabItemTap;
-                                  if (n) for (var a = 0; a < n.length; a++) {
-                                    n[a].call(o, t);
-                                  }
-                                }
-                              });
-                            };
-                          }
-                          c = f;
-                        }
-                        var v = e,
-                          y = v.events,
-                          g = v.success,
-                          d = v.fail,
-                          m = v.complete,
-                          b = v.animationType,
-                          P = {
-                            path: c,
-                            events: y,
-                            success: g,
-                            fail: d,
-                            complete: m,
-                            animationDuration: v.animationDuration,
-                            animationType: b
-                          };
-                        r[l](i.notDeepClearNull(P));
-                      }
-                    }(s, t, e), o.label = 4;
-                  case 4:
-                    return [2];
-                }
-              });
-            });
-          };
-        });
-      };
-    },
-    963: function _(e, t, r) {
-      "use strict";
-
-      var o = this && this.__assign || function () {
-        return (o = Object.assign || function (e) {
-          for (var t, r = 1, o = arguments.length; r < o; r++) {
-            for (var n in t = arguments[r]) {
-              Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
-            }
-          }
-          return e;
-        }).apply(this, arguments);
-      };
-      Object.defineProperty(t, "__esModule", {
-        value: !0
-      }), t.createRouter = t.RouterMount = void 0;
-      var n = r(282),
-        a = r(789),
-        i = r(662),
-        u = r(460),
-        l = r(890),
-        c = r(314),
-        s = function s() {},
-        p = new Promise(function (e) {
-          return s = e;
-        });
-      t.createRouter = function (e) {
-        var t = a.assertNewOptions(e),
-          r = {
-            options: t,
-            mount: [],
-            runId: 0,
-            Vue: null,
-            proxyHookDeps: n.proxyHookDeps,
-            appMain: {},
-            enterPath: "",
-            $route: null,
-            $lockStatus: !1,
-            routesMap: {},
-            lifeCycle: i.registerRouterHooks(n.lifeCycle, t),
-            push: function push(e) {
-              l.lockNavjump(e, r, "push");
-            },
-            replace: function replace(e) {
-              l.lockNavjump(e, r, "replace");
-            },
-            replaceAll: function replaceAll(e) {
-              l.lockNavjump(e, r, "replaceAll");
-            },
-            pushTab: function pushTab(e) {
-              l.lockNavjump(e, r, "pushTab");
-            },
-            back: function back(e, t) {
-              void 0 === e && (e = 1), "[object Object]" !== a.getDataType(t) ? t = {
-                from: "navigateBack"
-              } : Reflect.has(t, "from") || (t = o(o({}, t), {
-                from: "navigateBack"
-              })), l.lockNavjump(e + "", r, "back", void 0, t);
-            },
-            forceGuardEach: function forceGuardEach(e, t) {
-              l.forceGuardEach(r, e, t);
-            },
-            beforeEach: function beforeEach(e) {
-              i.registerEachHooks(r, "beforeHooks", e);
-            },
-            afterEach: function afterEach(e) {
-              i.registerEachHooks(r, "afterHooks", e);
-            },
-            install: function install(e) {
-              r.Vue = e, c.rewriteMethod(this), u.initMixins(e, this), Object.defineProperty(e.prototype, "$Router", {
-                get: function get() {
-                  var e = r;
-                  return Object.defineProperty(this, "$Router", {
-                    value: e,
-                    writable: !1,
-                    configurable: !1,
-                    enumerable: !1
-                  }), Object.seal(e);
-                }
-              }), Object.defineProperty(e.prototype, "$Route", {
-                get: function get() {
-                  return l.createRoute(r);
-                }
-              }), Object.defineProperty(e.prototype, "$AppReady", {
-                get: function get() {
-                  return "h5" === r.options.platform ? Promise.resolve() : p;
-                },
-                set: function set(e) {
-                  !0 === e && s();
-                }
-              });
-            }
-          };
-        return a.def(r, "currentRoute", function () {
-          return l.createRoute(r);
-        }), r.beforeEach(function (e, t, r) {
-          return r();
-        }), r.afterEach(function () {}), r;
-      }, t.RouterMount = function (e, t, r) {
-        if (void 0 === r && (r = "#app"), "[object Array]" !== a.getDataType(t.mount)) throw new Error("挂载路由失败，router.app 应该为数组类型。当前类型：" + _typeof(t.mount));
-        if (t.mount.push({
-          app: e,
-          el: r
-        }), "h5" === t.options.platform) {
-          var o = t.$route;
-          o.replace({
-            path: o.currentRoute.fullPath
-          });
-        }
-      };
-    },
-    809: function _(e, t, r) {
-      "use strict";
-
-      var o = this && this.__assign || function () {
-          return (o = Object.assign || function (e) {
-            for (var t, r = 1, o = arguments.length; r < o; r++) {
-              for (var n in t = arguments[r]) {
-                Object.prototype.hasOwnProperty.call(t, n) && (e[n] = t[n]);
-              }
-            }
-            return e;
-          }).apply(this, arguments);
-        },
-        n = this && this.__awaiter || function (e, t, r, o) {
-          return new (r || (r = Promise))(function (n, a) {
-            function i(e) {
-              try {
-                l(o.next(e));
-              } catch (e) {
-                a(e);
-              }
-            }
-            function u(e) {
-              try {
-                l(o.throw(e));
-              } catch (e) {
-                a(e);
-              }
-            }
-            function l(e) {
-              var t;
-              e.done ? n(e.value) : (t = e.value, t instanceof r ? t : new r(function (e) {
-                e(t);
-              })).then(i, u);
-            }
-            l((o = o.apply(e, t || [])).next());
-          });
-        },
-        a = this && this.__generator || function (e, t) {
-          var r,
-            o,
-            n,
-            a,
-            i = {
-              label: 0,
-              sent: function sent() {
-                if (1 & n[0]) throw n[1];
-                return n[1];
-              },
-              trys: [],
-              ops: []
-            };
-          return a = {
-            next: u(0),
-            throw: u(1),
-            return: u(2)
-          }, "function" == typeof Symbol && (a[Symbol.iterator] = function () {
-            return this;
-          }), a;
-          function u(a) {
-            return function (u) {
-              return function (a) {
-                if (r) throw new TypeError("Generator is already executing.");
-                for (; i;) {
-                  try {
-                    if (r = 1, o && (n = 2 & a[0] ? o.return : a[0] ? o.throw || ((n = o.return) && n.call(o), 0) : o.next) && !(n = n.call(o, a[1])).done) return n;
-                    switch (o = 0, n && (a = [2 & a[0], n.value]), a[0]) {
-                      case 0:
-                      case 1:
-                        n = a;
-                        break;
-                      case 4:
-                        return i.label++, {
-                          value: a[1],
-                          done: !1
-                        };
-                      case 5:
-                        i.label++, o = a[1], a = [0];
-                        continue;
-                      case 7:
-                        a = i.ops.pop(), i.trys.pop();
-                        continue;
-                      default:
-                        if (!((n = (n = i.trys).length > 0 && n[n.length - 1]) || 6 !== a[0] && 2 !== a[0])) {
-                          i = 0;
-                          continue;
-                        }
-                        if (3 === a[0] && (!n || a[1] > n[0] && a[1] < n[3])) {
-                          i.label = a[1];
-                          break;
-                        }
-                        if (6 === a[0] && i.label < n[1]) {
-                          i.label = n[1], n = a;
-                          break;
-                        }
-                        if (n && i.label < n[2]) {
-                          i.label = n[2], i.ops.push(a);
-                          break;
-                        }
-                        n[2] && i.ops.pop(), i.trys.pop();
-                        continue;
-                    }
-                    a = t.call(e, i);
-                  } catch (e) {
-                    a = [6, e], o = 0;
-                  } finally {
-                    r = n = 0;
-                  }
-                }
-                if (5 & a[0]) throw a[1];
-                return {
-                  value: a[0] ? a[1] : void 0,
-                  done: !0
-                };
-              }([a, u]);
-            };
-          }
-        },
-        i = this && this.__rest || function (e, t) {
-          var r = {};
-          for (var o in e) {
-            Object.prototype.hasOwnProperty.call(e, o) && t.indexOf(o) < 0 && (r[o] = e[o]);
-          }
-          if (null != e && "function" == typeof Object.getOwnPropertySymbols) {
-            var n = 0;
-            for (o = Object.getOwnPropertySymbols(e); n < o.length; n++) {
-              t.indexOf(o[n]) < 0 && Object.prototype.propertyIsEnumerable.call(e, o[n]) && (r[o[n]] = e[o[n]]);
-            }
-          }
-          return r;
-        };
-      Object.defineProperty(t, "__esModule", {
-        value: !0
-      }), t.formatOriginURLQuery = t.uniOriginJump = void 0;
-      var u = r(99),
-        l = r(789),
-        c = r(282),
-        s = r(845),
-        p = 0,
-        f = "reLaunch";
-      function h(e, t, r) {
-        var n,
-          a = t.url,
-          i = t.path,
-          c = t.query,
-          s = t.animationType,
-          p = t.animationDuration,
-          f = t.events,
-          h = t.success,
-          v = t.fail,
-          y = t.complete,
-          g = t.delta,
-          d = t.animation,
-          m = u.stringifyQuery(c || {}),
-          b = "" === m ? i || a : (i || a) + m,
-          P = {};
-        return "app-plus" === e.options.platform && "navigateBack" !== r && (P = (null === (n = e.options.APP) || void 0 === n ? void 0 : n.animation) || {}, P = o(o({}, P), d || {})), l.notDeepClearNull({
-          delta: g,
-          url: b,
-          animationType: s || P.animationType,
-          animationDuration: p || P.animationDuration,
-          events: f,
-          success: h,
-          fail: v,
-          complete: y
-        });
-      }
-      t.uniOriginJump = function (e, t, r, u, v, y) {
-        var g = h(e, u, r),
-          d = g.complete,
-          m = i(g, ["complete"]),
-          b = e.options.platform;
-        null != y && !1 === y ? (0 === p && (p++, "h5" !== b && (s.resetAndCallPageHook(e, m.url), e.Vue.prototype.$AppReady = !0)), d && d.apply(null, {
-          msg: "forceGuardEach强制触发并且不执行跳转"
-        }), v && v.apply(null, {
-          msg: "forceGuardEach强制触发并且不执行跳转"
-        })) : (0 === p && ("app-plus" === b ? s.resetAndCallPageHook(e, m.url) : new RegExp(c.mpPlatformReg, "g").test(b) && s.resetAndCallPageHook(e, m.url, !1)), t(o(o({}, m), {
-          from: u.BACKTYPE,
-          complete: function complete() {
-            for (var t, o, i, u, h = [], y = 0; y < arguments.length; y++) {
-              h[y] = arguments[y];
-            }
-            return n(this, void 0, void 0, function () {
-              var n, y, g;
-              return a(this, function (a) {
-                switch (a.label) {
-                  case 0:
-                    return 0 === p && (p++, "h5" !== b && (new RegExp(c.mpPlatformReg, "g").test(b) && s.resetPageHook(e), e.Vue.prototype.$AppReady = !0, "app-plus" === b && ((n = plus.nativeObj.View.getViewById("router-loadding")) && n.close(), (y = null === (t = e.options.APP) || void 0 === t ? void 0 : t.launchedHook) && y()))), g = 0, new RegExp(c.mpPlatformReg, "g").test(b) ? g = null === (o = e.options.applet) || void 0 === o ? void 0 : o.animationDuration : "app-plus" === b && "navigateBack" === r && "navigateTo" === f && (g = null === (u = null === (i = e.options.APP) || void 0 === i ? void 0 : i.animation) || void 0 === u ? void 0 : u.animationDuration), "navigateTo" !== r && "navigateBack" !== r || 0 === g ? [3, 2] : [4, l.timeOut(g)];
-                  case 1:
-                    a.sent(), a.label = 2;
-                  case 2:
-                    return f = r, d && d.apply(null, h), v && v.apply(null, h), [2];
-                }
-              });
-            });
-          }
-        })));
-      }, t.formatOriginURLQuery = h;
-    }
-  }, t = {}, function r(o) {
-    if (t[o]) return t[o].exports;
-    var n = t[o] = {
-      exports: {}
-    };
-    return e[o].call(n.exports, n, n.exports, r), n.exports;
-  }(607);
-  var e, t;
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"], __webpack_require__(/*! ./../../../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/webpack/buildin/module.js */ 179)(module)))
+exports.default = void 0;
+var _default = {
+  fade: {
+    enter: {
+      opacity: 0
+    },
+    'enter-to': {
+      opacity: 1
+    },
+    leave: {
+      opacity: 1
+    },
+    'leave-to': {
+      opacity: 0
+    }
+  },
+  'fade-up': {
+    enter: {
+      opacity: 0,
+      transform: 'translateY(100%)'
+    },
+    'enter-to': {
+      opacity: 1,
+      transform: 'translateY(0)'
+    },
+    leave: {
+      opacity: 1,
+      transform: 'translateY(0)'
+    },
+    'leave-to': {
+      opacity: 0,
+      transform: 'translateY(100%)'
+    }
+  },
+  'fade-down': {
+    enter: {
+      opacity: 0,
+      transform: 'translateY(-100%)'
+    },
+    'enter-to': {
+      opacity: 1,
+      transform: 'translateY(0)'
+    },
+    leave: {
+      opacity: 1,
+      transform: 'translateY(0)'
+    },
+    'leave-to': {
+      opacity: 0,
+      transform: 'translateY(-100%)'
+    }
+  },
+  'fade-left': {
+    enter: {
+      opacity: 0,
+      transform: 'translateX(-100%)'
+    },
+    'enter-to': {
+      opacity: 1,
+      transform: 'translateY(0)'
+    },
+    leave: {
+      opacity: 1,
+      transform: 'translateY(0)'
+    },
+    'leave-to': {
+      opacity: 0,
+      transform: 'translateX(-100%)'
+    }
+  },
+  'fade-right': {
+    enter: {
+      opacity: 0,
+      transform: 'translateX(100%)'
+    },
+    'enter-to': {
+      opacity: 1,
+      transform: 'translateY(0)'
+    },
+    leave: {
+      opacity: 1,
+      transform: 'translateY(0)'
+    },
+    'leave-to': {
+      opacity: 0,
+      transform: 'translateX(100%)'
+    }
+  },
+  'slide-up': {
+    enter: {
+      transform: 'translateY(100%)'
+    },
+    'enter-to': {
+      transform: 'translateY(0)'
+    },
+    leave: {
+      transform: 'translateY(0)'
+    },
+    'leave-to': {
+      transform: 'translateY(100%)'
+    }
+  },
+  'slide-down': {
+    enter: {
+      transform: 'translateY(-100%)'
+    },
+    'enter-to': {
+      transform: 'translateY(0)'
+    },
+    leave: {
+      transform: 'translateY(0)'
+    },
+    'leave-to': {
+      transform: 'translateY(-100%)'
+    }
+  },
+  'slide-left': {
+    enter: {
+      transform: 'translateX(-100%)'
+    },
+    'enter-to': {
+      transform: 'translateY(0)'
+    },
+    leave: {
+      transform: 'translateY(0)'
+    },
+    'leave-to': {
+      transform: 'translateX(-100%)'
+    }
+  },
+  'slide-right': {
+    enter: {
+      transform: 'translateX(100%)'
+    },
+    'enter-to': {
+      transform: 'translateY(0)'
+    },
+    leave: {
+      transform: 'translateY(0)'
+    },
+    'leave-to': {
+      transform: 'translateX(100%)'
+    }
+  },
+  zoom: {
+    enter: {
+      transform: 'scale(0.95)'
+    },
+    'enter-to': {
+      transform: 'scale(1)'
+    },
+    leave: {
+      transform: 'scale(1)'
+    },
+    'leave-to': {
+      transform: 'scale(0.95)'
+    }
+  },
+  'fade-zoom': {
+    enter: {
+      opacity: 0,
+      transform: 'scale(0.95)'
+    },
+    'enter-to': {
+      opacity: 1,
+      transform: 'scale(1)'
+    },
+    leave: {
+      opacity: 1,
+      transform: 'scale(1)'
+    },
+    'leave-to': {
+      opacity: 0,
+      transform: 'scale(0.95)'
+    }
+  }
+};
+exports.default = _default;
 
 /***/ }),
-/* 179 */
-/*!***********************************!*\
-  !*** (webpack)/buildin/module.js ***!
-  \***********************************/
+/* 234 */,
+/* 235 */,
+/* 236 */,
+/* 237 */,
+/* 238 */,
+/* 239 */,
+/* 240 */,
+/* 241 */
+/*!*****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/components/u-icon/icons.js ***!
+  \*****************************************************************************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = function(module) {
-	if (!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if (!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  'uicon-level': "\uE693",
+  'uicon-column-line': "\uE68E",
+  'uicon-checkbox-mark': "\uE807",
+  'uicon-folder': "\uE7F5",
+  'uicon-movie': "\uE7F6",
+  'uicon-star-fill': "\uE669",
+  'uicon-star': "\uE65F",
+  'uicon-phone-fill': "\uE64F",
+  'uicon-phone': "\uE622",
+  'uicon-apple-fill': "\uE881",
+  'uicon-chrome-circle-fill': "\uE885",
+  'uicon-backspace': "\uE67B",
+  'uicon-attach': "\uE632",
+  'uicon-cut': "\uE948",
+  'uicon-empty-car': "\uE602",
+  'uicon-empty-coupon': "\uE682",
+  'uicon-empty-address': "\uE646",
+  'uicon-empty-favor': "\uE67C",
+  'uicon-empty-permission': "\uE686",
+  'uicon-empty-news': "\uE687",
+  'uicon-empty-search': "\uE664",
+  'uicon-github-circle-fill': "\uE887",
+  'uicon-rmb': "\uE608",
+  'uicon-person-delete-fill': "\uE66A",
+  'uicon-reload': "\uE788",
+  'uicon-order': "\uE68F",
+  'uicon-server-man': "\uE6BC",
+  'uicon-search': "\uE62A",
+  'uicon-fingerprint': "\uE955",
+  'uicon-more-dot-fill': "\uE630",
+  'uicon-scan': "\uE662",
+  'uicon-share-square': "\uE60B",
+  'uicon-map': "\uE61D",
+  'uicon-map-fill': "\uE64E",
+  'uicon-tags': "\uE629",
+  'uicon-tags-fill': "\uE651",
+  'uicon-bookmark-fill': "\uE63B",
+  'uicon-bookmark': "\uE60A",
+  'uicon-eye': "\uE613",
+  'uicon-eye-fill': "\uE641",
+  'uicon-mic': "\uE64A",
+  'uicon-mic-off': "\uE649",
+  'uicon-calendar': "\uE66E",
+  'uicon-calendar-fill': "\uE634",
+  'uicon-trash': "\uE623",
+  'uicon-trash-fill': "\uE658",
+  'uicon-play-left': "\uE66D",
+  'uicon-play-right': "\uE610",
+  'uicon-minus': "\uE618",
+  'uicon-plus': "\uE62D",
+  'uicon-info': "\uE653",
+  'uicon-info-circle': "\uE7D2",
+  'uicon-info-circle-fill': "\uE64B",
+  'uicon-question': "\uE715",
+  'uicon-error': "\uE6D3",
+  'uicon-close': "\uE685",
+  'uicon-checkmark': "\uE6A8",
+  'uicon-android-circle-fill': "\uE67E",
+  'uicon-android-fill': "\uE67D",
+  'uicon-ie': "\uE87B",
+  'uicon-IE-circle-fill': "\uE889",
+  'uicon-google': "\uE87A",
+  'uicon-google-circle-fill': "\uE88A",
+  'uicon-setting-fill': "\uE872",
+  'uicon-setting': "\uE61F",
+  'uicon-minus-square-fill': "\uE855",
+  'uicon-plus-square-fill': "\uE856",
+  'uicon-heart': "\uE7DF",
+  'uicon-heart-fill': "\uE851",
+  'uicon-camera': "\uE7D7",
+  'uicon-camera-fill': "\uE870",
+  'uicon-more-circle': "\uE63E",
+  'uicon-more-circle-fill': "\uE645",
+  'uicon-chat': "\uE620",
+  'uicon-chat-fill': "\uE61E",
+  'uicon-bag-fill': "\uE617",
+  'uicon-bag': "\uE619",
+  'uicon-error-circle-fill': "\uE62C",
+  'uicon-error-circle': "\uE624",
+  'uicon-close-circle': "\uE63F",
+  'uicon-close-circle-fill': "\uE637",
+  'uicon-checkmark-circle': "\uE63D",
+  'uicon-checkmark-circle-fill': "\uE635",
+  'uicon-question-circle-fill': "\uE666",
+  'uicon-question-circle': "\uE625",
+  'uicon-share': "\uE631",
+  'uicon-share-fill': "\uE65E",
+  'uicon-shopping-cart': "\uE621",
+  'uicon-shopping-cart-fill': "\uE65D",
+  'uicon-bell': "\uE609",
+  'uicon-bell-fill': "\uE640",
+  'uicon-list': "\uE650",
+  'uicon-list-dot': "\uE616",
+  'uicon-zhihu': "\uE6BA",
+  'uicon-zhihu-circle-fill': "\uE709",
+  'uicon-zhifubao': "\uE6B9",
+  'uicon-zhifubao-circle-fill': "\uE6B8",
+  'uicon-weixin-circle-fill': "\uE6B1",
+  'uicon-weixin-fill': "\uE6B2",
+  'uicon-twitter-circle-fill': "\uE6AB",
+  'uicon-twitter': "\uE6AA",
+  'uicon-taobao-circle-fill': "\uE6A7",
+  'uicon-taobao': "\uE6A6",
+  'uicon-weibo-circle-fill': "\uE6A5",
+  'uicon-weibo': "\uE6A4",
+  'uicon-qq-fill': "\uE6A1",
+  'uicon-qq-circle-fill': "\uE6A0",
+  'uicon-moments-circel-fill': "\uE69A",
+  'uicon-moments': "\uE69B",
+  'uicon-qzone': "\uE695",
+  'uicon-qzone-circle-fill': "\uE696",
+  'uicon-baidu-circle-fill': "\uE680",
+  'uicon-baidu': "\uE681",
+  'uicon-facebook-circle-fill': "\uE68A",
+  'uicon-facebook': "\uE689",
+  'uicon-car': "\uE60C",
+  'uicon-car-fill': "\uE636",
+  'uicon-warning-fill': "\uE64D",
+  'uicon-warning': "\uE694",
+  'uicon-clock-fill': "\uE638",
+  'uicon-clock': "\uE60F",
+  'uicon-edit-pen': "\uE612",
+  'uicon-edit-pen-fill': "\uE66B",
+  'uicon-email': "\uE611",
+  'uicon-email-fill': "\uE642",
+  'uicon-minus-circle': "\uE61B",
+  'uicon-minus-circle-fill': "\uE652",
+  'uicon-plus-circle': "\uE62E",
+  'uicon-plus-circle-fill': "\uE661",
+  'uicon-file-text': "\uE663",
+  'uicon-file-text-fill': "\uE665",
+  'uicon-pushpin': "\uE7E3",
+  'uicon-pushpin-fill': "\uE86E",
+  'uicon-grid': "\uE673",
+  'uicon-grid-fill': "\uE678",
+  'uicon-play-circle': "\uE647",
+  'uicon-play-circle-fill': "\uE655",
+  'uicon-pause-circle-fill': "\uE654",
+  'uicon-pause': "\uE8FA",
+  'uicon-pause-circle': "\uE643",
+  'uicon-eye-off': "\uE648",
+  'uicon-eye-off-outline': "\uE62B",
+  'uicon-gift-fill': "\uE65C",
+  'uicon-gift': "\uE65B",
+  'uicon-rmb-circle-fill': "\uE657",
+  'uicon-rmb-circle': "\uE677",
+  'uicon-kefu-ermai': "\uE656",
+  'uicon-server-fill': "\uE751",
+  'uicon-coupon-fill': "\uE8C4",
+  'uicon-coupon': "\uE8AE",
+  'uicon-integral': "\uE704",
+  'uicon-integral-fill': "\uE703",
+  'uicon-home-fill': "\uE964",
+  'uicon-home': "\uE965",
+  'uicon-hourglass-half-fill': "\uE966",
+  'uicon-hourglass': "\uE967",
+  'uicon-account': "\uE628",
+  'uicon-plus-people-fill': "\uE626",
+  'uicon-minus-people-fill': "\uE615",
+  'uicon-account-fill': "\uE614",
+  'uicon-thumb-down-fill': "\uE726",
+  'uicon-thumb-down': "\uE727",
+  'uicon-thumb-up': "\uE733",
+  'uicon-thumb-up-fill': "\uE72F",
+  'uicon-lock-fill': "\uE979",
+  'uicon-lock-open': "\uE973",
+  'uicon-lock-opened-fill': "\uE974",
+  'uicon-lock': "\uE97A",
+  'uicon-red-packet-fill': "\uE690",
+  'uicon-photo-fill': "\uE98B",
+  'uicon-photo': "\uE98D",
+  'uicon-volume-off-fill': "\uE659",
+  'uicon-volume-off': "\uE644",
+  'uicon-volume-fill': "\uE670",
+  'uicon-volume': "\uE633",
+  'uicon-red-packet': "\uE691",
+  'uicon-download': "\uE63C",
+  'uicon-arrow-up-fill': "\uE6B0",
+  'uicon-arrow-down-fill': "\uE600",
+  'uicon-play-left-fill': "\uE675",
+  'uicon-play-right-fill': "\uE676",
+  'uicon-rewind-left-fill': "\uE679",
+  'uicon-rewind-right-fill': "\uE67A",
+  'uicon-arrow-downward': "\uE604",
+  'uicon-arrow-leftward': "\uE601",
+  'uicon-arrow-rightward': "\uE603",
+  'uicon-arrow-upward': "\uE607",
+  'uicon-arrow-down': "\uE60D",
+  'uicon-arrow-right': "\uE605",
+  'uicon-arrow-left': "\uE60E",
+  'uicon-arrow-up': "\uE606",
+  'uicon-skip-back-left': "\uE674",
+  'uicon-skip-forward-right': "\uE672",
+  'uicon-rewind-right': "\uE66F",
+  'uicon-rewind-left': "\uE671",
+  'uicon-arrow-right-double': "\uE68D",
+  'uicon-arrow-left-double': "\uE68C",
+  'uicon-wifi-off': "\uE668",
+  'uicon-wifi': "\uE667",
+  'uicon-empty-data': "\uE62F",
+  'uicon-empty-history': "\uE684",
+  'uicon-empty-list': "\uE68B",
+  'uicon-empty-page': "\uE627",
+  'uicon-empty-order': "\uE639",
+  'uicon-man': "\uE697",
+  'uicon-woman': "\uE69C",
+  'uicon-man-add': "\uE61C",
+  'uicon-man-add-fill': "\uE64C",
+  'uicon-man-delete': "\uE61A",
+  'uicon-man-delete-fill': "\uE66A",
+  'uicon-zh': "\uE70A",
+  'uicon-en': "\uE692"
 };
+exports.default = _default;
 
+/***/ }),
+/* 242 */
+/*!*****************************************************************************************************!*\
+  !*** /Users/zhudi/Documents/workSpace/mp-Demo/nbjy/uni_modules/uview-ui/components/u-icon/props.js ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  props: {
+    // 图标类名
+    name: {
+      type: String,
+      default: uni.$u.props.icon.name
+    },
+    // 图标颜色，可接受主题色
+    color: {
+      type: String,
+      default: uni.$u.props.icon.color
+    },
+    // 字体大小，单位px
+    size: {
+      type: [String, Number],
+      default: uni.$u.props.icon.size
+    },
+    // 是否显示粗体
+    bold: {
+      type: Boolean,
+      default: uni.$u.props.icon.bold
+    },
+    // 点击图标的时候传递事件出去的index（用于区分点击了哪一个）
+    index: {
+      type: [String, Number],
+      default: uni.$u.props.icon.index
+    },
+    // 触摸图标时的类名
+    hoverClass: {
+      type: String,
+      default: uni.$u.props.icon.hoverClass
+    },
+    // 自定义扩展前缀，方便用户扩展自己的图标库
+    customPrefix: {
+      type: String,
+      default: uni.$u.props.icon.customPrefix
+    },
+    // 图标右边或者下面的文字
+    label: {
+      type: [String, Number],
+      default: uni.$u.props.icon.label
+    },
+    // label的位置，只能右边或者下边
+    labelPos: {
+      type: String,
+      default: uni.$u.props.icon.labelPos
+    },
+    // label的大小
+    labelSize: {
+      type: [String, Number],
+      default: uni.$u.props.icon.labelSize
+    },
+    // label的颜色
+    labelColor: {
+      type: String,
+      default: uni.$u.props.icon.labelColor
+    },
+    // label与图标的距离
+    space: {
+      type: [String, Number],
+      default: uni.$u.props.icon.space
+    },
+    // 图片的mode
+    imgMode: {
+      type: String,
+      default: uni.$u.props.icon.imgMode
+    },
+    // 用于显示图片小图标时，图片的宽度
+    width: {
+      type: [String, Number],
+      default: uni.$u.props.icon.width
+    },
+    // 用于显示图片小图标时，图片的高度
+    height: {
+      type: [String, Number],
+      default: uni.$u.props.icon.height
+    },
+    // 用于解决某些情况下，让图标垂直居中的用途
+    top: {
+      type: [String, Number],
+      default: uni.$u.props.icon.top
+    },
+    // 是否阻止事件传播
+    stop: {
+      type: Boolean,
+      default: uni.$u.props.icon.stop
+    }
+  }
+};
+exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ })
 ]]);

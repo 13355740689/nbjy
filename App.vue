@@ -13,11 +13,19 @@
 </script>
 
 <style lang="scss">
-	/* 注意要写在第一行，同时给style标签加入lang="scss"属性 */
 	@import "@/uni_modules/uview-ui/index.scss";
 	@import "@/static/font/iconfont.css";
-</style>
+	@import "@/static/style/index.css";
 
-<style>
 	/*每个页面公共css */
+	*{
+		padding: 0;
+		margin: 0;
+		box-sizing: border-box;
+		font-family: 'Helvetica Neue', Helvetica, sans-serif;
+		font-size: 32upx;
+	}
+	body{
+		background: #f8f9fd;
+	}
 </style>
