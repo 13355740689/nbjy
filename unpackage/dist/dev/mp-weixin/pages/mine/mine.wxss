@@ -1,0 +1,119 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ center--------------------------------------------------------------------------------------
+ * */
+.h-top {
+	position: relative;
+	width: 100%;
+	height: 6.8rem;
+	/* background-color: #25cb83; */
+/* 	background: url(../img/text-bck.png) no-repeat center; */
+	padding: 0.4rem;
+}
+.h-top .ge-back ._img{
+	width: 100%;
+	height: 100%;
+	display: block;
+	margin: 0 auto;
+}
+.mui-tus{
+	position: absolute;
+	bottom: 77px;
+	padding: 0 0.6rem;
+}
+.huiyuan-text{
+	display: flex;
+}
+.h-top ._img {
+	width: 23%;
+}
+.h-top .content {
+	width: 60%;
+	margin-left: 5%;
+	padding-top: 20px;
+}
+.h-top .content ._p {
+	color: #fff;
+	line-height: .6rem;
+}
+.h-top .content ._p.hname {
+	font-size: .5rem;
+}
+.h-top .content ._p.htel,
+.h-top .content ._p.hpthy {
+	font-size: .4rem;
+}
+.h-top .btn {
+	width: 15%;
+	text-align: center;
+	height: 1rem;
+	background-color: #fff;
+	color: #25cb83;
+	font-size: .45rem;
+	line-height: 1rem;
+	margin-top: 3%;
+}
+

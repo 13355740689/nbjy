@@ -1,0 +1,1 @@
+<view class="content"><view class="iconfont icon-envelope-full _i"></view><image class="logo" src="/static/logo.png"></image><view class="text-area"><text class="title">{{title}}</text></view><zd-tabbar vue-id="8dd740cc-1" bind:__l="__l"></zd-tabbar></view>

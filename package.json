@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "uni-read-pages": "^1.0.5"
+  },
+  "dependencies": {
+    "uni-simple-router": "^2.0.8-beta.4"
+  }
+}
