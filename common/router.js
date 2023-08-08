@@ -1,4 +1,4 @@
-
+import Vue from 'vue'
 import {RouterMount,createRouter} from 'uni-simple-router'
 
 //初始化
@@ -21,7 +21,6 @@ router.beforeEach((to, from, next) => {
 })
 // 全局路由后置守卫
 router.afterEach((to, from) => {
-	console.log('------afterEach-------')
 })
 export {
 	router,

@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4200920 */
-	src: url('//at.alicdn.com/t/c/font_4200920_leridwd2p1q.ttf?t=1691417453821') format('truetype')
+	src: url('//at.alicdn.com/t/c/font_4200920_1j1lln4yc1t.ttf?t=1691511173838') format('truetype')
 }
 
 .iconfont {
@@ -11,6 +11,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-dibu_guangchang_p:before{
+	content: "\e638";
+}
+.icon-yingyongguangchang:before{
+	content: "\e6b8";
+}
 .icon-right:before {
 	content: "\e624";
 }

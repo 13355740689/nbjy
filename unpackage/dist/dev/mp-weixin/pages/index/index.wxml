@@ -1,1 +1,0 @@
-<view class="content"><u-swiper vue-id="8dd740cc-1" list="{{list1}}" bind:__l="__l"></u-swiper><zd-tabbar vue-id="8dd740cc-2" bind:__l="__l"></zd-tabbar></view>

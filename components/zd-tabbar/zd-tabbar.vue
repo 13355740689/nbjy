@@ -5,17 +5,7 @@
 			<view class="tabbar-box" :style="{ background: tabbarData.bgcolor || '#fff' }">
 				<view class="tabbar-item" v-for="(tab, index) in tabbarData.tabbarList" :key="tab.name" @tap="switchTabbar(tab, index)">
 					<view class="img-box">
-						<!-- <image
-							class="tabbar-icon"
-							:src="currentPath == getPath(tab.path) ? tab.activeImage : tab.image"
-							mode="scaleToFill"
-							style="width: 32upx;height: 36upx;"
-						></image> -->
-						<!-- <span>{{ currentPath == getPath(tab.path) ? tab.activeImage : 2 }}</span> -->
-						<!-- <u-icon
-							:name="currentPath == getPath(tab.path) ? tab.activeIcon : tab.icon"
-							:color="currentPath === getPath(tab.path) ? tabbarData.activeColor : tabbarData.color"
-						></u-icon> -->
+	
 						<i
 							class="iconfont"
 							:class="currentPath == getPath(tab.path) ? tab.activeIcon : tab.icon"
@@ -54,10 +44,10 @@ export default {
 						activeIcon: 'icon-shouye1'
 					},
 					{
-						name: '工作台',
+						name: '广场',
 						path: '/pages/work/work',
-						icon: 'home',
-						activeIcon: 'home-fill'
+						icon: 'icon-dibu_guangchang_p',
+						activeIcon: 'icon-yingyongguangchang'
 					},
 					{
 						name: '消息',
@@ -102,7 +92,7 @@ export default {
 	methods: {
 		// 切换tabbar
 		switchTabbar(tab, index) {
-			console.log('---------switchTabbar--------')
+			console.log('111111111111')
 			console.dir(this.$tools)
 			this.$tools.routerTo(tab.path, {}, true);
 		},

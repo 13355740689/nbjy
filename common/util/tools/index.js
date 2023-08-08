@@ -1,6 +1,8 @@
 import {
 	router
-} from '@/common/router'
+} from '@/common/router.js'
+
+import Vue from 'vue'
 
 export default {
 	/**
