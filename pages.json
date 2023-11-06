@@ -25,7 +25,8 @@
 			"path": "pages/work/work",
 			"style": {
 				"navigationBarBackgroundColor": "#fff",
-				"navigationBarTitleText": "广场"
+				"navigationBarTitleText": "广场",
+				"enablePullDownRefresh": true
 			}
 		}
 	],

@@ -40,7 +40,10 @@ const app = new Vue({
 })
 
 // 引入请求封装
-require('./util/request/index')(app)
+// require('./util/request/index')(app)
+
+import plugins from '@/common/plugins.js'
+Vue.use(plugins)
 
 // #ifdef H5
 	RouterMount(app,router,'#app')

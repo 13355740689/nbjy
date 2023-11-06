@@ -130,22 +130,34 @@
     "h5" : {
         "template" : "template.h5.html",
         "router" : {
-            "mode" : "history",
-            "base" : ""
+            "mode" : "hash",
+            "base" : "./"
         },
         "optimization" : {
             "treeShaking" : {
                 "enable" : false
             }
         },
-        "title" : "uView UI",
         "sdkConfigs" : {
             "maps" : {
                 "qqmap" : {
                     "key" : ""
                 }
             }
-        },
-        "domain" : ""
+        }
+        // "devServer" : {
+        //     "port" : 8083,
+        //     "disableHostCheck" : true,
+        //     "proxy" : {
+        //         "/" : {
+        //             "target" : "http://192.168.50.242:8083",
+        //             "changeOrigin" : true,
+        //             "secure" : false,
+        //             "pathRewrite" : {
+        //                 "^/" : ""
+        //             }
+        //         }
+        //     }
+        // }
     }
 }

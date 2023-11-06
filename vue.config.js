@@ -11,7 +11,17 @@ module.exports = {
     configureWebpack: {
         devServer: {
             // 调试时允许内网穿透，让外网的人访问到本地调试的H5页面
-            disableHostCheck: true
+            disableHostCheck: true,
+			proxy: {
+			    "/" : {
+			        "target" : "http://192.168.50.242:8083",
+			        "changeOrigin" : true,
+			        "secure" : false,
+			        "pathRewrite" : {
+			            "^/" : ""
+			        }
+			    }
+			}
         },
 		resolve: {
 			alias: {

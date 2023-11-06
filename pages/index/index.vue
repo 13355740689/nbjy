@@ -136,7 +136,11 @@
 		padding: 20upx 0;
 		.grid-text{
 			margin-top: 10upx;
-			font-size: .24rem;color: #333333;text-align: center;padding-top: .12rem;padding-bottom: .1rem;
+			font-size: 28upx;
+			color: #333333;
+			text-align: center;
+			padding-top: .12rem;
+			padding-bottom: .1rem;
 		}
 	}
 
