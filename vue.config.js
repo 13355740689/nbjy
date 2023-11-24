@@ -14,11 +14,11 @@ module.exports = {
             disableHostCheck: true,
 			proxy: {
 			    "/" : {
-			        "target" : "http://192.168.50.242:8083",
+			        "target" : "http://192.168.1.6:8083",
 			        "changeOrigin" : true,
 			        "secure" : false,
 			        "pathRewrite" : {
-			            "^/" : ""
+			            "^/" : "/"
 			        }
 			    }
 			}

@@ -1,0 +1,52 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 4200920 */
+	src: url('//at.alicdn.com/t/c/font_4200920_1j1lln4yc1t.ttf?t=1691511173838') format('truetype')
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-dibu_guangchang_p:before{
+	content: "\e638";
+}
+.icon-yingyongguangchang:before{
+	content: "\e6b8";
+}
+.icon-right:before {
+	content: "\e624";
+}
+.icon-qiabao1:before {
+	content: "\e611";
+}
+.icon-qiabao:before {
+	content: "\e62e";
+}
+.icon-envelope-full:before {
+  content: "\e983";
+}
+
+.icon-31wode:before {
+  content: "\e600";
+}
+
+.icon-my:before {
+  content: "\e608";
+}
+
+.icon-envelope:before {
+  content: "\e982";
+}
+
+.icon-shouye:before {
+  content: "\e639";
+}
+
+.icon-shouye1:before {
+  content: "\e8b9";
+}
+

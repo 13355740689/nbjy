@@ -1,0 +1,7 @@
+{
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTitleText": "消息",
+  "usingComponents": {
+    "zd-tabbar": "/components/zd-tabbar/zd-tabbar"
+  }
+}

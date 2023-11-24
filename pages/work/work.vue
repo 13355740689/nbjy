@@ -106,10 +106,10 @@
         num: 0
 			}
 		},
-		onShow() {			
+		onShow() {
 			this.getList()
 		},
-		
+
 		onReachBottom() {
 			console.log('下拉刷新')
 
@@ -124,6 +124,10 @@
           console.log('22222222222222=========')
           console.dir(res)
 					this.userList = [...this.userList, ...res.data.list]
+
+          if (this.userList.length === res.data.totalNum) {
+            this.status = 'nomore'
+          }
 
           this.num++
 
@@ -148,7 +152,7 @@
 			margin-left: 10upx;
 		}
 	}
-	
+
 	.perItem:nth-child(n+2){
 		margin-top: 20px;
 	}
