@@ -1,7 +1,8 @@
 {
-  "navigationBarBackgroundColor": "#fff",
-  "navigationBarTitleText": "我的",
+  "navigationStyle": "custom",
+  "navigationBarTextStyle": "white",
   "usingComponents": {
+    "u-navbar": "/uni_modules/uview-ui/components/u-navbar/u-navbar",
     "u-line": "/uni_modules/uview-ui/components/u-line/u-line",
     "u-tag": "/uni_modules/uview-ui/components/u-tag/u-tag",
     "zd-tabbar": "/components/zd-tabbar/zd-tabbar"

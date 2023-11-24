@@ -19,6 +19,8 @@ Vue.config.productionTip = false
 App.mpType = 'app'
 Vue.use(uView)
 
+uni.$u.config.unit = 'upx'
+
 import {
 	router,
 	RouterMount
